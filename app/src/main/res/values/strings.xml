@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">DedinjeAdmin</string>
+
+    <string name="enter_password">Унеси лозинку</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_start_match">StartMatchActivity</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_events">Unos dogadjaja</string>
+
+
+    <string name="startgame">Pocetak utakmice</string>
+    <string name="halftime">I poluvreme</string>
+    <string name="startsecondhalf">Pocetak II poluvremena</string>
+    <string name="finaltime">Kraj utakmice</string>
+
+
+    <string name="goluser">Gol za FK Dedinje</string>
+    <string name="golprotivnik">Gol za protivnika</string>
+
+
+    <string name="zutikarton">Zuti karton</string>
+    <string name="drugizutikarton">Drugi zuti</string>
+    <string name="crvenikarton">Crveni karton</string>
+
+    <string name="txtuser">FK Dedinje</string>
+    <string name="txtprotivnik">protivnik</string>
+
+
+
+    <string name="playerin">Ulazi igrac:</string>
+    <string name="playerout">Izlazi igrac:</string>
+
+
+</resources>
