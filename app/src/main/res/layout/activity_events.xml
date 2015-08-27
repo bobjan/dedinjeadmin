@@ -5,114 +5,148 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:orientation="vertical"
+    android:animateLayoutChanges="true"
     tools:context="com.logotet.dedinjeadmin.EventsActivity">
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/rlTimeEvents"
-    >
 
-
-    <RadioGroup
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:id="@+id/rgTimeEvents"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true">
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/rbStartGame"
-            android:text="@string/startgame"/>
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/rbHalfTime"
-            android:text="@string/halftime"/>
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/rbStartSecondHalf"
-            android:text="@string/startsecondhalf"/>
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/rbFinalTime"
-            android:text="@string/finaltime"/>
-
-    </RadioGroup>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginLeft="12dp"
-        android:layout_toRightOf="@id/rgTimeEvents">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="minuti korekcije"/>
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/llLateMinutes"
-            android:inputType="numberDecimal"
-           />
-
-    </LinearLayout>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/btnTimeEvents"
-        android:layout_below="@+id/rgTimeEvents"
-        android:text="Posalji"/>
+        android:id="@+id/btnExpandTime"
+        android:text="vreme"
+        android:gravity="right" />
+    <!--  ============pocetak opisa delova prikaza=====================   -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/llExpandTime"
+        android:visibility="visible"  >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rlTimeEvents"    >
 
-</RelativeLayout>
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/rgTimeEvents"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true" >
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rbStartGame"
+                    android:text="@string/startgame"   />
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rbHalfTime"
+                    android:text="@string/halftime" />
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rbStartSecondHalf"
+                    android:text="@string/startsecondhalf"  />
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rbFinalTime"
+                    android:text="@string/finaltime" />
+
+            </RadioGroup>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="12dp"
+                android:layout_toRightOf="@id/rgTimeEvents" >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="minuti korekcije"    />
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/llLateMinutes"
+                    android:inputType="numberDecimal" />
+
+            </LinearLayout>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnTimeEvents"
+                android:layout_below="@+id/rgTimeEvents"
+                android:text="Posalji" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnExpandGoal"
+        android:text="gol"
+        android:gravity="right"  />
+    <!--  =================================================================   -->
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:id="@+id/rlGolEvent">
+        android:id="@+id/llExpandGoal"
+        android:visibility="gone" >
         <RadioGroup
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:id="@+id/rgGol">
+            android:id="@+id/rgGol"     >
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/goluser"/>
+                android:text="@string/goluser"         />
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="right"
                 android:layout_gravity="right"
-                android:text="@string/golprotivnik"/>
+                android:text="@string/golprotivnik"
+/>
         </RadioGroup>
         <Spinner
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/spinStrelac"></Spinner>
+            android:id="@+id/spinStrelac"
+></Spinner>
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/btnGoal"
-            android:text="GOOOOOL"/>
+            android:text="GOOOOOL"
+ />
     </LinearLayout>
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnExpandKarton"
+        android:text="kartoni"
+        android:gravity="right" />
+    <!--  =================================================================   -->
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/llExpandKarton"
+        android:visibility="gone">
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/rlKartoni">
+        android:id="@+id/rlKartoni" >
 
         <RadioGroup
             android:layout_width="wrap_content"
@@ -120,22 +154,22 @@
             android:orientation="vertical"
             android:id="@+id/rgKartoni"
             android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true">
+            android:layout_alignParentLeft="true" >
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/rbZutiKarton"
-                android:text="@string/zutikarton"/>
+                android:text="@string/zutikarton"  />
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/rbDrugiZutiKarton"
-                android:text="@string/drugizutikarton"/>
+                android:text="@string/drugizutikarton"  />
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/rbCrveniKarton"
-                android:text="@string/crvenikarton"/>
+                android:text="@string/crvenikarton"  />
 
         </RadioGroup>
 
@@ -145,18 +179,18 @@
             android:orientation="vertical"
             android:layout_toRightOf="@+id/rgKartoni"
             android:layout_alignParentRight="true"
-            android:id="@+id/rgWhatTeam">
+            android:id="@+id/rgWhatTeam" >
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/txtuser"
-                android:id="@+id/rbKartonDedinje"/>
+                android:id="@+id/rbKartonDedinje"  />
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/rbKartonProtivnik"
-                android:text="@string/txtprotivnik"/>
+                android:text="@string/txtprotivnik"  />
 
         </RadioGroup>
 
@@ -166,51 +200,94 @@
             android:id="@+id/spinKarton"
             android:layout_below="@+id/rgKartoni"></Spinner>
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/spinKarton"
-            android:text="Karton"/>
 
     </RelativeLayout>
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:id="@+id/llIzmena">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/playerout"
-        />
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/spinPlayerOut">
-    </Spinner>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/playerin"
-        />
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/spinPlayerIn">
-    </Spinner>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnIzmena"
-        android:text="Izmena"/>
-
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnKarton"
+            android:text="Karton"  />
 </LinearLayout>
 
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnExpandIzmena"
+        android:text="izmene"
+        android:gravity="right"  />
 
-        </LinearLayout>
+    <!--  =================================================================   -->
 
-    </ScrollView>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/llExpandIzmena"
+        android:visibility="gone" >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/playerout"  />
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinPlayerOut" > </Spinner>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/playerin"  />
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinPlayerIn" >    </Spinner>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnIzmena"
+            android:text="Izmena"  />
+
+    </LinearLayout>
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnExpandKomentar"
+        android:text="komentar"
+        android:gravity="right"  />
+    <!--  =================================================================   -->
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/llExpandKomentar"
+        android:visibility="gone" >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Unesi komentar"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/etKomentar"  />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnKomentar"
+            android:text="Komentar"  />
+    </LinearLayout>
+
+
+
+
+
+
+
 
 </LinearLayout>
