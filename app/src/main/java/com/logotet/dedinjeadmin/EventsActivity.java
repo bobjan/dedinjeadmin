@@ -1,5 +1,6 @@
 package com.logotet.dedinjeadmin;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -32,6 +33,15 @@ public class EventsActivity extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_events);
+
+
+        if(!AllStatic.loggedUser){
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+        }
+
+
+
         btnExpand = new Button[5];
         llExpand = new LinearLayout[5];
 

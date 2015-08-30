@@ -5,12 +5,11 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_start_match">StartMatchActivity</string>
 
-    <string name="hello_world">Hello world!</string>
     <string name="title_activity_events">Unos dogadjaja</string>
 
 
     <string name="startgame">Pocetak utakmice</string>
-    <string name="halftime">I poluvreme</string>
+    <string name="halftime">Karj I poluvremena</string>
     <string name="startsecondhalf">Pocetak II poluvremena</string>
     <string name="finaltime">Kraj utakmice</string>
 
@@ -30,6 +29,19 @@
 
     <string name="playerin">Ulazi igrac:</string>
     <string name="playerout">Izlazi igrac:</string>
+    <string name="title_activity_delete_events">Brisanje dogadjaja</string>
 
+    <string name="network_error">Ne postoji internet veza!</string>
+    <string name="wrong_password">Pogresna lozinka, pokusaj ponovo</string>
+
+
+    <string name="prompt_vreme">Unesi vreme pocetka utakmice:</string>
+    <string name="prompt_stadion">Odaberi teren gde se utakmica igra:</string>
+    <string name="prompt_protivnik">Odaberi teren gde se utakmica igra:</string>
+
+    <string name="prompt_domacin">Da li je FKDedinje domacin?</string>
+    <string name="title_activity_sastav">Sastav tima</string>
+
+    <string name="hello_world">Hello world!</string>
 
 </resources>

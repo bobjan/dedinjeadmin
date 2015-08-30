@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/btnExpandTime"
+        android:textAllCaps="false"
         android:text="vreme"
         android:gravity="right" />
     <!--  ============pocetak opisa delova prikaza=====================   -->
@@ -69,14 +70,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/llLateMinutes"
+                    android:layout_gravity="center_horizontal"
                     android:inputType="numberDecimal" />
 
             </LinearLayout>
             <Button
-                android:layout_width="match_parent"
+                android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/btnTimeEvents"
                 android:layout_below="@+id/rgTimeEvents"
+                android:layout_centerHorizontal="true"
                 android:text="Posalji" />
 
         </RelativeLayout>
@@ -86,7 +89,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/btnExpandGoal"
+        android:textAllCaps="false"
         android:text="gol"
+        android:paddingRight="30dp"
         android:gravity="right"  />
     <!--  =================================================================   -->
 
@@ -121,9 +126,10 @@
             android:id="@+id/spinStrelac"
 ></Spinner>
         <Button
-            android:layout_width="match_parent"
+            android:layout_width="160dp"
             android:layout_height="wrap_content"
             android:id="@+id/btnGoal"
+            android:layout_gravity="center_horizontal"
             android:text="GOOOOOL"
  />
     </LinearLayout>
@@ -132,6 +138,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/btnExpandKarton"
+        android:textAllCaps="false"
         android:text="kartoni"
         android:gravity="right" />
     <!--  =================================================================   -->
@@ -204,9 +211,10 @@
     </RelativeLayout>
 
         <Button
-            android:layout_width="match_parent"
+            android:layout_width="160dp"
             android:layout_height="wrap_content"
             android:id="@+id/btnKarton"
+            android:layout_gravity="center_horizontal"
             android:text="Karton"  />
 </LinearLayout>
 
@@ -215,6 +223,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/btnExpandIzmena"
+        android:textAllCaps="false"
         android:text="izmene"
         android:gravity="right"  />
 
@@ -245,9 +254,10 @@
             android:layout_height="wrap_content"
             android:id="@+id/spinPlayerIn" >    </Spinner>
         <Button
-            android:layout_width="match_parent"
+            android:layout_width="160dp"
             android:layout_height="wrap_content"
             android:id="@+id/btnIzmena"
+            android:layout_gravity="center_horizontal"
             android:text="Izmena"  />
 
     </LinearLayout>
@@ -257,6 +267,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/btnExpandKomentar"
+        android:textAllCaps="false"
         android:text="komentar"
         android:gravity="right"  />
     <!--  =================================================================   -->
@@ -277,9 +288,10 @@
             android:layout_height="wrap_content"
             android:id="@+id/etKomentar"  />
         <Button
-            android:layout_width="match_parent"
+            android:layout_width="160dp"
             android:layout_height="wrap_content"
             android:id="@+id/btnKomentar"
+            android:layout_gravity="center_horizontal"
             android:text="Komentar"  />
     </LinearLayout>
 

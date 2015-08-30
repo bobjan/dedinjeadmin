@@ -36,6 +36,14 @@
             android:name=".EventsActivity"
             android:label="@string/title_activity_events" >
         </activity>
+        <activity
+            android:name=".DeleteEventsActivity"
+            android:label="@string/title_activity_delete_events" >
+        </activity>
+        <activity
+            android:name=".SastavActivity"
+            android:label="@string/title_activity_sastav" >
+        </activity>
     </application>
 
 </manifest>
