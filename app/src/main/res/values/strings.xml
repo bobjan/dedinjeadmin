@@ -1,47 +1,58 @@
 <resources>
-    <string name="app_name">DedinjeAdmin</string>
+    <string name="app_name">ФК Дедиње - Live score </string>
 
     <string name="enter_password">Унеси лозинку</string>
-    <string name="action_settings">Settings</string>
-    <string name="title_activity_start_match">StartMatchActivity</string>
-
-    <string name="title_activity_events">Unos dogadjaja</string>
 
 
-    <string name="startgame">Pocetak utakmice</string>
-    <string name="halftime">Karj I poluvremena</string>
-    <string name="startsecondhalf">Pocetak II poluvremena</string>
-    <string name="finaltime">Kraj utakmice</string>
+    <string name="title_activity_after_login">Унос података за Live score</string>
 
 
-    <string name="goluser">Gol za FK Dedinje</string>
-    <string name="golprotivnik">Gol za protivnika</string>
+    <string name="menuStart">Креирање утакмице</string>
+    <string name="menuDogadjaj">Унос догађаја</string>
+    <string name="menuSastav">Унос састава тима</string>
+    <string name="menuBrisanje">Брисање догађаја</string>
+    <string name="menuLogout">Одјава</string>
 
 
-    <string name="zutikarton">Zuti karton</string>
-    <string name="drugizutikarton">Drugi zuti</string>
-    <string name="crvenikarton">Crveni karton</string>
-
-    <string name="txtuser">FK Dedinje</string>
-    <string name="txtprotivnik">protivnik</string>
+    <string name="logout_confirm">Да ли си сигуран да желиш да се одјавиш?</string>
 
 
-
-    <string name="playerin">Ulazi igrac:</string>
-    <string name="playerout">Izlazi igrac:</string>
-    <string name="title_activity_delete_events">Brisanje dogadjaja</string>
-
-    <string name="network_error">Ne postoji internet veza!</string>
-    <string name="wrong_password">Pogresna lozinka, pokusaj ponovo</string>
+    <string name="startgame">Почетак утакмице</string>
+    <string name="halftime">Крај I полувремена</string>
+    <string name="startsecondhalf">Почетак II полувремена</string>
+    <string name="finaltime">Крај утакмице</string>
 
 
-    <string name="prompt_vreme">Unesi vreme pocetka utakmice:</string>
-    <string name="prompt_stadion">Odaberi teren gde se utakmica igra:</string>
-    <string name="prompt_protivnik">Odaberi teren gde se utakmica igra:</string>
+    <string name="goluser">Гол за ФК Дедиње</string>
+    <string name="golprotivnik">Гол за противника</string>
 
-    <string name="prompt_domacin">Da li je FKDedinje domacin?</string>
-    <string name="title_activity_sastav">Sastav tima</string>
 
-    <string name="hello_world">Hello world!</string>
+    <string name="zutikarton">Жути картон</string>
+    <string name="drugizutikarton">Други жути</string>
+    <string name="crvenikarton">Црвени картон</string>
+
+    <string name="txtuser">ФК Дедиње БГД</string>
+    <string name="txtprotivnik">Противник</string>
+
+
+
+    <string name="playerin">Улази играч:</string>
+    <string name="playerout">Излази играч:</string>
+
+    <string name="network_error">Не постоји интернет веза!!</string>
+    <string name="wrong_password">Погрешна лозинка, покушај поново</string>
+
+
+    <string name="prompt_vreme">Унеси време почетка уткмице:</string>
+    <string name="prompt_stadion">Одабери терен где се утакмица игра:</string>
+    <string name="prompt_protivnik">Одабери противнички тим:</string>
+
+    <string name="prompt_domacin">Да ли је ФК Дедиње домаћин?</string>
+
+
+    <string name="btn_confirmsastav">Коначан састав</string>
+    <string name="btn_sviigraci">Сви играчи</string>
+    <string name="btn_protokol">У протоколу</string>
+
 
 </resources>

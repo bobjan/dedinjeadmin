@@ -57,7 +57,7 @@ public class DresIgracAdapter extends BaseAdapter {
         Igrac igrac = (Igrac) getItem(position);
 
         tvIgrac.setText(igrac.getNaziv());
-        tvBrojNaDresu.setText(igrac.getBrojNaDresu());
+        tvBrojNaDresu.setText(igrac.getBrojNaDresu() + "");
 
         return convertView;
     }

@@ -62,4 +62,12 @@
             android:id="@+id/lvUProtokolu"></ListView>
     </LinearLayout>
 
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/btnConfirmSastav"
+        android:text="@string/btn_confirmsastav"/>
 </RelativeLayout>

@@ -25,7 +25,7 @@
         </activity>
         <activity
             android:name=".StartMatchActivity"
-            android:label="@string/title_activity_start_match" >
+            android:label="@string/menuStart" >
         </activity>
 
         <meta-data
@@ -34,15 +34,19 @@
 
         <activity
             android:name=".EventsActivity"
-            android:label="@string/title_activity_events" >
+            android:label="@string/menuDogadjaj" >
         </activity>
         <activity
             android:name=".DeleteEventsActivity"
-            android:label="@string/title_activity_delete_events" >
+            android:label="@string/menuBrisanje" >
         </activity>
         <activity
             android:name=".SastavActivity"
-            android:label="@string/title_activity_sastav" >
+            android:label="@string/menuSastav" >
+        </activity>
+        <activity
+            android:name=".AfterLoginActivity"
+            android:label="@string/title_activity_after_login" >
         </activity>
     </application>
 

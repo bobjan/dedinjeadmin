@@ -1,5 +1,7 @@
 package com.logotet.dedinjeadmin.model;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -7,6 +9,7 @@ import java.util.Iterator;
  * Created by logotet on 8/26/15.
  */
 public class BazaIgraca {
+    private static final String TAG = "BazaIgraca";
     private static BazaIgraca bazaIgraca = null;
 
     private ArrayList<Igrac> squad;  // svi registrovani igraci

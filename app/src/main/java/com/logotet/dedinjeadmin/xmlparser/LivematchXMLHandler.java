@@ -37,6 +37,7 @@ public class LivematchXMLHandler extends MyXMLHandler {
         if (rawName.equals("match")) {
             pcData = MATCH;
             utakmica = Utakmica.getInstance();
+            utakmica.setFromHttpServer(true);
 
         }
         if (rawName.equals("datum")) {
@@ -82,8 +83,6 @@ public class LivematchXMLHandler extends MyXMLHandler {
         if (rawName.equals("stadion")) {
             pcData = STADION + 100;
         }
-
-
     }
 
     /**
@@ -112,6 +111,4 @@ public class LivematchXMLHandler extends MyXMLHandler {
                 break;
         }
     }
-
-
 }

@@ -1,6 +1,5 @@
 package com.logotet.dedinjeadmin.xmlparser;
 
-import android.util.Log;
 
 import com.logotet.dedinjeadmin.model.BazaIgraca;
 import com.logotet.dedinjeadmin.model.Utakmica;
@@ -13,7 +12,7 @@ import java.net.URLEncoder;
  * Created by boban on 8/29/15.
  */
 public class RequestPreparator {
-    private static final String TAG = "StartMatchActivity";
+    private static final String TAG = "RequestPreparator";
 
 
 
@@ -87,7 +86,7 @@ public class RequestPreparator {
 
         sb.append("&domacin=");
         sb.append(utakmica.isUserTeamDomacin() ? "1" : "0");
-        Log.w(TAG,sb.toString());
+//        Log.w(TAG,sb.toString());
         return sb.toString();
 
     }

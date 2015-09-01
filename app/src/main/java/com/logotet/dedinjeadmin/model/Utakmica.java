@@ -26,6 +26,9 @@ public class Utakmica {
 
     private boolean userTeamDomacin;
 
+    private boolean fromHttpServer;
+
+
     private BJTime lastVremenski;
 
     private boolean sortirano;
@@ -42,6 +45,7 @@ public class Utakmica {
         vremenskiTok = new ArrayList<Dogadjaj>();
         tokZaPrikaz = new ArrayList<Dogadjaj>();
         sortirano = true;
+        fromHttpServer = false;
     }
 
     public BJDatum getDatum() {
@@ -113,6 +117,15 @@ public class Utakmica {
 
     public void setUserTeamDomacin(boolean userTeamDomacin) {
         this.userTeamDomacin = userTeamDomacin;
+    }
+
+
+    public boolean isFromHttpServer() {
+        return fromHttpServer;
+    }
+
+    public void setFromHttpServer(boolean fromHttpServer) {
+        this.fromHttpServer = fromHttpServer;
     }
 
     public ArrayList<Dogadjaj> getSvaDogadjanja() {

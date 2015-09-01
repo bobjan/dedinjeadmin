@@ -33,12 +33,15 @@ public class LoginActivity extends AppCompatActivity {
         thread.start();
         thread = new RequestThread(RequestPreparator.GETPOZICIJA, AllStatic.HTTPHOST);
         thread.start();
+        thread = new RequestThread(RequestPreparator.GETEKIPA, AllStatic.HTTPHOST);
+        thread.start();
+
 
 
         etPassword = (EditText) findViewById(R.id.etPassword);
         btnLogin = (Button) findViewById(R.id.btnLogin);
 
-        firstActivity = new Intent(this, StartMatchActivity.class);
+        firstActivity = new Intent(this, AfterLoginActivity.class);
 
         if(AllStatic.loggedUser)
             startActivity(firstActivity);
@@ -51,6 +54,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (AppHeaderData.getInstance().getPassword().equals(etPassword.getText().toString())) {
                     AllStatic.loggedUser = true;
                     startActivity(firstActivity);
+                    finish();
                 } else {
                     AllStatic.loggedUser = false;
                     if (AppHeaderData.getInstance().getPassword().length() > 0)
@@ -65,27 +69,6 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_login, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     @Override
     protected void onPostResume() {

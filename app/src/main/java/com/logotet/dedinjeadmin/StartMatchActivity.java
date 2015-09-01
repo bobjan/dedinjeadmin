@@ -43,7 +43,7 @@ public class StartMatchActivity extends AppCompatActivity {
     BJTime selectedTime;
 
 
-    Button btnStartMatch;
+    Button btnCreateMatch;
 
     ArrayList listaStadiona;
     ArrayList listaProtivnika;
@@ -60,9 +60,6 @@ public class StartMatchActivity extends AppCompatActivity {
             startActivity(intent);
         }
 
-        Thread thread = new RequestThread(RequestPreparator.GETEKIPA, AllStatic.HTTPHOST);
-        thread.start();
-
         tvDatum = (TextView) findViewById(R.id.tvDatum);
         tvDatum.setText((new BJDatum().toString()));
 
@@ -72,7 +69,7 @@ public class StartMatchActivity extends AppCompatActivity {
 
         spProtivnik = (Spinner) findViewById(R.id.spProtivnik);
         spStadion = (Spinner) findViewById(R.id.spStadion);
-        btnStartMatch = (Button) findViewById(R.id.btnStartMatch);
+        btnCreateMatch = (Button) findViewById(R.id.btnCreateMatch);
         cbDomacin = (CheckBox) findViewById(R.id.cbDomacin);
 
         listaStadiona = BazaStadiona.getInstance().getTereni();
@@ -131,9 +128,9 @@ public class StartMatchActivity extends AppCompatActivity {
         });
 
 
-        intent = new Intent(this, SastavActivity.class);
+        intent = new Intent(this, AfterLoginActivity.class);
 
-        btnStartMatch.setOnClickListener(new View.OnClickListener() {
+        btnCreateMatch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Utakmica utakmica = Utakmica.getInstance();
@@ -146,6 +143,7 @@ public class StartMatchActivity extends AppCompatActivity {
                 th.start();
                 Toast.makeText(getApplicationContext(), "Utakmica je kreirana", Toast.LENGTH_LONG).show();
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -158,26 +156,5 @@ public class StartMatchActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_start_match, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
 }
