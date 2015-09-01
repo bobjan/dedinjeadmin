@@ -46,6 +46,9 @@ public class RequestThread extends Thread {
         try {
             url = new URL(serverAddress + requestParams);
             urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.addRequestProperty("Cache-Control", "no-cache");
+
+
             instream = new BufferedInputStream(urlConnection.getInputStream());
             switch (what) {
                 case RequestPreparator.SERVERTIME:

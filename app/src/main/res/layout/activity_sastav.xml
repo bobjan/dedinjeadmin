@@ -17,14 +17,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:text="Svi igraci"
+            android:text="@string/btn_sviigraci"
             android:id="@+id/btnVanProtokola"
 />
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:text="U protokolu"
+            android:text="@string/btn_protokol"
             android:id="@+id/btnUProtokolu" />
     </LinearLayout>
 
