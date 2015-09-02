@@ -4,12 +4,11 @@ import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
 import java.io.CharArrayWriter;
 import java.io.InputStream;
 import java.net.MalformedURLException;
-
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
 
 /**
  * Created by boban on 8/28/15.

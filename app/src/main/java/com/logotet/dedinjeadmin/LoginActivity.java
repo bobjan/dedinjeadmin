@@ -36,6 +36,12 @@ public class LoginActivity extends AppCompatActivity {
         thread = new RequestThread(RequestPreparator.GETEKIPA, AllStatic.HTTPHOST);
         thread.start();
 
+        thread = new RequestThread(RequestPreparator.GETLIVEMATCH, AllStatic.HTTPHOST);
+        thread.start();
+
+        thread = new RequestThread(RequestPreparator.ALLEVENTS, AllStatic.HTTPHOST);
+        thread.start();
+
 
 
         etPassword = (EditText) findViewById(R.id.etPassword);

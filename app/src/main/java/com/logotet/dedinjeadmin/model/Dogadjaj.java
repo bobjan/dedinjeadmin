@@ -1,11 +1,13 @@
 package com.logotet.dedinjeadmin.model;
 
 import com.logotet.util.BJTime;
+import com.logotet.util.NumericStringComparable;
 
 /**
  * Created by logotet on 8/26/15.
  */
-public class Dogadjaj implements DogadjajComparable {
+public class Dogadjaj implements NumericStringComparable {
+    public static Dogadjaj currentDogadjaj; // prvenstveno radi RequestPreparatora
     public static final int STARTUTAKMICE = 0;
     public static final int HALFTIME = 1;
     public static final int STARTDRUGOPOLUVREME = 2;
@@ -45,12 +47,14 @@ public class Dogadjaj implements DogadjajComparable {
 
     private String fileName;
     private BJTime serverTime;
+    private int stringServerTime;
 
 
     public Dogadjaj(String file, String serverVreme, int tipDogadjaja) {
         this.tipDogadjaja = tipDogadjaja;
         this.fileName = file;
         int tmpTime = Integer.parseInt(serverVreme.trim());
+        stringServerTime = tmpTime;
 
         int sec = tmpTime % 100;
         tmpTime /= 100;
@@ -106,6 +110,9 @@ public class Dogadjaj implements DogadjajComparable {
         return komentar;
     }
 
+    public String getFileName() {
+        return fileName;
+    }
 
     public void setMinut(int minut) {
         this.minut = minut;
@@ -161,6 +168,10 @@ public class Dogadjaj implements DogadjajComparable {
         this.komentar = komentar;
     }
 
+    public BJTime getServerTime() {
+        return serverTime;
+    }
+
     public boolean isVremenski() {
         return (tipDogadjaja == STARTDRUGOPOLUVREME) ||
                 (tipDogadjaja == STARTUTAKMICE) ||
@@ -210,4 +221,34 @@ public class Dogadjaj implements DogadjajComparable {
 //        return fileName + "\t" + tipDogadjaja + "\t" + serverTime.toString();
     }
 
+    public int getNumericString() {
+        return stringServerTime;
+    }
+
+    public void modifyMinut(BJTime[] vremePocetka, BJTime[] vremeKraja) {
+        int[] tmpMinut = new int[4];
+        tmpMinut[0] = (int) ((serverTime.getSeconds() - vremePocetka[0].getSeconds()) / 60);
+        tmpMinut[1] = (int) ((serverTime.getSeconds() - vremeKraja[0].getSeconds()) / 60);
+        tmpMinut[2] = (int) ((serverTime.getSeconds() - vremePocetka[1].getSeconds()) / 60);
+        tmpMinut[3] = (int) ((serverTime.getSeconds() - vremePocetka[1].getSeconds()) / 60);
+
+
+        if(tmpMinut[0] < 45){
+            minut = tmpMinut[0];
+            return;
+        }
+
+        if((tmpMinut[2] < 0) && (tmpMinut[1] > 0)){
+            minut = 45;
+            return;
+        }
+
+        if(tmpMinut[2] < 45){
+            minut = 45 + tmpMinut[2];
+            return;
+        }
+
+        minut = 90;
+
+    }
 }

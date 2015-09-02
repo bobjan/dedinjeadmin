@@ -6,12 +6,13 @@
         android:id="@+id/tvBrojNaDresu"
         android:layout_width="60dp"
         android:layout_height="wrap_content"
-        android:textSize="22sp"
+        android:textSize="20sp"
         android:textColor="@color/myyellow"/>
 
     <TextView
         android:id="@+id/tvIgracUProtokolu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:paddingLeft="10dp"/>
 
 </LinearLayout>

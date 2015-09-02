@@ -2,7 +2,6 @@ package com.logotet.dedinjeadmin.xmlparser;
 
 import com.logotet.dedinjeadmin.model.Dogadjaj;
 import com.logotet.dedinjeadmin.model.Utakmica;
-
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 

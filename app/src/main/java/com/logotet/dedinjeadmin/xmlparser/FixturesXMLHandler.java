@@ -2,7 +2,6 @@ package com.logotet.dedinjeadmin.xmlparser;
 
 import com.logotet.dedinjeadmin.model.Fixtures;
 import com.logotet.dedinjeadmin.model.FixturesRow;
-
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 

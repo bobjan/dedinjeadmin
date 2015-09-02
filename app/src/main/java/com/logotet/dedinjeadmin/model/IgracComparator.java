@@ -20,7 +20,7 @@ public class IgracComparator implements Comparator {
         Igrac d1 = (Igrac) o1;
         Igrac d2 = (Igrac) o2;
         if (bywhat == BYID)
-            return d2.getId() - d1.getId();
+            return d1.getId() - d2.getId();
         else if (bywhat == BYDRES){
             int koef1 = d1.isNaTerenu() ? 0 : 100;
             int koef2 = d2.isNaTerenu() ? 0 : 100;

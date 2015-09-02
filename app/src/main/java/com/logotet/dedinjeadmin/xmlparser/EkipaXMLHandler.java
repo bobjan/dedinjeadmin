@@ -2,7 +2,6 @@ package com.logotet.dedinjeadmin.xmlparser;
 
 import com.logotet.dedinjeadmin.model.BazaIgraca;
 import com.logotet.dedinjeadmin.model.Igrac;
-
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
@@ -37,7 +36,9 @@ public class EkipaXMLHandler extends MyXMLHandler {
             pcData = PLAYER;
             try {
                 int id = Integer.parseInt(attr.getValue("pid").trim());
-                currentIgrac = new Igrac(id, attr.getValue("naziv"), attr.getValue("godina"), attr.getValue("mestoutimu"), attr.getValue("img"));
+                currentIgrac = new Igrac(id, attr.getValue("naziv"), attr.getValue("godina"),
+                        attr.getValue("mestoutimu"),attr.getValue("visina"),
+                        attr.getValue("tezina") ,  attr.getValue("img"));
                 bazaIgraca.add(currentIgrac);
             } catch (NumberFormatException nfe) {
             }

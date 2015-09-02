@@ -2,7 +2,6 @@ package com.logotet.dedinjeadmin.xmlparser;
 
 
 import com.logotet.dedinjeadmin.model.Servertime;
-
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
@@ -52,7 +51,7 @@ public class ServertimeXMLHandler extends MyXMLHandler {
         contents.write(ch, start, length);//ne znam cemu sluzi ali neka ostane
         String tekst = new String(ch, start, length);
         if (pcData == SERVERTIME)
-            Servertime.TIME = tekst.trim();
+            Servertime.getInstance(tekst.trim());
     }
 
 

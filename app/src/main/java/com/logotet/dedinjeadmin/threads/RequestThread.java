@@ -1,17 +1,6 @@
 package com.logotet.dedinjeadmin.threads;
 
-import com.logotet.dedinjeadmin.xmlparser.AlleventsXMLHandler;
-import com.logotet.dedinjeadmin.xmlparser.EkipaXMLHandler;
-import com.logotet.dedinjeadmin.xmlparser.FixturesXMLHandler;
-import com.logotet.dedinjeadmin.xmlparser.LigaXMLHandler;
-import com.logotet.dedinjeadmin.xmlparser.LivematchXMLHandler;
-import com.logotet.dedinjeadmin.xmlparser.MyXMLHandler;
-import com.logotet.dedinjeadmin.xmlparser.NoResponseHandler;
-import com.logotet.dedinjeadmin.xmlparser.PozicijaXMLHandler;
-import com.logotet.dedinjeadmin.xmlparser.RequestPreparator;
-import com.logotet.dedinjeadmin.xmlparser.ServertimeXMLHandler;
-import com.logotet.dedinjeadmin.xmlparser.StadionXMLHandler;
-import com.logotet.dedinjeadmin.xmlparser.TabelaXMLHandler;
+import com.logotet.dedinjeadmin.xmlparser.*;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -92,6 +81,9 @@ public class RequestThread extends Thread {
                     break;
                 case RequestPreparator.DELETEEVENT:
                     myXMLHandler = new NoResponseHandler(instream);
+                    break;
+                case RequestPreparator.GETRUKOVODSTVO:
+                    myXMLHandler = new RukovodstvoXMLHandler(instream);
                     break;
 
             }

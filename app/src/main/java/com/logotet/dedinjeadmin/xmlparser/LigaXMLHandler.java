@@ -3,7 +3,6 @@ package com.logotet.dedinjeadmin.xmlparser;
 import com.logotet.dedinjeadmin.model.AppHeaderData;
 import com.logotet.dedinjeadmin.model.BazaTimova;
 import com.logotet.dedinjeadmin.model.Tim;
-
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 

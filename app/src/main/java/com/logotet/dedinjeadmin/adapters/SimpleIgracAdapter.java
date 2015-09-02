@@ -2,6 +2,7 @@ package com.logotet.dedinjeadmin.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,6 +56,26 @@ public class SimpleIgracAdapter extends BaseAdapter {
         TextView tvIgrac = (TextView) convertView.findViewById(R.id.tvIgrac);
 
         Igrac igrac = (Igrac) getItem(position);
+        tvIgrac.setTextColor(Color.WHITE);
+
+        switch(igrac.getDefaultPozicija()){
+            case 1:
+                tvIgrac.setBackgroundResource(R.drawable.golmanbutton);
+                break;
+            case 2:
+                tvIgrac.setBackgroundResource(R.drawable.odbranabutton);
+                break;
+            case 3:
+                tvIgrac.setBackgroundResource(R.drawable.veznibutton);
+                break;
+            default:
+                tvIgrac.setBackgroundResource(R.drawable.napadbutton);
+                break;
+
+
+        }
+
+
 
         tvIgrac.setText(igrac.getNaziv());
 

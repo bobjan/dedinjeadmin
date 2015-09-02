@@ -2,7 +2,6 @@ package com.logotet.dedinjeadmin.xmlparser;
 
 import com.logotet.dedinjeadmin.model.BazaSaopstenja;
 import com.logotet.dedinjeadmin.model.Saopstenje;
-
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 

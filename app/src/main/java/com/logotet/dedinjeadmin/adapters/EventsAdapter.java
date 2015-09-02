@@ -58,7 +58,7 @@ public class EventsAdapter extends BaseAdapter {
 
         Dogadjaj dogadjaj = (Dogadjaj) getItem(position);
 
-        tvMinut.setText(dogadjaj.getMinut());
+        tvMinut.setText(dogadjaj.getMinut() + "");
         tvDogadjaj.setText(dogadjaj.toString());
 
         return convertView;

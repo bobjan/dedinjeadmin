@@ -2,6 +2,7 @@ package com.logotet.dedinjeadmin.xmlparser;
 
 
 import com.logotet.dedinjeadmin.model.BazaIgraca;
+import com.logotet.dedinjeadmin.model.Dogadjaj;
 import com.logotet.dedinjeadmin.model.Utakmica;
 
 import java.io.UnsupportedEncodingException;
@@ -33,9 +34,10 @@ public class RequestPreparator {
     public static final int DELETEALL = 11;
     public static final int ALLEVENTS = 12;
     public static final int GETLIVEMATCH = 13;
+    public static final int GETRUKOVODSTVO = 14;
 
     private static final String[] request = {"servertime.php", "pozicija.xml", "stadion.xml", "ekipa.xml", "liga.xml", "tabela.xml", "fixtures.xml",
-            "startmatch.php", "makesastav.php", "makeevent.php", "deleteevent.php", "deleteall.php", "allevents.php", "livematch.xml"};
+            "startmatch.php", "makesastav.php", "makeevent.php", "deleteevent.php", "deleteall.php", "allevents.php", "livematch.xml","rukovodstvo.xml"};
 
     public static String getRequest(int what) {
         switch (what) {
@@ -49,19 +51,27 @@ public class RequestPreparator {
             case DELETEALL:
             case ALLEVENTS:
             case GETLIVEMATCH:
+            case GETRUKOVODSTVO:
                 return request[what];
 
             case STARTMATCH:
                 return request[what] + startMatch();
             case MAKESASTAV:
                 return request[what] + getProtokol();
-
             case MAKEEVENT:
                 return request[what] + getEvent();
             case DELETEEVENT:
-                break;
+                return request[what] + getEventForDeletion();
         }
         return null;
+    }
+
+    private static String getEventForDeletion() {
+        StringBuffer sb = new StringBuffer("?eventfile=");
+        if(Dogadjaj.currentDogadjaj != null)
+            sb.append(Dogadjaj.currentDogadjaj.getFileName());
+        Dogadjaj.currentDogadjaj = null;
+        return sb.toString();
     }
 
 

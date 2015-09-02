@@ -2,7 +2,6 @@ package com.logotet.dedinjeadmin.xmlparser;
 
 import com.logotet.dedinjeadmin.model.BazaStadiona;
 import com.logotet.dedinjeadmin.model.Stadion;
-
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 

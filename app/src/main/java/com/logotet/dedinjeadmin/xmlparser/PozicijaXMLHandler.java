@@ -2,7 +2,6 @@ package com.logotet.dedinjeadmin.xmlparser;
 
 import com.logotet.dedinjeadmin.model.BazaPozicija;
 import com.logotet.dedinjeadmin.model.Pozicija;
-
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 

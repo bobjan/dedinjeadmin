@@ -2,6 +2,7 @@ package com.logotet.dedinjeadmin.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,11 +55,38 @@ public class DresIgracAdapter extends BaseAdapter {
         TextView tvIgrac = (TextView) convertView.findViewById(R.id.tvIgracUProtokolu);
         TextView tvBrojNaDresu = (TextView) convertView.findViewById(R.id.tvBrojNaDresu);
 
+        int clrKlupa = parent.getResources().getColor(R.color.grey);
+        int clrStarter = parent.getResources().getColor(R.color.myyellow);
+
+
         Igrac igrac = (Igrac) getItem(position);
 
         tvIgrac.setText(igrac.getNaziv());
         tvBrojNaDresu.setText(igrac.getBrojNaDresu() + "");
 
+        tvIgrac.setTextColor(Color.WHITE);
+
+        if(igrac.getBrojNaDresu() < 12)
+            tvBrojNaDresu.setTextColor(clrStarter);
+        else
+            tvBrojNaDresu.setTextColor(clrKlupa);
+
+
+
+        switch(igrac.getDefaultPozicija()){
+            case 1:
+                tvIgrac.setBackgroundResource(R.drawable.golmanbutton);
+                break;
+            case 2:
+                tvIgrac.setBackgroundResource(R.drawable.odbranabutton);
+                break;
+            case 3:
+                tvIgrac.setBackgroundResource(R.drawable.veznibutton);
+                break;
+            default:
+                tvIgrac.setBackgroundResource(R.drawable.napadbutton);
+                break;
+        }
         return convertView;
     }
 }

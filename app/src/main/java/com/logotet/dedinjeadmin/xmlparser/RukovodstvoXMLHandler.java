@@ -1,23 +1,26 @@
 package com.logotet.dedinjeadmin.xmlparser;
 
-import com.logotet.dedinjeadmin.model.Tabela;
-import com.logotet.dedinjeadmin.model.TabelaRow;
+import com.logotet.dedinjeadmin.model.BazaIgraca;
+import com.logotet.dedinjeadmin.model.BazaOsoba;
+import com.logotet.dedinjeadmin.model.Igrac;
+import com.logotet.dedinjeadmin.model.Osoba;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
 import java.io.InputStream;
 
 /**
- * Klasa koja parsira tabela.xml
+ * Klasa koja parsira stadion.xml
  */
-public class TabelaXMLHandler extends MyXMLHandler {
+public class RukovodstvoXMLHandler extends MyXMLHandler {
+    BazaOsoba bazaOsoba;
+    Osoba currentOsoba;
+    final private int OSOBA = 123;
 
-
-    Tabela tabela;
-
-    public TabelaXMLHandler(InputStream inputStream) {
+    public RukovodstvoXMLHandler(InputStream inputStream) {
         super(inputStream);
     }
+
 
     /**
      * po standardnom APIju ova metoda hvata pocetak nekog taga, a u njoj je moguce
@@ -27,16 +30,19 @@ public class TabelaXMLHandler extends MyXMLHandler {
                              String rawName, Attributes attr) throws SAXException {
         contents.reset();
 
-        if (rawName.equals("tabela")) {
+        if (rawName.equals("rukovodstvo")) {
+            bazaOsoba = BazaOsoba.getInstance();
             isOk = true;
-            tabela = Tabela.getInstance();
-            pcData = 0;
         }
-
-        if (rawName.equals("mesto")) {
-            pcData = 2;
-            tabela.add(new TabelaRow(attr.getValue("broj"), attr.getValue("naziv"),
-                    attr.getValue("pwdl"), attr.getValue("goaldif"), attr.getValue("points")));
+        if (rawName.equals("osoba")) {
+            pcData = OSOBA;
+            try {
+                int id = Integer.parseInt(attr.getValue("oid").trim());
+                currentOsoba = new Osoba(id, attr.getValue("naziv"), attr.getValue("funkcija"),
+                         attr.getValue("img"));
+                bazaOsoba.add(currentOsoba);
+            } catch (NumberFormatException nfe) {
+            }
         }
     }
 
@@ -45,8 +51,11 @@ public class TabelaXMLHandler extends MyXMLHandler {
      */
     public void endElement(String namespaceURI, String localName,
                            String rawName) throws SAXException {
-        if (rawName.equals("mesto")) {
+        if (rawName.equals("rukovodstvo")) {
             pcData = 0;
+        }
+        if (rawName.equals("osoba")) {
+            pcData = 1;
         }
     }
 
@@ -57,5 +66,6 @@ public class TabelaXMLHandler extends MyXMLHandler {
         contents.write(ch, start, length);//ne znam cemu sluzi ali neka ostane
         String tekst = new String(ch, start, length);
     }
+
 
 }
