@@ -94,17 +94,6 @@ public class Dogadjaj implements NumericStringComparable {
         return minut;
     }
 
-    public int getPlayerId() {
-        return playerId;
-    }
-
-    public int getPlayerInId() {
-        return playerInId;
-    }
-
-    public int getPlayerOutId() {
-        return playerOutId;
-    }
 
     public String getKomentar() {
         return komentar;
@@ -168,6 +157,32 @@ public class Dogadjaj implements NumericStringComparable {
         this.komentar = komentar;
     }
 
+
+
+    public String getPlayerName() {
+        try{
+            return BazaIgraca.getInstance().getIgrac(playerId).getNaziv();
+        }catch (Exception npe){
+            return "***";
+        }
+    }
+
+    public String getPlayerInName()    {
+        try{
+            return BazaIgraca.getInstance().getIgrac(playerInId).getNaziv();
+        }catch (Exception npe){
+            return "***";
+        }
+    }
+
+    public String  getPlayerOutName() {
+        try{
+            return BazaIgraca.getInstance().getIgrac(playerOutId).getNaziv();
+        }catch (Exception npe){
+            return "***";
+        }
+    }
+
     public BJTime getServerTime() {
         return serverTime;
     }
@@ -220,6 +235,15 @@ public class Dogadjaj implements NumericStringComparable {
 
 //        return fileName + "\t" + tipDogadjaja + "\t" + serverTime.toString();
     }
+public String getIgrackiTekst(){
+    if(isIgracki())
+        if(tipDogadjaja == IZMENAIGRACA){
+            return getPlayerInName() + " <- -> " + getPlayerOutName();
+        }else{
+            return getPlayerName();
+        }
+        return "";
+}
 
     public int getNumericString() {
         return stringServerTime;

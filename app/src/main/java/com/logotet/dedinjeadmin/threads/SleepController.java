@@ -6,7 +6,7 @@ package com.logotet.dedinjeadmin.threads;
 public class SleepController {
     private static SleepController sleepController = null;
 
-    private static final int MINUT = 1000;  //  60 * 1000 milisekundi
+    private static final int MINUT = 60*1000;  //  60 * 1000 milisekundi
 
     private int sleepTime;  //   u mintima
 
@@ -17,7 +17,7 @@ public class SleepController {
     }
 
     private SleepController() {
-        sleepTime = 5;;
+        sleepTime = 5;
     }
 
     public void setSleepTime(int sleepTime) {

@@ -53,7 +53,6 @@ public class RequestPreparator {
             case GETLIVEMATCH:
             case GETRUKOVODSTVO:
                 return request[what];
-
             case STARTMATCH:
                 return request[what] + startMatch();
             case MAKESASTAV:
@@ -98,7 +97,6 @@ public class RequestPreparator {
         sb.append(utakmica.isUserTeamDomacin() ? "1" : "0");
 //        Log.w(TAG,sb.toString());
         return sb.toString();
-
     }
 
 
@@ -131,8 +129,5 @@ public class RequestPreparator {
                 break;
         }
     return sb.toString();
-
     }
-
-
 }

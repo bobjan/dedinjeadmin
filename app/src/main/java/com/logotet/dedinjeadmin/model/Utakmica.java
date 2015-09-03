@@ -1,5 +1,7 @@
 package com.logotet.dedinjeadmin.model;
 
+import android.util.Log;
+
 import com.logotet.util.BJDatum;
 import com.logotet.util.BJTime;
 import com.logotet.util.NumericStringComparator;
@@ -13,19 +15,14 @@ import java.util.Iterator;
  * Created by logotet on 8/26/15.
  */
 public class Utakmica {
-
-
+    private static final String TAG = "Utakmica";
     private ArrayList<Dogadjaj> svaDogadjanja;
-    private ArrayList<Dogadjaj> vremenskiTok;
-    private ArrayList<Dogadjaj> tokZaPrikaz;
 
     private static Utakmica utakmica = null;
 
-
     private BJDatum datum;
-    private BJTime planiranoVremePocetka; // client time
-    private BJTime[] stvarnoVremePocetka; // server time
-    private BJTime[] stvarnoVremeKraja; // server time
+    private BJTime planiranoVremePocetka; // livematch.xml time
+
 
     private int protivnikId;
     private int stadionId;
@@ -34,8 +31,6 @@ public class Utakmica {
 
     private boolean fromHttpServer;     // kada je true znaci postoji livematch.xml na serveru
 
-
-    private BJTime lastVremenski;
 
     private boolean sortirano;
 
@@ -48,14 +43,8 @@ public class Utakmica {
 
     private Utakmica() {
         svaDogadjanja = new ArrayList<Dogadjaj>();
-        vremenskiTok = new ArrayList<Dogadjaj>();
-        tokZaPrikaz = new ArrayList<Dogadjaj>();
         sortirano = true;
         fromHttpServer = false;
-        stvarnoVremePocetka = new BJTime[2];
-        stvarnoVremePocetka[0] = null;
-        stvarnoVremePocetka[1] = null;
-
     }
 
     public BJDatum getDatum() {
@@ -103,7 +92,6 @@ public class Utakmica {
         }
     }
 
-
     public int getStadionId() {
         return stadionId;
     }
@@ -142,137 +130,38 @@ public class Utakmica {
         return svaDogadjanja;
     }
 
-    public ArrayList<Dogadjaj> getTokZaPrikaz() {
-        return tokZaPrikaz;
-    }
-
-
     public void refresh() {
         svaDogadjanja.clear();
-        vremenskiTok.clear();
-        tokZaPrikaz.clear();
+
         sortirano = true;
     }
-
 
     public void add(Dogadjaj dogadjaj) {
         sortirano = false;
         if (!svaDogadjanja.contains(dogadjaj))
             svaDogadjanja.add(dogadjaj);
-
-        if (dogadjaj.isVremenski())
-            if (!vremenskiTok.contains(dogadjaj))
-                vremenskiTok.add(dogadjaj);
-
-        if (dogadjaj.isInformativni() || dogadjaj.isRezultatski() || dogadjaj.isKazneni())
-            if (!tokZaPrikaz.contains(dogadjaj))
-                tokZaPrikaz.add(dogadjaj);
     }
 
     public void sortiraj() {
         NumericStringComparator dc = new NumericStringComparator();
         Collections.sort(svaDogadjanja, dc);
-        Collections.sort(vremenskiTok, dc);
-        Collections.sort(tokZaPrikaz, dc);
         sortirano = true;
     }
 
     public void remove(Dogadjaj dogadjaj) {
-        if (svaDogadjanja.contains(dogadjaj))
-            svaDogadjanja.remove(dogadjaj);
-        if (vremenskiTok.contains(dogadjaj))
-            vremenskiTok.remove(dogadjaj);
-        if (tokZaPrikaz.contains(dogadjaj))
-            tokZaPrikaz.remove(dogadjaj);
+        if (svaDogadjanja.contains(dogadjaj)){
+            Log.w(TAG," contains dogadja and is to be removed");
+            svaDogadjanja.remove(dogadjaj);}else{
+            Log.w(TAG," NOT containing dogadja NOR removed");
 
-    }
-
-    public void odrediMinutazu() {
-        sortiraj();
-        Iterator<Dogadjaj> iter = vremenskiTok.iterator();
-        while (iter.hasNext()) {
-            Dogadjaj d = iter.next();
-            if (d.getTipDogadjaja() == Dogadjaj.STARTUTAKMICE)
-                stvarnoVremePocetka[0] = new BJTime(d.getServerTime().getSeconds() + d.getMinut() * 60);
-            if (d.getTipDogadjaja() == Dogadjaj.HALFTIME)
-                stvarnoVremeKraja[0] = new BJTime(d.getServerTime().getSeconds());
-
-            if (d.getTipDogadjaja() == Dogadjaj.STARTDRUGOPOLUVREME)
-                stvarnoVremePocetka[1] = new BJTime(d.getServerTime().getSeconds() + d.getMinut() * 60);
-            if (d.getTipDogadjaja() == Dogadjaj.FINALTIME)
-                stvarnoVremeKraja[1] = new BJTime(d.getServerTime().getSeconds());
-        }
-
-
-        if (stvarnoVremePocetka[0] == null)
-            if (svaDogadjanja.size() > 0) {
-                Dogadjaj d = svaDogadjanja.get(0);
-                stvarnoVremePocetka[0] = new BJTime(d.getServerTime().getSeconds() - 300);// 5 minuta pre prvog dogadjaja
-                if (stvarnoVremePocetka[1] == null)
-                    stvarnoVremePocetka[1] = new BJTime(stvarnoVremePocetka[0].getSeconds() + (60 * 60));
-
-                if (stvarnoVremeKraja[0] == null)
-                    stvarnoVremeKraja[0] = new BJTime(stvarnoVremePocetka[0].getSeconds() + (50 * 60));
-
-                if (stvarnoVremeKraja[1] == null)
-                    stvarnoVremeKraja[0] = new BJTime(stvarnoVremePocetka[1].getSeconds() + (50 * 60));
-            }
-
-        iter = svaDogadjanja.iterator();
-        while (iter.hasNext()) {
-            Dogadjaj d = iter.next();
-            d.modifyMinut(stvarnoVremePocetka, stvarnoVremeKraja);
         }
     }
 
     public boolean isTodayMatch() {
         return datum.isToday();
-
-    }
-/*
-    public String getCurrentTime() {
-        if (!sortirano)
-            sortiraj();
-       if(uToku()){}
-        else
-           if(isFinished())
-               return "FT";
-        else
-               return  planiranoVremePocetka.toString();
-
-    }
-*/
-
-
-    public boolean uToku() {
-        if (!datum.isToday())
-            return false;
-        if (svaDogadjanja.size() == 0)
-            return false;
-        if (isFinished())
-            return false;
-        return isStarted();
     }
 
-    public boolean isStarted() {
-        Iterator<Dogadjaj> iter = vremenskiTok.iterator();
-        while (iter.hasNext()) {
-            Dogadjaj d = iter.next();
-            if (d.getTipDogadjaja() == Dogadjaj.STARTUTAKMICE)
-                return true;
-        }
-        return false;
-    }
 
-    public boolean isFinished() {
-        Iterator<Dogadjaj> iter = vremenskiTok.iterator();
-        while (iter.hasNext()) {
-            Dogadjaj d = iter.next();
-            if (d.getTipDogadjaja() == Dogadjaj.FINALTIME)
-                return true;
-        }
-        return false;
-    }
 
     public String toString() {
         StringBuffer sb = new StringBuffer();

@@ -1,5 +1,8 @@
 package com.logotet.dedinjeadmin;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -49,7 +52,6 @@ public class StartMatchActivity extends AppCompatActivity {
     ArrayList listaProtivnika;
 
     Intent intent;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -133,6 +135,38 @@ public class StartMatchActivity extends AppCompatActivity {
         btnCreateMatch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(StartMatchActivity.this);
+                alertDialogBuilder.setTitle("Brisnaj e dogadja da  li si siguran da zelis da ga obrises");
+
+                alertDialogBuilder.setMessage("Click yes to exit!");
+                alertDialogBuilder.setCancelable(false);
+                alertDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // if this button is clicked, close
+                        // current activity
+//                                MainActivity.this.finish();
+                    }
+                });
+                alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // if this button is clicked, just close
+                        // the dialog box and do nothing
+                        dialog.cancel();
+                    }
+                });
+
+                // create alert dialog
+                AlertDialog alertDialog = alertDialogBuilder.create();
+
+                // show it
+                alertDialog.show();
+
+
+                //
+                /*
                 Utakmica utakmica = Utakmica.getInstance();
 //                utakmica.setPlaniranoVremePocetka();
                 utakmica.setDatum(new BJDatum());
@@ -144,6 +178,7 @@ public class StartMatchActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Utakmica je kreirana", Toast.LENGTH_LONG).show();
                 startActivity(intent);
                 finish();
+                */
             }
         });
 

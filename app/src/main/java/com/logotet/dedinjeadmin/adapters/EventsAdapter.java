@@ -53,12 +53,12 @@ public class EventsAdapter extends BaseAdapter {
         if (convertView == null)
             convertView = inflater.inflate(R.layout.dogadjaj_row, null);
 
-        TextView tvMinut = (TextView) convertView.findViewById(R.id.tvMinut);
+        TextView tvServerTime = (TextView) convertView.findViewById(R.id.tvServerTime);
         TextView tvDogadjaj = (TextView) convertView.findViewById(R.id.tvDogadjaj);
 
         Dogadjaj dogadjaj = (Dogadjaj) getItem(position);
 
-        tvMinut.setText(dogadjaj.getMinut() + "");
+        tvServerTime.setText(dogadjaj.getServerTime().toString());
         tvDogadjaj.setText(dogadjaj.toString());
 
         return convertView;
