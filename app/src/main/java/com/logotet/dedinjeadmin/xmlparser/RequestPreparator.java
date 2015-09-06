@@ -35,11 +35,12 @@ public class RequestPreparator {
     public static final int ALLEVENTS = 12;
     public static final int GETLIVEMATCH = 13;
     public static final int GETRUKOVODSTVO = 14;
+    public static final int GETSASTAV = 15;
 
     private static final String[] request = {"servertime.php", "pozicija.xml", "stadion.xml", "ekipa.xml", "liga.xml", "tabela.xml", "fixtures.xml",
-            "startmatch.php", "makesastav.php", "makeevent.php", "deleteevent.php", "deleteall.php", "allevents.php", "livematch.xml","rukovodstvo.xml"};
+            "startmatch.php", "makesastav.php", "makeevent.php", "deleteevent.php", "deleteall.php", "allevents.php", "livematch.xml","rukovodstvo.xml","sastav.xml"};
 
-    public static String getRequest(int what) {
+    public static String getRequest(int what, Object object) {
         switch (what) {
             case SERVERTIME:
             case GETPOZICIJA:
@@ -52,6 +53,7 @@ public class RequestPreparator {
             case ALLEVENTS:
             case GETLIVEMATCH:
             case GETRUKOVODSTVO:
+            case GETSASTAV:
                 return request[what];
             case STARTMATCH:
                 return request[what] + startMatch();
@@ -60,17 +62,21 @@ public class RequestPreparator {
             case MAKEEVENT:
                 return request[what] + getEvent();
             case DELETEEVENT:
-                return request[what] + getEventForDeletion();
+                return request[what] + getEventForDeletion(object);
         }
         return null;
     }
 
-    private static String getEventForDeletion() {
-        StringBuffer sb = new StringBuffer("?eventfile=");
-        if(Dogadjaj.currentDogadjaj != null)
-            sb.append(Dogadjaj.currentDogadjaj.getFileName());
-        Dogadjaj.currentDogadjaj = null;
-        return sb.toString();
+    private static String getEventForDeletion(Object object) {
+        try {
+            Dogadjaj dogadjaj = (Dogadjaj) object;
+            StringBuffer sb = new StringBuffer("?eventfile=");
+            if(dogadjaj != null)
+                sb.append(dogadjaj.getFileName());
+            return sb.toString();
+        }catch (ClassCastException cce){
+            return "";
+        }
     }
 
 

@@ -17,4 +17,9 @@
     <color name="dedinjsko">#b04070</color>
     <color name="lightdedinjsko">#66b04070</color>
 
+
+    <color name="llback">#111111</color>
+    <color name="seltabclr">#666666</color>
+    <color name="unseltabclr">#aaaaaa</color>
+
 </resources>

@@ -135,50 +135,33 @@ public class StartMatchActivity extends AppCompatActivity {
         btnCreateMatch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(StartMatchActivity.this);
-                alertDialogBuilder.setTitle("Brisnaj e dogadja da  li si siguran da zelis da ga obrises");
-
-                alertDialogBuilder.setMessage("Click yes to exit!");
-                alertDialogBuilder.setCancelable(false);
-                alertDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        // if this button is clicked, close
-                        // current activity
-//                                MainActivity.this.finish();
-                    }
-                });
-                alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        // if this button is clicked, just close
-                        // the dialog box and do nothing
-                        dialog.cancel();
-                    }
-                });
-
-                // create alert dialog
-                AlertDialog alertDialog = alertDialogBuilder.create();
-
-                // show it
-                alertDialog.show();
-
-
-                //
-                /*
                 Utakmica utakmica = Utakmica.getInstance();
-//                utakmica.setPlaniranoVremePocetka();
-                utakmica.setDatum(new BJDatum());
-                utakmica.setProtivnikId(selectedProtivnik.getId());
-                utakmica.setStadionId(selectedStadion.getId());
-                utakmica.setPlaniranoVremePocetka(selectedTime.toString());
-                Thread th = new RequestThread(RequestPreparator.STARTMATCH, AllStatic.HTTPHOST);
-                th.start();
-                Toast.makeText(getApplicationContext(), "Utakmica je kreirana", Toast.LENGTH_LONG).show();
-                startActivity(intent);
-                finish();
-                */
+                if((utakmica.isFromHttpServer()) && utakmica.getDatum().isToday())
+                {
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(StartMatchActivity.this);
+                    alertDialogBuilder.setTitle("Већ постоји данашња утакмица. Креирањем нове ће бити обрисани сви постојећи подаци(састав...)");
+
+                    alertDialogBuilder.setMessage("Да, за креирање утакмице!");
+                    alertDialogBuilder.setCancelable(false);
+
+                    alertDialogBuilder.setNegativeButton("Не", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                            startActivity(intent);
+                            finish();
+                        }
+                    });
+                    alertDialogBuilder.setPositiveButton("Да", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            kreirajUtakmicu();
+
+                        }
+                    });
+                   AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
+                }else{
+                    kreirajUtakmicu();
+                }
             }
         });
 
@@ -189,6 +172,19 @@ public class StartMatchActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void kreirajUtakmicu(){
+        Utakmica utakmica = Utakmica.getInstance();
+        utakmica.setDatum(new BJDatum());
+        utakmica.setProtivnikId(selectedProtivnik.getId());
+        utakmica.setStadionId(selectedStadion.getId());
+        utakmica.setPlaniranoVremePocetka(selectedTime.toString());
+        Thread th = new RequestThread(RequestPreparator.STARTMATCH, AllStatic.HTTPHOST, utakmica);
+        th.start();
+        Toast.makeText(getApplicationContext(), "Utakmica je kreirana", Toast.LENGTH_LONG).show();
+        startActivity(intent);
+        finish();
     }
 
 

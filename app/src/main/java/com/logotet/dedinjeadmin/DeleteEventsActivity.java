@@ -1,14 +1,10 @@
 package com.logotet.dedinjeadmin;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -23,9 +19,7 @@ public class DeleteEventsActivity extends AppCompatActivity {
     private static final String TAG = "DeleteEventsActivity";
     ListView lvDeleteEvents;
     private EventsAdapter eventsAdapter;
-
-
-
+    private Dogadjaj selectedDogadjaj;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,26 +34,17 @@ public class DeleteEventsActivity extends AppCompatActivity {
         lvDeleteEvents.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Dogadjaj.currentDogadjaj = (Dogadjaj) parent.getItemAtPosition(position);
-                Log.w(TAG, " dogadja = " + Dogadjaj.currentDogadjaj.toString() + "\t" + Dogadjaj.currentDogadjaj.getFileName());
+               selectedDogadjaj = (Dogadjaj) parent.getItemAtPosition(position);
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(DeleteEventsActivity.this);
                 alertDialogBuilder.setTitle("Да ли си сигуран да желиш да обришеш догађај?");
 //                alertDialogBuilder.setMessage("Click yes to exit!");
                 alertDialogBuilder.setCancelable(false);
                 alertDialogBuilder.setPositiveButton("Да", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        Utakmica.getInstance().remove(Dogadjaj.currentDogadjaj);
-
-                        Thread th = new RequestThread(RequestPreparator.DELETEEVENT, AllStatic.HTTPHOST);
+                        Thread th = new RequestThread(RequestPreparator.DELETEEVENT, AllStatic.HTTPHOST, selectedDogadjaj);
                         th.start();
-                        Log.w(TAG, " thread startovan, i adapter ce biti obavesten");
-//                        DeleteEventsActivity.this.runOnUiThread(new Runnable() {
-//                            @Override
-//                            public void run() {
+                        Utakmica.getInstance().remove(selectedDogadjaj);
                         eventsAdapter.notifyDataSetChanged();
-//                            }
-//                        });
-//                        Dogadjaj.currentDogadjaj= null;
                     }
                 });
                 alertDialogBuilder.setNegativeButton("Не", new DialogInterface.OnClickListener() {

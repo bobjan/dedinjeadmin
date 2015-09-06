@@ -55,7 +55,16 @@ public class BazaIgraca {
         }
         return teren;
     }
-
+    public ArrayList<Igrac> getNaKlupi() {
+        ArrayList<Igrac> klupa = new ArrayList<Igrac>();
+        Iterator<Igrac> iter = uProtokolu.iterator();
+        while (iter.hasNext()) {
+            Igrac tmp = iter.next();
+            if (!tmp.isNaTerenu())
+                klupa.add(tmp);
+        }
+        return klupa;
+    }
     public Iterator getIterator() {
         return squad.iterator();
     }

@@ -22,9 +22,9 @@ public class RequestThread extends Thread {
     HttpURLConnection urlConnection;
 
 
-    public RequestThread(int what, String host) {
+    public RequestThread(int what, String host, Object object) {
         this.what = what;
-        requestParams = RequestPreparator.getRequest(what);
+        requestParams = RequestPreparator.getRequest(what, object);
         serverAddress = host;
     }
 

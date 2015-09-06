@@ -3,8 +3,6 @@ package com.logotet.dedinjeadmin;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,23 +23,22 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        Thread thread = new RequestThread(RequestPreparator.GETLIGA, AllStatic.HTTPHOST);
+        Thread thread = new RequestThread(RequestPreparator.GETLIGA, AllStatic.HTTPHOST, null);
         thread.start();
 
 
-        thread = new RequestThread(RequestPreparator.GETSTADION, AllStatic.HTTPHOST);
+        thread = new RequestThread(RequestPreparator.GETSTADION, AllStatic.HTTPHOST, null);
         thread.start();
-        thread = new RequestThread(RequestPreparator.GETPOZICIJA, AllStatic.HTTPHOST);
+        thread = new RequestThread(RequestPreparator.GETPOZICIJA, AllStatic.HTTPHOST, null);
         thread.start();
-        thread = new RequestThread(RequestPreparator.GETEKIPA, AllStatic.HTTPHOST);
-        thread.start();
-
-        thread = new RequestThread(RequestPreparator.GETLIVEMATCH, AllStatic.HTTPHOST);
+        thread = new RequestThread(RequestPreparator.GETEKIPA, AllStatic.HTTPHOST, null);
         thread.start();
 
-        thread = new RequestThread(RequestPreparator.ALLEVENTS, AllStatic.HTTPHOST);
+        thread = new RequestThread(RequestPreparator.GETLIVEMATCH, AllStatic.HTTPHOST, null);
         thread.start();
 
+        thread = new RequestThread(RequestPreparator.ALLEVENTS, AllStatic.HTTPHOST, null);
+        thread.start();
 
 
         etPassword = (EditText) findViewById(R.id.etPassword);

@@ -4,6 +4,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
+    android:background="@color/llback"
     tools:context="com.logotet.dedinjeadmin.SastavActivity">
 
 
@@ -12,12 +13,16 @@
        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
+        android:background="@color/llback"
+        android:paddingBottom="0dp"
+        android:layout_marginBottom="0dp"
         android:id="@+id/llTopButtons" android:orientation="horizontal">
         <Button
             android:layout_width="0dp"
             android:layout_margin="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
+            android:background="@color/seltabclr"
             android:text="@string/btn_sviigraci"
             android:id="@+id/btnVanProtokola"
 />
@@ -26,6 +31,7 @@
             android:layout_margin="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
+            android:background="@color/unseltabclr"
             android:text="@string/btn_protokol"
             android:id="@+id/btnUProtokolu" />
     </LinearLayout>
@@ -35,9 +41,11 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:orientation="vertical"
+        android:background="@color/seltabclr"
         android:visibility="visible"
         android:id="@+id/llSviIgraci"
-        android:layout_marginTop="2dp"
+        android:padding="5dp"
+        android:layout_marginTop="0dp"
         android:layout_below="@+id/llTopButtons"
         android:layout_alignParentLeft="true">
 
@@ -53,23 +61,27 @@
         android:layout_height="fill_parent"
         android:orientation="vertical"
         android:visibility="visible"
+        android:background="@color/seltabclr"
         android:id="@+id/llProtokol"
-        android:layout_marginTop="2dp"
+        android:padding="5dp"
+        android:layout_marginTop="0dp"
         android:layout_below="@+id/llTopButtons"
         android:layout_alignParentLeft="true">
 
         <ListView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:id="@+id/lvUProtokolu"></ListView>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/btnConfirmSastav"
+            android:text="@string/btn_confirmsastav"/>
     </LinearLayout>
 
 
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:id="@+id/btnConfirmSastav"
-        android:text="@string/btn_confirmsastav"/>
 </RelativeLayout>

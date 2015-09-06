@@ -1,12 +1,9 @@
 package com.logotet.dedinjeadmin;
 
-import android.content.ClipData;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import android.view.DragEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -55,8 +52,8 @@ public class SastavActivity extends AppCompatActivity {
 
         bazaIgraca = BazaIgraca.getInstance();
 
-        clrSelected = getResources().getColor(R.color.white);
-        clrDeselected = getResources().getColor(R.color.grey);
+        clrSelected = getResources().getColor(R.color.seltabclr);
+        clrDeselected = getResources().getColor(R.color.unseltabclr);
 
         llSviIgraci = (LinearLayout) findViewById(R.id.llSviIgraci);
         llUProtokolu = (LinearLayout) findViewById(R.id.llProtokol);
@@ -130,7 +127,7 @@ public class SastavActivity extends AppCompatActivity {
         btnConfirmsastav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Thread th = new RequestThread(RequestPreparator.MAKESASTAV, AllStatic.HTTPHOST);
+                Thread th = new RequestThread(RequestPreparator.MAKESASTAV, AllStatic.HTTPHOST, null);
                 th.start();
                 Toast.makeText(getApplicationContext(), "Sastav je unet", Toast.LENGTH_LONG).show();
 //                startActivity(intent);

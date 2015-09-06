@@ -3,11 +3,13 @@ package com.logotet.dedinjeadmin.model;
 import com.logotet.util.BJTime;
 import com.logotet.util.NumericStringComparable;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 /**
  * Created by logotet on 8/26/15.
  */
 public class Dogadjaj implements NumericStringComparable {
-    public static Dogadjaj currentDogadjaj; // prvenstveno radi RequestPreparatora
     public static final int STARTUTAKMICE = 0;
     public static final int HALFTIME = 1;
     public static final int STARTDRUGOPOLUVREME = 2;
@@ -33,9 +35,9 @@ public class Dogadjaj implements NumericStringComparable {
     public static final int KOMENTAR = 17;
     public static final int IZMENAIGRACA = 18;
 
-    public static final String[] opis = {"Почетак утакмице","Полувреме","Почетак 2. полувремена","Крај утакмице", "Корекција минута",
-                        "Гол", "Гол", "Гол из пенала","Гол из пенала","Промашен пенал","Промашен пенал",
-                        "Жути картон","Жути картон","Други жути картон","Други жути картон","Црвени картон","Црвени картон","Коментар","Измена играча"};
+    public static final String[] opis = {"Почетак утакмице", "Полувреме", "Почетак 2. полувремена", "Крај утакмице", "Корекција минута",
+            "Гол", "Гол", "Гол из пенала", "Гол из пенала", "Промашен пенал", "Промашен пенал",
+            "Жути картон", "Жути картон", "Други жути картон", "Други жути картон", "Црвени картон", "Црвени картон", "Коментар", "Измена играча"};
 
 
     private int tipDogadjaja;
@@ -50,11 +52,19 @@ public class Dogadjaj implements NumericStringComparable {
     private int stringServerTime;
 
 
+    private boolean toBeCreated;
+
+    public Dogadjaj() {
+        toBeCreated = true;
+    }
+
     public Dogadjaj(String file, String serverVreme, int tipDogadjaja) {
+        toBeCreated = false;
         this.tipDogadjaja = tipDogadjaja;
         this.fileName = file;
         int tmpTime = Integer.parseInt(serverVreme.trim());
         stringServerTime = tmpTime;
+        this.minut = -1;
 
         int sec = tmpTime % 100;
         tmpTime /= 100;
@@ -84,6 +94,11 @@ public class Dogadjaj implements NumericStringComparable {
     public Dogadjaj(String file, String serverVreme, int tipDogadjaja, String komentar) {
         this(file, serverVreme, tipDogadjaja);
         this.komentar = komentar;
+    }
+
+    public void setTipDogadjaja(int tipDogadjaja) {
+        if(toBeCreated)
+            this.tipDogadjaja = tipDogadjaja;
     }
 
     public int getTipDogadjaja() {
@@ -158,27 +173,26 @@ public class Dogadjaj implements NumericStringComparable {
     }
 
 
-
     public String getPlayerName() {
-        try{
+        try {
             return BazaIgraca.getInstance().getIgrac(playerId).getNaziv();
-        }catch (Exception npe){
+        } catch (Exception npe) {
             return "***";
         }
     }
 
-    public String getPlayerInName()    {
-        try{
+    public String getPlayerInName() {
+        try {
             return BazaIgraca.getInstance().getIgrac(playerInId).getNaziv();
-        }catch (Exception npe){
+        } catch (Exception npe) {
             return "***";
         }
     }
 
-    public String  getPlayerOutName() {
-        try{
+    public String getPlayerOutName() {
+        try {
             return BazaIgraca.getInstance().getIgrac(playerOutId).getNaziv();
-        }catch (Exception npe){
+        } catch (Exception npe) {
             return "***";
         }
     }
@@ -229,21 +243,22 @@ public class Dogadjaj implements NumericStringComparable {
 
     public String toString() {
         StringBuffer sb = new StringBuffer(opis[tipDogadjaja]);
-        if(isIgracki())
-                sb.append("  " + AppHeaderData.getInstance().getUserTeamName());
+        if (isIgracki())
+            sb.append("  " + AppHeaderData.getInstance().getUserTeamName());
         return sb.toString();
 
 //        return fileName + "\t" + tipDogadjaja + "\t" + serverTime.toString();
     }
-public String getIgrackiTekst(){
-    if(isIgracki())
-        if(tipDogadjaja == IZMENAIGRACA){
-            return getPlayerInName() + " <- -> " + getPlayerOutName();
-        }else{
-            return getPlayerName();
-        }
+
+    public String getIgrackiTekst() {
+        if (isIgracki())
+            if (tipDogadjaja == IZMENAIGRACA) {
+                return getPlayerInName() + " <- -> " + getPlayerOutName();
+            } else {
+                return getPlayerName();
+            }
         return "";
-}
+    }
 
     public int getNumericString() {
         return stringServerTime;
@@ -256,23 +271,41 @@ public String getIgrackiTekst(){
         tmpMinut[2] = (int) ((serverTime.getSeconds() - vremePocetka[1].getSeconds()) / 60);
         tmpMinut[3] = (int) ((serverTime.getSeconds() - vremePocetka[1].getSeconds()) / 60);
 
-
-        if(tmpMinut[0] < 45){
+        if (tmpMinut[0] < 45) {
             minut = tmpMinut[0];
             return;
         }
-
-        if((tmpMinut[2] < 0) && (tmpMinut[1] > 0)){
+        if ((tmpMinut[2] < 0) && (tmpMinut[1] > 0)) {
             minut = 45;
             return;
         }
-
-        if(tmpMinut[2] < 45){
+        if (tmpMinut[2] < 45) {
             minut = 45 + tmpMinut[2];
             return;
         }
-
         minut = 90;
+
+    }
+
+    public String getCreationHttpParams() {
+        if(!toBeCreated)
+            return "";
+        StringBuffer sb = new StringBuffer("?eventid" + tipDogadjaja);
+        if (minut >= 0)
+            sb.append("&minut=" + minut);
+        if (playerId != 0)
+            sb.append("&player=" + playerId);
+        if (playerInId != 0)
+            sb.append("&playerin=" + playerInId);
+        if (playerOutId != 0)
+            sb.append("&playerout=" + playerOutId);
+        try {
+            if (tipDogadjaja == KOMENTAR)
+                sb.append("&komentar=" + URLEncoder.encode(komentar, "UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+//            e.printStackTrace();
+        }
+        return sb.toString();
 
     }
 }

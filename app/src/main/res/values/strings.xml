@@ -23,8 +23,9 @@
     <string name="finaltime">Крај утакмице</string>
 
 
-    <string name="goluser">Гол за ФК Дедиње</string>
-    <string name="golprotivnik">Гол за противника</string>
+    <string name="golgame">Гол из игра</string>
+    <string name="golpenal">Гол из пенала</string>
+    <string name="missedpenal">Промашен пенал</string>
 
 
     <string name="zutikarton">Жути картон</string>
@@ -43,11 +44,12 @@
     <string name="wrong_password">Погрешна лозинка, покушај поново</string>
 
 
-    <string name="prompt_vreme">Унеси време почетка уткмице:</string>
-    <string name="prompt_stadion">Одабери терен где се утакмица игра:</string>
-    <string name="prompt_protivnik">Одабери противнички тим:</string>
+    <string name="prompt_vreme">Време почетка утакмице:</string>
+    <string name="prompt_stadion">Стадион:</string>
+    <string name="prompt_protivnik">Противник:</string>
 
     <string name="prompt_domacin">Да ли је ФК Дедиње домаћин?</string>
+    <string name="prompt_lateminutes">Минути корекције</string>
 
 
     <string name="btn_confirmsastav">Коначан састав</string>
