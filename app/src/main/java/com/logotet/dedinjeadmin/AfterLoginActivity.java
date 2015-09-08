@@ -34,8 +34,6 @@ public class AfterLoginActivity extends AppCompatActivity {
         btnLogout = (Button) findViewById(R.id.btnLogout);
         ovaAktivnost = this;
 
-        checkEveything();
-
         btnStartMatch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,8 +73,26 @@ public class AfterLoginActivity extends AppCompatActivity {
                 System.exit(0);
             }
         });
-
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if ((System.currentTimeMillis() - AllStatic.lastActiveTime) > AllStatic.TIMEOUT) {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+        }
+        checkEveything();
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        AllStatic.lastActiveTime = System.currentTimeMillis();
+    }
+
+
 
     private void checkEveything(){
         Utakmica utakmica = Utakmica.getInstance();
@@ -84,12 +100,11 @@ public class AfterLoginActivity extends AppCompatActivity {
             disableAllButtons();
             return;
         }
-       if(utakmica.isFromHttpServer())
-                disableAllButtons();
+        if(!utakmica.isFromHttpServer())
+            disableAllButtons();
         else{
-
-       }
-
+            enableAllButtons();
+        }
     }
 
     private void disableAllButtons() {
@@ -104,5 +119,7 @@ public class AfterLoginActivity extends AppCompatActivity {
         btnEnterEvent.setEnabled(true);
         btnDeleteEvent.setEnabled(true);
     }
+
+
 
 }

@@ -51,16 +51,12 @@ public class StartMatchActivity extends AppCompatActivity {
     ArrayList listaStadiona;
     ArrayList listaProtivnika;
 
-    Intent intent;
+    Intent nextIntent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_match);
 
-        if (!AllStatic.loggedUser) {
-            intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
-        }
 
         tvDatum = (TextView) findViewById(R.id.tvDatum);
         tvDatum.setText((new BJDatum().toString()));
@@ -130,7 +126,7 @@ public class StartMatchActivity extends AppCompatActivity {
         });
 
 
-        intent = new Intent(this, AfterLoginActivity.class);
+        nextIntent = new Intent(this, AfterLoginActivity.class);
 
         btnCreateMatch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,7 +143,7 @@ public class StartMatchActivity extends AppCompatActivity {
                     alertDialogBuilder.setNegativeButton("Не", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             dialog.cancel();
-                            startActivity(intent);
+                            startActivity(nextIntent);
                             finish();
                         }
                     });
@@ -183,9 +179,24 @@ public class StartMatchActivity extends AppCompatActivity {
         Thread th = new RequestThread(RequestPreparator.STARTMATCH, AllStatic.HTTPHOST, utakmica);
         th.start();
         Toast.makeText(getApplicationContext(), "Utakmica je kreirana", Toast.LENGTH_LONG).show();
-        startActivity(intent);
+        startActivity(nextIntent);
         finish();
     }
 
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if ((System.currentTimeMillis() - AllStatic.lastActiveTime) > AllStatic.TIMEOUT) {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+        }
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        AllStatic.lastActiveTime = System.currentTimeMillis();
+    }
 }

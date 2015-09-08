@@ -13,10 +13,13 @@ import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.logotet.dedinjeadmin.model.BazaIgraca;
 import com.logotet.dedinjeadmin.model.Dogadjaj;
 import com.logotet.dedinjeadmin.model.Igrac;
+import com.logotet.dedinjeadmin.threads.RequestThread;
+import com.logotet.dedinjeadmin.xmlparser.RequestPreparator;
 
 import java.util.ArrayList;
 
@@ -36,9 +39,10 @@ public class EventsActivity extends AppCompatActivity implements View.OnClickLis
 
 
     RadioGroup rgTimeEvents;
-    RadioGroup rgGol;
+    RadioGroup rgWhoseGoal;
+    RadioGroup rgGoalKind;
     RadioGroup rgKartoni;
-    RadioGroup rgWhatTeam;
+    RadioGroup rgWhoseKarton;
 
     int btnIdx;
 
@@ -62,12 +66,6 @@ public class EventsActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_events);
 
-/*
-        if (!AllStatic.loggedUser) {
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
-        }
-*/
         naTerenu = BazaIgraca.getInstance().getNaTerenu();
         naKlupi = BazaIgraca.getInstance().getNaKlupi();
         Log.w(TAG, "na terenu = " + naTerenu.size() + "\tna klupi = " + naKlupi.size());
@@ -93,16 +91,17 @@ public class EventsActivity extends AppCompatActivity implements View.OnClickLis
         llExpand[3] = (LinearLayout) findViewById(R.id.llExpandIzmena);
         llExpand[4] = (LinearLayout) findViewById(R.id.llExpandKomentar);
 
-        btnSendTime = (Button) findViewById(R.id.btnStartMatch);
+        btnSendTime = (Button) findViewById(R.id.btnTimeEvents);
         btnSendGoal = (Button) findViewById(R.id.btnGoal);
         btnSendKarton = (Button) findViewById(R.id.btnKarton);
         btnSendIzmena = (Button) findViewById(R.id.btnIzmena);
         btnSendKomentar = (Button) findViewById(R.id.btnKomentar);
 
-        rgGol = (RadioGroup) findViewById(R.id.rgGol);
+        rgGoalKind = (RadioGroup) findViewById(R.id.rgGoalKind);
+        rgWhoseGoal = (RadioGroup) findViewById(R.id.rgWhoseGol);
         rgKartoni = (RadioGroup) findViewById(R.id.rgKartoni);
         rgTimeEvents = (RadioGroup) findViewById(R.id.rgTimeEvents);
-        rgWhatTeam = (RadioGroup) findViewById(R.id.rgWhatTeam);
+        rgWhoseKarton = (RadioGroup) findViewById(R.id.rgWhoseKarton);
 
         spKarton = (Spinner) findViewById(R.id.spinKarton);
         spStrelac = (Spinner) findViewById(R.id.spinStrelac);
@@ -110,22 +109,16 @@ public class EventsActivity extends AppCompatActivity implements View.OnClickLis
         spIgracOut = (Spinner) findViewById(R.id.spinPlayerOut);
 
 
-
         ArrayAdapter<String> naTerenuAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, naTerenu);
         naTerenuAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        ArrayAdapter<String> naKlupiAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, naTerenu);
+        ArrayAdapter<String> naKlupiAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, naKlupi);
         naKlupiAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-//    Log.w(TAG, "prvi set aapter");
-//        spKarton.setAdapter(naTerenuAdapter);
-//        Log.w(TAG, "drug set aapter");
-//        spStrelac.setAdapter(naTerenuAdapter);
-//        Log.w(TAG, "trec set aapter");
+        spKarton.setAdapter(naTerenuAdapter);
+        spStrelac.setAdapter(naTerenuAdapter);
         spIgracOut.setAdapter(naTerenuAdapter);
-        Log.w(TAG, "fourth set aapter");
         spIgracIn.setAdapter(naKlupiAdapter);
-        Log.w(TAG, "fifth set aapter");
 
         spIgracIn.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -135,22 +128,21 @@ public class EventsActivity extends AppCompatActivity implements View.OnClickLis
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
+                igracUnutra = (Igrac) parent.getItemAtPosition(0);
             }
         });
-
         spIgracOut.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 igracNapolje = (Igrac) parent.getItemAtPosition(position);
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
+                igracNapolje = (Igrac) parent.getItemAtPosition(0);
 
             }
         });
-
-
         spStrelac.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -159,6 +151,7 @@ public class EventsActivity extends AppCompatActivity implements View.OnClickLis
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
+                igracStrelac = (Igrac) parent.getItemAtPosition(0);
 
             }
         });
@@ -170,11 +163,10 @@ public class EventsActivity extends AppCompatActivity implements View.OnClickLis
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
+                igracKarton = (Igrac) parent.getItemAtPosition(0);
 
             }
         });
-
-
 
         for (btnIdx = 0; btnIdx < btnExpand.length; btnIdx++) {
             btnExpand[btnIdx].setOnClickListener(new View.OnClickListener() {
@@ -193,12 +185,55 @@ public class EventsActivity extends AppCompatActivity implements View.OnClickLis
                 }
             });
         }
+
+        rgWhoseKarton.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId == R.id.rbKartonDedinje) {
+                    spKarton.setVisibility(View.VISIBLE);
+                } else {
+                    spKarton.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+
+        rgWhoseGoal.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId == R.id.rbDedinjeGol) {
+                    spStrelac.setVisibility(View.VISIBLE);
+                } else {
+                    spStrelac.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if ((System.currentTimeMillis() - AllStatic.lastActiveTime) > AllStatic.TIMEOUT) {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+        }
+        btnSendTime.setOnClickListener(this);
+        btnSendGoal.setOnClickListener(this);
+        btnSendIzmena.setOnClickListener(this);
+        btnSendKarton.setOnClickListener(this);
+        btnSendKomentar.setOnClickListener(this);
+        setDefaults();
+    }
+
+    private void setDefaults() {
+        spKarton.setVisibility(View.INVISIBLE);
+        spStrelac.setVisibility(View.INVISIBLE);
+
+    }
 
     @Override
     public void onClick(View v) {
         Dogadjaj dogadjaj = new Dogadjaj();
+        dogadjaj.setTipDogadjaja(-1);
         if (v.getId() == btnSendTime.getId()) {
             switch (rgTimeEvents.getCheckedRadioButtonId()) {
                 case R.id.rbStartGame:
@@ -217,25 +252,71 @@ public class EventsActivity extends AppCompatActivity implements View.OnClickLis
         }
 
         if (v.getId() == btnSendGoal.getId()) {
-            switch (rgGol.getCheckedRadioButtonId()) {
-                case R.id.rbDedinjeEvent:
-                    dogadjaj.setTipDogadjaja(Dogadjaj.GOLFKDEDINJE);
+            switch (rgGoalKind.getCheckedRadioButtonId()) {
+                case R.id.rbGolGame:
+                    if (rgWhoseGoal.getCheckedRadioButtonId() == R.id.rbDedinjeGol) {
+                        dogadjaj.setTipDogadjaja(Dogadjaj.GOLFKDEDINJE);
+                        dogadjaj.setPlayerId(igracStrelac.getId());
+                    } else {
+                        dogadjaj.setTipDogadjaja(Dogadjaj.GOLPROTIVNIK);
+                    }
                     break;
-                case R.id.rbProtivnikEvent:
-                    dogadjaj.setTipDogadjaja(Dogadjaj.GOLPROTIVNIK);
+                case R.id.rbGolPenal:
+                    if (rgWhoseGoal.getCheckedRadioButtonId() == R.id.rbDedinjeGol) {
+                        dogadjaj.setTipDogadjaja(Dogadjaj.GOLPENALFKDEDINJE);
+                        dogadjaj.setPlayerId(igracStrelac.getId());
+                    } else {
+                        dogadjaj.setTipDogadjaja(Dogadjaj.GOLPENALPROTIVNIK);
+                    }
+
+                    break;
+                case R.id.rbMissedPenal:
+                    if (rgWhoseGoal.getCheckedRadioButtonId() == R.id.rbDedinjeGol) {
+                        dogadjaj.setTipDogadjaja(Dogadjaj.MISSEDPENALFKDEDINJE);
+                        dogadjaj.setPlayerId(igracStrelac.getId());
+
+                    } else {
+                        dogadjaj.setTipDogadjaja(Dogadjaj.MISSEDPENALPROTIVNIK);
+                    }
                     break;
             }
         }
 
         if (v.getId() == btnSendIzmena.getId()) {
-
-//            switch ((rgWhatTeam))
-
+            dogadjaj.setTipDogadjaja(Dogadjaj.IZMENAIGRACA);
+            dogadjaj.setPlayerInId(igracUnutra.getId());
+            dogadjaj.setPlayerOutId(igracNapolje.getId());
         }
 
-
         if (v.getId() == btnSendKarton.getId()) {
+            switch (rgKartoni.getCheckedRadioButtonId()) {
+                case R.id.rbZutiKarton:
+                    if (rgWhoseKarton.getCheckedRadioButtonId() == R.id.rbKartonDedinje) {
+                        dogadjaj.setTipDogadjaja(Dogadjaj.ZUTIKARTONFKDEDINJE);
+                        dogadjaj.setPlayerId(igracKarton.getId());
+                    } else {
+                        dogadjaj.setTipDogadjaja(Dogadjaj.ZUTIKARTONPROTIVNIK);
+                    }
+                    break;
 
+                case R.id.rbDrugiZutiKarton:
+                    if (rgWhoseKarton.getCheckedRadioButtonId() == R.id.rbKartonDedinje) {
+                        dogadjaj.setTipDogadjaja(Dogadjaj.DRUGIZUTIFKDEDINJE);
+                        dogadjaj.setPlayerId(igracKarton.getId());
+                    } else {
+                        dogadjaj.setTipDogadjaja(Dogadjaj.DRUGIZUTIPROTIVNIK);
+                    }
+                    break;
+
+                case R.id.rbCrveniKarton:
+                    if (rgWhoseKarton.getCheckedRadioButtonId() == R.id.rbKartonDedinje) {
+                        dogadjaj.setTipDogadjaja(Dogadjaj.CRVENIKARTONFKDEDINJE);
+                        dogadjaj.setPlayerId(igracKarton.getId());
+                    } else {
+                        dogadjaj.setTipDogadjaja(Dogadjaj.CRVENIKARTONPROTIVNIK);
+                    }
+                    break;
+            }
         }
 
         if (v.getId() == btnSendKomentar.getId()) {
@@ -243,6 +324,19 @@ public class EventsActivity extends AppCompatActivity implements View.OnClickLis
             dogadjaj.setKomentar(etKomentar.getText().toString());
             dogadjaj.setTipDogadjaja(Dogadjaj.KOMENTAR);
         }
+
+        if (dogadjaj.getTipDogadjaja() >= 0) {
+            Thread thread = new RequestThread(RequestPreparator.MAKEEVENT, AllStatic.HTTPHOST, dogadjaj);
+            thread.start();
+        } else {
+            Toast.makeText(getApplicationContext(),
+                    getApplicationContext().getString(R.string.invalid_entry), Toast.LENGTH_LONG).show();
+        }
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        AllStatic.lastActiveTime = System.currentTimeMillis();
+    }
 }

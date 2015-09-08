@@ -135,4 +135,10 @@ public class SastavActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        AllStatic.lastActiveTime = System.currentTimeMillis();
+    }
 }

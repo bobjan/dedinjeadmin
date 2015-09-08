@@ -172,6 +172,17 @@ public class Dogadjaj implements NumericStringComparable {
         this.komentar = komentar;
     }
 
+    public int getPlayerId() {
+        return playerId;
+    }
+
+    public int getPlayerInId() {
+        return playerInId;
+    }
+
+    public int getPlayerOutId() {
+        return playerOutId;
+    }
 
     public String getPlayerName() {
         try {
@@ -203,32 +214,16 @@ public class Dogadjaj implements NumericStringComparable {
 
     public boolean isVremenski() {
         return (tipDogadjaja == STARTDRUGOPOLUVREME) ||
+                (tipDogadjaja == HALFTIME) ||
                 (tipDogadjaja == STARTUTAKMICE) ||
+                (tipDogadjaja == FINALTIME) ||
                 (tipDogadjaja == TACANMINUT);
     }
 
-    public boolean isRezultatski() {
-        return (tipDogadjaja == GOLFKDEDINJE) ||
-                (tipDogadjaja == GOLPENALFKDEDINJE) ||
-                (tipDogadjaja == GOLPENALPROTIVNIK) ||
-                (tipDogadjaja == GOLPROTIVNIK);
-    }
-
     public boolean isInformativni() {
-        return (tipDogadjaja == KOMENTAR) ||
-                (tipDogadjaja == MISSEDPENALFKDEDINJE) ||
-                (tipDogadjaja == MISSEDPENALPROTIVNIK) ||
-                (tipDogadjaja == IZMENAIGRACA);
+        return (tipDogadjaja == KOMENTAR);
     }
 
-    public boolean isKazneni() {
-        return (tipDogadjaja == ZUTIKARTONFKDEDINJE) ||
-                (tipDogadjaja == ZUTIKARTONPROTIVNIK) ||
-                (tipDogadjaja == DRUGIZUTIFKDEDINJE) ||
-                (tipDogadjaja == DRUGIZUTIPROTIVNIK) ||
-                (tipDogadjaja == CRVENIKARTONFKDEDINJE) ||
-                (tipDogadjaja == CRVENIKARTONPROTIVNIK);
-    }
 
     public boolean isIgracki() {
         return (tipDogadjaja == GOLFKDEDINJE) ||
@@ -290,7 +285,7 @@ public class Dogadjaj implements NumericStringComparable {
     public String getCreationHttpParams() {
         if(!toBeCreated)
             return "";
-        StringBuffer sb = new StringBuffer("?eventid" + tipDogadjaja);
+        StringBuffer sb = new StringBuffer("?eventid=" + tipDogadjaja);
         if (minut >= 0)
             sb.append("&minut=" + minut);
         if (playerId != 0)

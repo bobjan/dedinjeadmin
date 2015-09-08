@@ -1,5 +1,7 @@
 package com.logotet.dedinjeadmin.threads;
 
+import android.util.Log;
+
 import com.logotet.dedinjeadmin.xmlparser.*;
 
 import java.io.BufferedInputStream;
@@ -25,6 +27,7 @@ public class RequestThread extends Thread {
     public RequestThread(int what, String host, Object object) {
         this.what = what;
         requestParams = RequestPreparator.getRequest(what, object);
+        Log.w("REQUEST OARAMSE = ", requestParams);
         serverAddress = host;
     }
 
@@ -84,6 +87,9 @@ public class RequestThread extends Thread {
                     break;
                 case RequestPreparator.GETRUKOVODSTVO:
                     myXMLHandler = new RukovodstvoXMLHandler(instream);
+                    break;
+                case RequestPreparator.GETSASTAV:
+                    myXMLHandler = new SastavXMLHandler(instream);
                     break;
 
             }

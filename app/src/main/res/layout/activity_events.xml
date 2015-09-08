@@ -135,17 +135,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:id="@+id/rgGol"     >
+            android:id="@+id/rgWhoseGol"     >
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/rbDedinjeEvent"
+                android:id="@+id/rbDedinjeGol"
                 android:text="@string/txtuser"  />
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/rbProtivnikEvent"
+                android:id="@+id/rbProtivnikGol"
                 android:gravity="right"
                 android:layout_gravity="right"
                 android:text="@string/txtprotivnik" />
@@ -153,11 +153,12 @@
         <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/rgGoalKind"
             android:orientation="vertical"        >
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/rbGol"
+                android:id="@+id/rbGolGame"
                 android:text="@string/golgame"/>
             <RadioButton
                 android:layout_width="wrap_content"
@@ -197,7 +198,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_alignParentRight="true"
-            android:id="@+id/rgWhatTeam" >
+            android:id="@+id/rgWhoseKarton" >
 
             <RadioButton
                 android:layout_width="wrap_content"

@@ -23,7 +23,7 @@
     <string name="finaltime">Крај утакмице</string>
 
 
-    <string name="golgame">Гол из игра</string>
+    <string name="golgame">Гол из игре</string>
     <string name="golpenal">Гол из пенала</string>
     <string name="missedpenal">Промашен пенал</string>
 
@@ -36,6 +36,7 @@
     <string name="txtprotivnik">Противник</string>
 
 
+    <string name="invalid_entry">Непотпуни подаци, провери унос!</string>
 
     <string name="playerin">Улази играч:</string>
     <string name="playerout">Излази играч:</string>

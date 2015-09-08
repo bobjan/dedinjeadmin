@@ -102,6 +102,10 @@ public class BazaIgraca {
             igrac.setBrojNaDresu(uProtokolu.size() + 1);
             uProtokolu.add(igrac);
             vanProtokola.remove(igrac);
+            if(igrac.getBrojNaDresu() < 12)
+                igrac.setNaTerenu(true);
+            else
+                igrac.setNaTerenu(false);
             return true;
         }
         return false;
@@ -129,8 +133,13 @@ public class BazaIgraca {
         for (int i = 0; i < uProtokolu.size(); i++) {
             Igrac tmp = uProtokolu.get(i);
             tmp.setBrojNaDresu(i + 1);
+            if(tmp.getBrojNaDresu() < 12)
+                tmp.setNaTerenu(true);
+            else
+                tmp.setNaTerenu(false);
         }
     }
+
 
     public String getProtokol() {
         StringBuffer sb = new StringBuffer();

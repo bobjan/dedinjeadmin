@@ -14,7 +14,7 @@ public class Sastav {
         if (tmp != null)
             tmp.setBrojNaDresu(dresbroj);
         else
-            System.out.printf("tmp == NUll");
+            System.out.printf("Sastav.add() error:tmp == NUll");
     }
 
     public static ArrayList<Igrac> getSastav() {

@@ -5,16 +5,12 @@ import com.logotet.dedinjeadmin.model.BazaIgraca;
 import com.logotet.dedinjeadmin.model.Dogadjaj;
 import com.logotet.dedinjeadmin.model.Utakmica;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-
 
 /**
  * Created by boban on 8/29/15.
  */
 public class RequestPreparator {
     private static final String TAG = "RequestPreparator";
-
 
 
     public static final int SERVERTIME = 0;
@@ -38,7 +34,7 @@ public class RequestPreparator {
     public static final int GETSASTAV = 15;
 
     private static final String[] request = {"servertime.php", "pozicija.xml", "stadion.xml", "ekipa.xml", "liga.xml", "tabela.xml", "fixtures.xml",
-            "startmatch.php", "makesastav.php", "makeevent.php", "deleteevent.php", "deleteall.php", "allevents.php", "livematch.xml","rukovodstvo.xml","sastav.xml"};
+            "startmatch.php", "makesastav.php", "makeevent.php", "deleteevent.php", "deleteall.php", "allevents.php", "livematch.xml", "rukovodstvo.xml", "sastav.xml"};
 
     public static String getRequest(int what, Object object) {
         switch (what) {
@@ -60,7 +56,7 @@ public class RequestPreparator {
             case MAKESASTAV:
                 return request[what] + getProtokol();
             case MAKEEVENT:
-                return request[what] + getEvent();
+                return request[what] + getEvent(object);
             case DELETEEVENT:
                 return request[what] + getEventForDeletion(object);
         }
@@ -71,10 +67,10 @@ public class RequestPreparator {
         try {
             Dogadjaj dogadjaj = (Dogadjaj) object;
             StringBuffer sb = new StringBuffer("?eventfile=");
-            if(dogadjaj != null)
+            if (dogadjaj != null)
                 sb.append(dogadjaj.getFileName());
             return sb.toString();
-        }catch (ClassCastException cce){
+        } catch (ClassCastException cce) {
             return "";
         }
     }
@@ -106,34 +102,16 @@ public class RequestPreparator {
     }
 
 
-    private static String getEvent() {
-        int rnd = (int) (Math.random() * 6);
-        StringBuffer sb = new StringBuffer("/makeevent.php?");
-        switch (rnd){
-            case 0:
-                sb.append("eventid=0&minut=5");
-                break;
-            case 1:
-                sb.append("eventid=1&player=5");
-                break;
-            case 2:
-                sb.append("eventid=2&playerin=5&playerout=6");
-                break;
-            case 3:
-                sb.append("eventid=3");
-                break;
-            case 4:
-                try {
-                    sb.append("eventid=4&komentar=");
-                    sb.append(URLEncoder.encode("ovo je neki komentar bla bla","UTF-8"));
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
-                break;
-            default:
-                sb.append("eventid=5&minut=90");
-                break;
+    private static String getEvent(Object object) {
+        Dogadjaj dogadjaj;
+        try {
+            dogadjaj = (Dogadjaj) object;
+        } catch (ClassCastException cce) {
+            dogadjaj = new Dogadjaj();
+            dogadjaj.setTipDogadjaja(Dogadjaj.KOMENTAR);
+            dogadjaj.setKomentar("Class cast exception ");
         }
-    return sb.toString();
+
+        return dogadjaj.getCreationHttpParams();
     }
 }

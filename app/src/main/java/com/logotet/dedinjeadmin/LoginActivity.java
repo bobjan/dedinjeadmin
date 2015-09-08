@@ -23,32 +23,11 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        Thread thread = new RequestThread(RequestPreparator.GETLIGA, AllStatic.HTTPHOST, null);
-        thread.start();
-
-
-        thread = new RequestThread(RequestPreparator.GETSTADION, AllStatic.HTTPHOST, null);
-        thread.start();
-        thread = new RequestThread(RequestPreparator.GETPOZICIJA, AllStatic.HTTPHOST, null);
-        thread.start();
-        thread = new RequestThread(RequestPreparator.GETEKIPA, AllStatic.HTTPHOST, null);
-        thread.start();
-
-        thread = new RequestThread(RequestPreparator.GETLIVEMATCH, AllStatic.HTTPHOST, null);
-        thread.start();
-
-        thread = new RequestThread(RequestPreparator.ALLEVENTS, AllStatic.HTTPHOST, null);
-        thread.start();
-
+        AppHeaderData.getInstance();
 
         etPassword = (EditText) findViewById(R.id.etPassword);
         btnLogin = (Button) findViewById(R.id.btnLogin);
-
         firstActivity = new Intent(this, AfterLoginActivity.class);
-
-        if(AllStatic.loggedUser)
-            startActivity(firstActivity);
-
 
 //        firstActivity = new Intent(this, EventsActivity.class);
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -61,12 +40,9 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
                     AllStatic.loggedUser = false;
                     if (AppHeaderData.getInstance().getPassword().length() > 0)
-                        Toast.makeText(getApplicationContext(),
-                                getApplicationContext().getString(R.string.wrong_password),
-                                Toast.LENGTH_LONG).show();
-                    else Toast.makeText(getApplicationContext(),
-                            getApplicationContext().getString(R.string.network_error),
-                            Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),getApplicationContext().getString(R.string.wrong_password),Toast.LENGTH_LONG).show();
+                    else
+                        Toast.makeText(getApplicationContext(),getApplicationContext().getString(R.string.network_error), Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -74,12 +50,43 @@ public class LoginActivity extends AppCompatActivity {
 
 
     @Override
-    protected void onPostResume() {
-        super.onPostResume();
-//       firstActivity = new Intent(this, StartMatchActivity.class);
-//
-//        if(AllStatic.loggedUser)
-//            startActivity(firstActivity);
+    protected void onResume() {
+        super.onResume();
 
+        if(!Checker.isInternetAvailable(getApplicationContext())){
+            btnLogin.setEnabled(false);
+            Toast.makeText(getApplicationContext(),
+                    getApplicationContext().getString(R.string.network_error),Toast.LENGTH_LONG).show();
+
+        }else{
+            btnLogin.setEnabled(true);
+        }
+
+
+        Thread thread = new RequestThread(RequestPreparator.GETLIGA, AllStatic.HTTPHOST, null);
+        thread.start();
+
+        thread = new RequestThread(RequestPreparator.GETSTADION, AllStatic.HTTPHOST, null);
+        thread.start();
+        thread = new RequestThread(RequestPreparator.GETPOZICIJA, AllStatic.HTTPHOST, null);
+        thread.start();
+        thread = new RequestThread(RequestPreparator.GETEKIPA, AllStatic.HTTPHOST, null);
+        thread.start();
+
+        thread = new RequestThread(RequestPreparator.GETLIVEMATCH, AllStatic.HTTPHOST, null);
+        thread.start();
+
+        thread = new RequestThread(RequestPreparator.GETSASTAV, AllStatic.HTTPHOST, null);
+        thread.start();
+
+        thread = new RequestThread(RequestPreparator.ALLEVENTS, AllStatic.HTTPHOST, null);
+        thread.start();
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        AllStatic.lastActiveTime = System.currentTimeMillis();
     }
 }
