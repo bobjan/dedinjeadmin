@@ -5,6 +5,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
+    android:background="@color/dark"
     tools:context=".LoginActivity">
 
     <ImageView
@@ -21,6 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/grbSplash"
         android:layout_marginTop="30dp"
+        android:textColor="@color/verylight"
         android:id="@+id/tvLoginTekst"       />
 
     <EditText
@@ -28,17 +30,20 @@
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:ems="10"
+        android:textColor="@color/verylight"
         android:id="@+id/etPassword"
         android:layout_below="@+id/tvLoginTekst" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="260dp"
         android:layout_height="wrap_content"
+        android:background="@color/baseclr"
+        android:textColor="@color/complementlght"
         android:text="Пријави се"
         android:id="@+id/btnLogin"
         android:layout_marginTop="40dp"
         android:layout_below="@+id/etPassword"
-        android:layout_alignRight="@+id/etPassword"
-        android:layout_alignEnd="@+id/etPassword" />
+        android:layout_centerHorizontal="true"
+        android:gravity="center" />
 
 </RelativeLayout>

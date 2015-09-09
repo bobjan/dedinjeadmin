@@ -84,10 +84,9 @@ public class StartMatchActivity extends AppCompatActivity {
 
 
         ArrayAdapter<String> protivnikAdapter = new ArrayAdapter<String>
-                (this, android.R.layout.simple_spinner_item, listaProtivnika);
+                (this, R.layout.spinner_item, listaProtivnika);
 
-        protivnikAdapter.setDropDownViewResource
-                (android.R.layout.simple_spinner_dropdown_item);
+        protivnikAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
 
         spProtivnik.setAdapter(protivnikAdapter);
 

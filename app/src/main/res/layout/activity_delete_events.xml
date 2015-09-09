@@ -7,13 +7,10 @@
     android:orientation="vertical"
     tools:context="com.logotet.dedinjeadmin.DeleteEventsActivity">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text=".............."/>
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/dark"
         android:id="@+id/lvDeleteEvents"/>
 
 </LinearLayout>

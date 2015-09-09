@@ -7,12 +7,13 @@
         android:layout_width="60dp"
         android:layout_height="wrap_content"
         android:textSize="20sp"
-        android:textColor="@color/myyellow"/>
+        android:textColor="@color/complementlght"/>
 
     <TextView
         android:id="@+id/tvIgracUProtokolu"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:textColor="@color/verylight"
         android:paddingLeft="10dp"/>
 
 </LinearLayout>

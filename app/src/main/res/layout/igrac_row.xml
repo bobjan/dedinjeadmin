@@ -9,6 +9,7 @@
         android:layout_gravity="center_horizontal"
         android:gravity="center_horizontal"
         android:textSize="20sp"
+        android:textColor="@color/verylight"
         android:paddingBottom="4dp"
         android:paddingTop="4dp"/>
 

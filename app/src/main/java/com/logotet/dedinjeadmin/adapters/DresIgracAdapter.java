@@ -55,8 +55,8 @@ public class DresIgracAdapter extends BaseAdapter {
         TextView tvIgrac = (TextView) convertView.findViewById(R.id.tvIgracUProtokolu);
         TextView tvBrojNaDresu = (TextView) convertView.findViewById(R.id.tvBrojNaDresu);
 
-        int clrKlupa = parent.getResources().getColor(R.color.grey);
-        int clrStarter = parent.getResources().getColor(R.color.myyellow);
+        int clrKlupa = parent.getResources().getColor(R.color.complementclr);
+        int clrStarter = parent.getResources().getColor(R.color.complementlght);
 
 
         Igrac igrac = (Igrac) getItem(position);
