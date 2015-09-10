@@ -6,7 +6,7 @@ android:shape="rectangle">
         android:width="1.0dip"
         android:color="@color/grey" />
     <solid android:color="@color/grey" />
-    <gradient android:angle="270" android:startColor="@color/grey" android:endColor="@color/dark"  />
+    <gradient android:angle="270" android:startColor="@color/grey" android:endColor="@color/screen_background"  />
     <corners android:bottomRightRadius="3dip"
         android:bottomLeftRadius="3dip"
         android:topRightRadius="3dip"

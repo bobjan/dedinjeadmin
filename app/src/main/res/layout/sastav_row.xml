@@ -13,7 +13,7 @@
         android:id="@+id/tvIgracUProtokolu"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:textColor="@color/verylight"
+        android:textColor="@color/screen_font"
         android:paddingLeft="10dp"/>
 
 </LinearLayout>

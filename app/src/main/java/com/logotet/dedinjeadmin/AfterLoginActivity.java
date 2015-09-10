@@ -120,6 +120,4 @@ public class AfterLoginActivity extends AppCompatActivity {
         btnDeleteEvent.setEnabled(true);
     }
 
-
-
 }

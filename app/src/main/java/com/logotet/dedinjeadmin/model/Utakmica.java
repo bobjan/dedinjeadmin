@@ -45,6 +45,7 @@ public class Utakmica {
         svaDogadjanja = new ArrayList<Dogadjaj>();
         sortirano = true;
         fromHttpServer = false;
+        datum = new BJDatum();
     }
 
     public BJDatum getDatum() {

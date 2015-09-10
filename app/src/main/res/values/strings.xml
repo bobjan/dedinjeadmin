@@ -45,11 +45,12 @@
     <string name="wrong_password">Погрешна лозинка, покушај поново</string>
 
 
-    <string name="prompt_vreme">Време почетка утакмице:</string>
+    <string name="prompt_datum">Датум утакмице:</string>
+    <string name="prompt_vreme">Време почетка:</string>
     <string name="prompt_stadion">Стадион:</string>
     <string name="prompt_protivnik">Противник:</string>
 
-    <string name="prompt_domacin">Да ли је ФК Дедиње домаћин?</string>
+    <string name="prompt_domacin">ФК Дедиње домаћин?</string>
     <string name="prompt_lateminutes">Минути корекције</string>
 
 

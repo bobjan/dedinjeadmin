@@ -9,7 +9,7 @@
         android:layout_gravity="center"
         android:layout_width="80dp"
         android:layout_height="26dp"
-        android:textColor="@color/verylight"/>
+        android:textColor="@color/screen_font"/>
 
     <TextView
         android:id="@+id/tvDogadjaj"
@@ -17,6 +17,6 @@
         android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/verylight" />
+        android:textColor="@color/screen_font" />
 
 </LinearLayout>

@@ -5,79 +5,102 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    android:background="@color/dark"
+    android:background="@color/screen_background"
     tools:context="com.logotet.dedinjeadmin.StartMatchActivity">
+
+    <EditText
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/etDatumUtakmice"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="50dp"
+        android:layout_marginRight="40dp"
+        android:layout_alignParentTop="true"
+        android:inputType="date"
+        />
+
+
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tvDatum"
-        android:layout_gravity="center_horizontal"
-        android:gravity="center_horizontal"
-        android:textColor="@color/verylight"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"/>
+        android:gravity="right"
+        android:text="@string/prompt_datum"
+        android:textColor="@color/screen_font"
+        android:layout_toLeftOf="@+id/etDatumUtakmice"
+        android:layout_alignBaseline="@+id/etDatumUtakmice"/>
+
+
+
+    <EditText
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/etVremePocetka"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="40dp"
+        android:layout_marginBottom="30dp"
+        android:layout_below="@+id/etDatumUtakmice"
+        android:layout_alignLeft="@+id/etDatumUtakmice"
+        android:inputType="time"/>
+
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="left"
         android:id="@+id/tvPropmptVreme"
+        android:gravity="right"
         android:layout_below="@+id/tvDatum"
-        android:paddingTop="40dp"
-        android:textColor="@color/verylight"
+        android:layout_toLeftOf="@+id/etVremePocetka"
+        android:layout_alignBaseline="@+id/etVremePocetka"
+        android:textColor="@color/screen_font"
         android:text="@string/prompt_vreme"/>
 
-    <TimePicker
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:foregroundGravity="center_horizontal"
-        android:layout_below="@+id/tvDatum"
-        android:layout_toRightOf="@+id/tvPropmptVreme"
-        android:id="@+id/tpStartTime"></TimePicker>
 
-    <TextView
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="left"
-        android:layout_marginBottom="10dp"
-        android:id="@+id/tvPromptProtivnik"
-        android:layout_below="@+id/tpStartTime"
-        android:layout_alignParentLeft="true"
-        android:textColor="@color/verylight"
-        android:text="@string/prompt_protivnik"/>
+
     <Spinner
-        android:layout_width="160dp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/tvPromptProtivnik"
+        android:id="@+id/spProtivnik"
+        android:layout_marginBottom="20dp"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/tpStartTime"
-        android:id="@+id/spProtivnik"></Spinner>
+        android:layout_below="@+id/etVremePocetka"
+        ></Spinner>
 
-    <TextView
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="left"
-        android:id="@+id/tvPromptStadion"
-        android:layout_below="@+id/tvPromptProtivnik"
-        android:layout_alignParentLeft="true"
-        android:textColor="@color/verylight"
-        android:text="@string/prompt_stadion"/>
     <Spinner
-        android:layout_width="160dp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:id="@+id/spStadion"
-        android:layout_toRightOf="@+id/tvPromptStadion"
-        android:layout_below="@+id/tvPromptProtivnik"
         android:layout_alignParentRight="true"
+        android:layout_below="@+id/spProtivnik"
         ></Spinner>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvPromptProtivnik"
+        android:layout_below="@+id/tvPropmptVreme"
+        android:layout_toLeftOf="@id/spProtivnik"
+        android:layout_alignBaseline="@id/spProtivnik"
+        android:textColor="@color/screen_font"
+        android:text="@string/prompt_protivnik"/>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvPromptStadion"
+        android:layout_below="@+id/tvPromptProtivnik"
+        android:layout_toLeftOf="@id/spStadion"
+        android:layout_alignBaseline="@+id/spStadion"
+        android:textColor="@color/screen_font"
+        android:text="@string/prompt_stadion"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/tvWarningStart"
-        android:textColor="@color/verylight"
-        android:layout_below="@+id/tvPromptStadion"/>
+        android:textColor="@color/screen_font"
+        android:layout_below="@+id/spStadion" />
 
     <CheckBox
         android:layout_width="match_parent"
@@ -86,7 +109,7 @@
         android:id="@+id/cbDomacin"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/tvWarningStart"
-        android:textColor="@color/verylight"
+        android:textColor="@color/screen_font"
         android:checked="false"/>
 
     <Button

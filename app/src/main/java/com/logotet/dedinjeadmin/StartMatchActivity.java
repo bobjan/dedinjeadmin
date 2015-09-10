@@ -1,22 +1,18 @@
 package com.logotet.dedinjeadmin;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.logotet.dedinjeadmin.model.BazaStadiona;
@@ -29,21 +25,24 @@ import com.logotet.dedinjeadmin.xmlparser.RequestPreparator;
 import com.logotet.util.BJDatum;
 import com.logotet.util.BJTime;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 
 public class StartMatchActivity extends AppCompatActivity {
     private static final String TAG = "StartMatchActivity";
 
-    TextView tvDatum;
-    TimePicker tpStartTime;
+    EditText etDatumUtakmice;
+    EditText etVremePocetka;
+
     BJTime vreme;
+    BJDatum datum;
+
     Spinner spStadion;
     Spinner spProtivnik;
     CheckBox cbDomacin;
 
     Stadion selectedStadion;
     Tim selectedProtivnik;
-    BJTime selectedTime;
 
 
     Button btnCreateMatch;
@@ -52,18 +51,16 @@ public class StartMatchActivity extends AppCompatActivity {
     ArrayList listaProtivnika;
 
     Intent nextIntent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_match);
 
 
-        tvDatum = (TextView) findViewById(R.id.tvDatum);
-        tvDatum.setText((new BJDatum().toString()));
+        etDatumUtakmice = (EditText) findViewById(R.id.etDatumUtakmice);
+        etVremePocetka = (EditText) findViewById(R.id.etVremePocetka);
 
-        tpStartTime = (TimePicker) findViewById(R.id.tpStartTime);
-        tpStartTime.setIs24HourView(true);
-        selectedTime = new BJTime();
 
         spProtivnik = (Spinner) findViewById(R.id.spProtivnik);
         spStadion = (Spinner) findViewById(R.id.spStadion);
@@ -89,14 +86,6 @@ public class StartMatchActivity extends AppCompatActivity {
         protivnikAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
 
         spProtivnik.setAdapter(protivnikAdapter);
-
-
-        tpStartTime.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
-            @Override
-            public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
-                selectedTime = new BJTime(hourOfDay + ":" + minute);
-            }
-        });
 
 
         spStadion.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -131,8 +120,7 @@ public class StartMatchActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Utakmica utakmica = Utakmica.getInstance();
-                if((utakmica.isFromHttpServer()) && utakmica.getDatum().isToday())
-                {
+                if ((utakmica.isFromHttpServer()) && utakmica.getDatum().isToday()) {
                     AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(StartMatchActivity.this);
                     alertDialogBuilder.setTitle("Већ постоји данашња утакмица. Креирањем нове ће бити обрисани сви постојећи подаци(састав...)");
 
@@ -152,9 +140,9 @@ public class StartMatchActivity extends AppCompatActivity {
 
                         }
                     });
-                   AlertDialog alertDialog = alertDialogBuilder.create();
+                    AlertDialog alertDialog = alertDialogBuilder.create();
                     alertDialog.show();
-                }else{
+                } else {
                     kreirajUtakmicu();
                 }
             }
@@ -169,12 +157,22 @@ public class StartMatchActivity extends AppCompatActivity {
 
     }
 
-    private void kreirajUtakmicu(){
+    private void kreirajUtakmicu() {
         Utakmica utakmica = Utakmica.getInstance();
-        utakmica.setDatum(new BJDatum());
+
+        try {
+            datum = new BJDatum(etDatumUtakmice.getText().toString());
+        } catch (ParseException e) {
+            datum = new BJDatum();
+        }
+
+
+        vreme = new BJTime(etVremePocetka.getText().toString());
+
+        utakmica.setDatum(datum);
         utakmica.setProtivnikId(selectedProtivnik.getId());
         utakmica.setStadionId(selectedStadion.getId());
-        utakmica.setPlaniranoVremePocetka(selectedTime.toString());
+        utakmica.setPlaniranoVremePocetka(vreme);
         Thread th = new RequestThread(RequestPreparator.STARTMATCH, AllStatic.HTTPHOST, utakmica);
         th.start();
         Toast.makeText(getApplicationContext(), "Utakmica je kreirana", Toast.LENGTH_LONG).show();
