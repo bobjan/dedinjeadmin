@@ -17,17 +17,27 @@ public class BazaIgraca {
     private ArrayList<Igrac> vanProtokola;  // svi registrovani igraci
     private ArrayList<Igrac> uProtokolu;  // svi registrovani igraci
 
+    private boolean loaded;
 
     private BazaIgraca() {
         squad = new ArrayList<Igrac>();
         vanProtokola = new ArrayList<Igrac>();
         uProtokolu = new ArrayList<Igrac>();
+        loaded = false;
     }
 
     public static BazaIgraca getInstance() {
         if (bazaIgraca == null)
             bazaIgraca = new BazaIgraca();
         return bazaIgraca;
+    }
+
+    public boolean isLoaded() {
+        return loaded;
+    }
+
+    public void setLoaded(boolean loaded) {
+        this.loaded = loaded;
     }
 
     public void add(Igrac igrac) {

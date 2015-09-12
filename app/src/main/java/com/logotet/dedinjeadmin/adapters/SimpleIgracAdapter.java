@@ -55,8 +55,13 @@ public class SimpleIgracAdapter extends BaseAdapter {
 
         TextView tvIgrac = (TextView) convertView.findViewById(R.id.tvIgrac);
 
+        int clr = parent.getResources().getColor(R.color.complementlght);
+
+
         Igrac igrac = (Igrac) getItem(position);
-        tvIgrac.setTextColor(Color.WHITE);
+        tvIgrac.setTextColor(clr);
+
+        tvIgrac.setBackgroundResource(R.drawable.veznibutton);
 
         switch(igrac.getDefaultPozicija()){
             case 1:
@@ -71,7 +76,6 @@ public class SimpleIgracAdapter extends BaseAdapter {
             default:
                 tvIgrac.setBackgroundResource(R.drawable.napadbutton);
                 break;
-
 
         }
 

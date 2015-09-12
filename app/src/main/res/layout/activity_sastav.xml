@@ -75,9 +75,12 @@
             android:id="@+id/lvUProtokolu"></ListView>
 
         <Button
-            android:layout_width="match_parent"
+            android:layout_width="260dp"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/actionbutton"
+            android:textColor="@color/btn1_font"
             android:id="@+id/btnConfirmSastav"
             android:text="@string/btn_confirmsastav"/>
     </LinearLayout>

@@ -13,6 +13,8 @@ public class BazaSaopstenja {
     private static BazaSaopstenja bazaSaopstenja = null;
     private ArrayList<Saopstenje> vesti;
 
+    private boolean loaded;
+
     public static BazaSaopstenja getInstance() {
         if (bazaSaopstenja == null)
             bazaSaopstenja = new BazaSaopstenja();
@@ -21,6 +23,15 @@ public class BazaSaopstenja {
 
     private BazaSaopstenja() {
         vesti = new ArrayList<Saopstenje>();
+        loaded = false;
+    }
+
+    public boolean isLoaded() {
+        return loaded;
+    }
+
+    public void setLoaded(boolean loaded) {
+        this.loaded = loaded;
     }
 
     public void add(Saopstenje row) {

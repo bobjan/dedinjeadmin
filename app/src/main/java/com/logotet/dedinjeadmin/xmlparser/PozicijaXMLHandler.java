@@ -50,6 +50,7 @@ public class PozicijaXMLHandler extends MyXMLHandler {
                            String rawName) throws SAXException {
         if (rawName.equals("pozicija")) {
             pcData = 0;
+            bazaPozicija.setLoaded(true);
         }
         if (rawName.equals("mestoutimu")) {
             pcData = 1;

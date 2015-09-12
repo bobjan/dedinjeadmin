@@ -10,6 +10,8 @@ public class BazaOsoba {
     private static BazaOsoba bazaOsoba = null;
     private ArrayList<Osoba> rukovodstvo;
 
+    private boolean loaded;
+
     public static BazaOsoba getInstance() {
         if (bazaOsoba == null)
             bazaOsoba = new BazaOsoba();
@@ -18,6 +20,15 @@ public class BazaOsoba {
 
     private BazaOsoba() {
         rukovodstvo = new ArrayList<Osoba>();
+        loaded = false;
+    }
+
+    public boolean isLoaded() {
+        return loaded;
+    }
+
+    public void setLoaded(boolean loaded) {
+        this.loaded = loaded;
     }
 
     public void add(Osoba osoba) {

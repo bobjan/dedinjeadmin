@@ -7,60 +7,75 @@
     android:background="@color/screen_background"
     tools:context="com.logotet.dedinjeadmin.AfterLoginActivity">
 
-    <Button
-        android:layout_width="match_parent"
+
+    <ProgressBar
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
-        android:id="@+id/btnStartMatch"
-        android:text="@string/menuStart"
-        android:background="@color/basedark"
-        android:textColor="@color/complementlght"
+        android:id="@+id/pbProgressBar"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/btnStartMatch"
+        android:layout_alignEnd="@+id/btnStartMatch"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
+        android:layout_alignParentStart="true"
+        android:indeterminate="false"
+        android:progress="0"
+        android:max="100" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="50dp"
+        android:id="@+id/btnStartMatch"
+        android:text="@string/menuStart"
+        android:background="@drawable/actionbutton"
+        android:textColor="@color/btn1_font"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/pbProgressBar"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:id="@+id/btnMakeSastav"
         android:text="@string/menuSastav"
-        android:background="@color/basedark"
-        android:textColor="@color/complementlght"
+        android:background="@drawable/actionbutton"
+        android:textColor="@color/btn1_font"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/btnStartMatch"/>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:id="@+id/btnEnterEvent"
         android:text="@string/menuDogadjaj"
-        android:background="@color/basedark"
-        android:textColor="@color/complementlght"
+        android:background="@drawable/actionbutton"
+        android:textColor="@color/btn1_font"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/btnMakeSastav"/>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:id="@+id/btnDeleteEvent"
         android:text="@string/menuBrisanje"
-        android:background="@color/basedark"
-        android:textColor="@color/complementlght"
+        android:background="@drawable/actionbutton"
+        android:textColor="@color/btn1_font"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/btnEnterEvent"/>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:id="@+id/btnLogout"
         android:text="@string/menuLogout"
-        android:background="@color/baseclr"
-        android:textColor="@color/complementlght"
+        android:background="@drawable/actionbutton"
+        android:textColor="@color/btn1_font"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/btnDeleteEvent"/>
+
 
 </RelativeLayout>
 

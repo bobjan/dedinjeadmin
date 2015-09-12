@@ -13,6 +13,8 @@
     <string name="menuBrisanje">Брисање догађаја</string>
     <string name="menuLogout">Одјава</string>
 
+    <string name="creatematch">Креирај утакмицу</string>
+
 
     <string name="logout_confirm">Да ли си сигуран да желиш да се одјавиш?</string>
 

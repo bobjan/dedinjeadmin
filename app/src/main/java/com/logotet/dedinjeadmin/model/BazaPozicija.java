@@ -9,6 +9,7 @@ import java.util.Iterator;
 public class BazaPozicija {
     private static BazaPozicija bazaPozicija = null;
     private ArrayList<Pozicija> timposition;
+    private boolean loaded;
 
     public static BazaPozicija getInstance() {
         if (bazaPozicija == null)
@@ -18,6 +19,15 @@ public class BazaPozicija {
 
     private BazaPozicija() {
         timposition = new ArrayList<Pozicija>();
+        loaded = false;
+    }
+
+    public boolean isLoaded() {
+        return loaded;
+    }
+
+    public void setLoaded(boolean loaded) {
+        this.loaded = loaded;
     }
 
     public void add(Pozicija pos) {

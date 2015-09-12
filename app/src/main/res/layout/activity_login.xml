@@ -37,8 +37,8 @@
     <Button
         android:layout_width="260dp"
         android:layout_height="wrap_content"
-        android:background="@color/baseclr"
-        android:textColor="@color/complementlght"
+        android:background="@drawable/actionbutton"
+        android:textColor="@color/btn1_font"
         android:text="Пријави се"
         android:id="@+id/btnLogin"
         android:layout_marginTop="40dp"

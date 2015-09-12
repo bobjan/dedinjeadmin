@@ -72,10 +72,10 @@ public class StartMatchActivity extends AppCompatActivity {
 
 
         ArrayAdapter<String> stadionAdapter = new ArrayAdapter<String>
-                (this, android.R.layout.simple_spinner_item, listaStadiona);
+                (this, R.layout.spinner_item, listaStadiona);
 
         stadionAdapter.setDropDownViewResource
-                (android.R.layout.simple_spinner_dropdown_item);
+                (R.layout.spinner_dropdown_item);
 
         spStadion.setAdapter(stadionAdapter);
 
@@ -154,7 +154,6 @@ public class StartMatchActivity extends AppCompatActivity {
                 Utakmica.getInstance().setUserTeamDomacin(isChecked);
             }
         });
-
     }
 
     private void kreirajUtakmicu() {

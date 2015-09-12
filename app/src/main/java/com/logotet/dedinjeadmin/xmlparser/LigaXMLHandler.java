@@ -67,7 +67,7 @@ public class LigaXMLHandler extends MyXMLHandler {
     public void endElement(String namespaceURI, String localName,
                            String rawName) throws SAXException {
         if (rawName.equals("liga")) {
-
+            bazaTimova.setLoaded(true);
             pcData = 1;
         }
         if (rawName.equals("naziv")) {

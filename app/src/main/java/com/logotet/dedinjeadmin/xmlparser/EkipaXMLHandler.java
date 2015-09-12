@@ -52,6 +52,7 @@ public class EkipaXMLHandler extends MyXMLHandler {
                            String rawName) throws SAXException {
         if (rawName.equals("ekipa")) {
             pcData = 0;
+            bazaIgraca.setLoaded(true);
         }
         if (rawName.equals("player")) {
             pcData = 1;

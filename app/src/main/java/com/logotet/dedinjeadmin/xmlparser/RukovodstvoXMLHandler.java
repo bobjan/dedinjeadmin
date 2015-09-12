@@ -53,6 +53,7 @@ public class RukovodstvoXMLHandler extends MyXMLHandler {
                            String rawName) throws SAXException {
         if (rawName.equals("rukovodstvo")) {
             pcData = 0;
+            bazaOsoba.setLoaded(true);
         }
         if (rawName.equals("osoba")) {
             pcData = 1;

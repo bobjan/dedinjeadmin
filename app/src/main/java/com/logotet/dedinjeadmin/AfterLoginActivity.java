@@ -2,16 +2,18 @@ package com.logotet.dedinjeadmin;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 
 import com.logotet.dedinjeadmin.model.Utakmica;
-import com.logotet.dedinjeadmin.threads.RequestThread;
 import com.logotet.dedinjeadmin.xmlparser.RequestPreparator;
+
+import java.io.IOException;
 
 public class AfterLoginActivity extends AppCompatActivity {
     Button btnStartMatch;
@@ -21,6 +23,10 @@ public class AfterLoginActivity extends AppCompatActivity {
     Button btnLogout;
 
     Activity ovaAktivnost;
+    ProgressBar progressBar;
+
+    Handler handler;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +38,9 @@ public class AfterLoginActivity extends AppCompatActivity {
         btnEnterEvent = (Button) findViewById(R.id.btnEnterEvent);
         btnDeleteEvent = (Button) findViewById(R.id.btnDeleteEvent);
         btnLogout = (Button) findViewById(R.id.btnLogout);
+
+        progressBar = (ProgressBar) findViewById(R.id.pbProgressBar);
+
         ovaAktivnost = this;
 
         btnStartMatch.setOnClickListener(new View.OnClickListener() {
@@ -73,6 +82,9 @@ public class AfterLoginActivity extends AppCompatActivity {
                 System.exit(0);
             }
         });
+
+        handler = new Handler();
+
     }
 
     @Override
@@ -82,9 +94,9 @@ public class AfterLoginActivity extends AppCompatActivity {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
         }
-        checkEveything();
+        HttpCatcher.fetchBaseData(handler);
+//        checkEveything();
     }
-
 
     @Override
     protected void onPause() {
@@ -94,15 +106,15 @@ public class AfterLoginActivity extends AppCompatActivity {
 
 
 
-    private void checkEveything(){
+    private void checkEveything() {
         Utakmica utakmica = Utakmica.getInstance();
-        if(!utakmica.getDatum().isToday()){
+        if (!utakmica.getDatum().isToday()) {
             disableAllButtons();
             return;
         }
-        if(!utakmica.isFromHttpServer())
+        if (!utakmica.isFromHttpServer())
             disableAllButtons();
-        else{
+        else {
             enableAllButtons();
         }
     }

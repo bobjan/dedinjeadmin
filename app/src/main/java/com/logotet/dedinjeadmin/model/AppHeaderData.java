@@ -18,6 +18,9 @@ public class AppHeaderData {
     }
 
     private AppHeaderData() {
+        nazivLige = "";
+        userTeamName = "";
+        password = "jahsjdhskjdwey2389xn3x23uy283xn8923yxnewk3nrxniQIEX9829823R9823R98";
     }
 
     public String getNazivLige() {

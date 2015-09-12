@@ -3,7 +3,7 @@
     android:id="@android:id/text1"
     android:singleLine="true"
     android:layout_width="match_parent"
-    android:layout_height="20dp"
+    android:layout_height="22dp"
     android:ellipsize="marquee"
-    android:background="@color/complementdark"
-    android:textColor="@color/screen_font"/>
+    android:background="@color/screen_background"
+    android:textColor="@color/baselight"/>

@@ -60,6 +60,7 @@ public class SaopstenjaXMLHandler extends MyXMLHandler {
                            String rawName) throws SAXException {
         if (rawName.equals("saopstenje")) {
             pcData = 0;
+            bazaSaopstenja.setLoaded(true);
         }
         if (rawName.equals("vest")) {
             pcData = 1;

@@ -2,6 +2,8 @@ package com.logotet.dedinjeadmin;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -12,11 +14,15 @@ import com.logotet.dedinjeadmin.model.AppHeaderData;
 import com.logotet.dedinjeadmin.threads.RequestThread;
 import com.logotet.dedinjeadmin.xmlparser.RequestPreparator;
 
+import java.io.IOException;
+
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     Button btnLogin;
     EditText etPassword;
     Intent firstActivity;
+
+    Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +52,16 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+
+        handler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                if(msg.arg1 == 1)
+                    btnLogin.setEnabled(true);
+                if(msg.arg1 == -1)
+                    Toast.makeText(getApplicationContext(),"URK connection error", Toast.LENGTH_LONG).show();
+            }
+        };
     }
 
 
@@ -59,29 +75,24 @@ public class LoginActivity extends AppCompatActivity {
                     getApplicationContext().getString(R.string.network_error),Toast.LENGTH_LONG).show();
 
         }else{
-            btnLogin.setEnabled(true);
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    Message msg = new Message();
+                    HttpCatcher httpCatcher = null;
+                    try {
+                        httpCatcher = new HttpCatcher(RequestPreparator.GETLIGA, AllStatic.HTTPHOST, null);
+                        httpCatcher.catchData();
+                        msg.arg1 = 1;
+                        handler.handleMessage(msg);
+                    } catch (IOException e) {
+                        msg.arg1 = -1;
+                        handler.handleMessage(msg);
+                    }
+                }
+            });
+            thread.start();
         }
-
-
-        Thread thread = new RequestThread(RequestPreparator.GETLIGA, AllStatic.HTTPHOST, null);
-        thread.start();
-
-        thread = new RequestThread(RequestPreparator.GETSTADION, AllStatic.HTTPHOST, null);
-        thread.start();
-        thread = new RequestThread(RequestPreparator.GETPOZICIJA, AllStatic.HTTPHOST, null);
-        thread.start();
-        thread = new RequestThread(RequestPreparator.GETEKIPA, AllStatic.HTTPHOST, null);
-        thread.start();
-
-        thread = new RequestThread(RequestPreparator.GETLIVEMATCH, AllStatic.HTTPHOST, null);
-        thread.start();
-
-        thread = new RequestThread(RequestPreparator.GETSASTAV, AllStatic.HTTPHOST, null);
-        thread.start();
-
-        thread = new RequestThread(RequestPreparator.ALLEVENTS, AllStatic.HTTPHOST, null);
-        thread.start();
-
     }
 
     @Override

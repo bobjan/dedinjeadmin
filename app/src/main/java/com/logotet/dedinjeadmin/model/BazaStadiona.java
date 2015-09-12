@@ -9,7 +9,7 @@ import java.util.Iterator;
 public class BazaStadiona {
     private static BazaStadiona bazaStadiona = null;
     private ArrayList<Stadion> tereni;
-
+    private boolean loaded;
     public static BazaStadiona getInstance() {
         if (bazaStadiona == null)
             bazaStadiona = new BazaStadiona();
@@ -18,6 +18,15 @@ public class BazaStadiona {
 
     private BazaStadiona() {
         tereni = new ArrayList<Stadion>();
+        loaded = false;
+    }
+
+    public boolean isLoaded() {
+        return loaded;
+    }
+
+    public void setLoaded(boolean loaded) {
+        this.loaded = loaded;
     }
 
     public void add(Stadion std) {

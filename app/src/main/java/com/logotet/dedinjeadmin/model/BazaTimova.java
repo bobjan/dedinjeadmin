@@ -10,6 +10,8 @@ public class BazaTimova {
     private static BazaTimova bazaTimova = null;
     private ArrayList<Tim> protivnici;
 
+    private boolean loaded;
+
     public static BazaTimova getInstance() {
         if (bazaTimova == null)
             bazaTimova = new BazaTimova();
@@ -18,6 +20,15 @@ public class BazaTimova {
 
     private BazaTimova() {
         protivnici = new ArrayList<Tim>();
+        loaded = false;
+    }
+
+    public boolean isLoaded() {
+        return loaded;
+    }
+
+    public void setLoaded(boolean loaded) {
+        this.loaded = loaded;
     }
 
     public void add(Tim tim) {

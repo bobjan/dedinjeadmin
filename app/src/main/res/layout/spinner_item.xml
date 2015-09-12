@@ -3,7 +3,7 @@
         android:id="@android:id/text1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:background="@color/baseclr"
-        android:textColor="@color/complementlght"
+        android:textSize="20sp"
+        android:background="@color/screen_background"
+        android:textColor="@color/baselight"
     />

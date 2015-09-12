@@ -50,6 +50,7 @@ public class StadionXMLHandler extends MyXMLHandler {
                            String rawName) throws SAXException {
         if (rawName.equals("stadion")) {
             pcData = 0;
+            bazaStadiona.setLoaded(true);
         }
         if (rawName.equals("teren")) {
             pcData = 1;
