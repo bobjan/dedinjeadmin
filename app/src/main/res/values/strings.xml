@@ -23,6 +23,7 @@
     <string name="halftime">Крај I полувремена</string>
     <string name="startsecondhalf">Почетак II полувремена</string>
     <string name="finaltime">Крај утакмице</string>
+    <string name="correctminute">Тачан минут игре</string>
 
 
     <string name="golgame">Гол из игре</string>
@@ -43,6 +44,7 @@
     <string name="playerin">Улази играч:</string>
     <string name="playerout">Излази играч:</string>
 
+    <string name="simple_message">Податак је послат</string>
     <string name="network_error">Не постоји интернет веза!!</string>
     <string name="wrong_password">Погрешна лозинка, покушај поново</string>
 
@@ -51,6 +53,7 @@
     <string name="prompt_vreme">Време почетка:</string>
     <string name="prompt_stadion">Стадион:</string>
     <string name="prompt_protivnik">Противник:</string>
+    <string name="prompt_komentar">Унеси коментар:</string>
 
     <string name="prompt_domacin">ФК Дедиње домаћин?</string>
     <string name="prompt_lateminutes">Минути корекције</string>
@@ -59,6 +62,7 @@
     <string name="btn_confirmsastav">Коначан састав</string>
     <string name="btn_sviigraci">Сви играчи</string>
     <string name="btn_protokol">У протоколу</string>
+    <string name="btn_sendevent">Пошаљи догађај</string>
 
 
 </resources>

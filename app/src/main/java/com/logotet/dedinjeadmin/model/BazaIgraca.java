@@ -1,6 +1,8 @@
 package com.logotet.dedinjeadmin.model;
 
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -97,13 +99,25 @@ public class BazaIgraca {
         }
         return sb.toString();
     }
+    public void refreshBrojeviNaDresu(){
+        Iterator<Igrac> iter = squad.iterator();
+        while(iter.hasNext()){
+            Igrac igrac = iter.next();
+            igrac.setBrojNaDresu(Igrac.MAXDRES);
+        }
+    }
 
     public void refreshProtokol() {
         vanProtokola.clear();
         uProtokolu.clear();
         Iterator<Igrac> iter = squad.iterator();
         while (iter.hasNext()) {
-            vanProtokola.add(iter.next());
+            Igrac igrac = iter.next();
+            vanProtokola.add(igrac);
+            if(igrac.getBrojNaDresu() < Igrac.MAXDRES){
+                ubaciUProtokol(igrac);
+                Log.w(TAG, igrac.punOpis());
+            }
         }
     }
 

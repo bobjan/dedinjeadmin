@@ -5,6 +5,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:orientation="vertical"
+    android:background="@color/screen_background"
     android:animateLayoutChanges="true"
     tools:context="com.logotet.dedinjeadmin.EventsActivity">
     <LinearLayout
@@ -15,24 +16,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="30dp"
+            android:textColor="@color/screen_font"
             android:layout_gravity="center_horizontal"
             android:text="@string/prompt_lateminutes"    />
-        <NumberPicker
-            android:layout_width="fill_parent"
+        <EditText
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:gravity="center_horizontal"
-            android:id="@+id/npMinuti"></NumberPicker>
-
+            android:id="@+id/etMinutKorekcije"
+            android:textColor="@color/screen_font"
+            android:inputType="number"/>
 
     </LinearLayout>
-
 
     <!--  ============navigacioni dugmici=====================   -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <Button
             android:layout_width="0dp"
             android:layout_height="40dp"
@@ -69,7 +70,6 @@
             android:textAllCaps="false"
             android:drawableLeft="@drawable/komentar"   />
 
-
     </LinearLayout>
 
     <!--  ============pocetak opisa delova prikaza - timeevents =====================   -->
@@ -78,7 +78,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:id="@+id/llExpandTime"
-        android:visibility="gone"  >
+        android:visibility="visible"  >
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -88,6 +88,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:layout_marginTop="20dp"
                 android:id="@+id/rgTimeEvents"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true" >
@@ -95,22 +96,33 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/rbStartGame"
+                    android:textColor="@color/screen_font"
                     android:text="@string/startgame"   />
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/rbHalfTime"
+                    android:textColor="@color/screen_font"
                     android:text="@string/halftime" />
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/screen_font"
                     android:id="@+id/rbStartSecondHalf"
                     android:text="@string/startsecondhalf"  />
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/rbFinalTime"
+                    android:textColor="@color/screen_font"
                     android:text="@string/finaltime" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rbCurrentMinute"
+                    android:textColor="@color/screen_font"
+                    android:text="@string/correctminute" />
 
             </RadioGroup>
             <Button
@@ -119,7 +131,9 @@
                 android:id="@+id/btnTimeEvents"
                 android:layout_below="@+id/rgTimeEvents"
                 android:layout_centerHorizontal="true"
-                android:text="Posalji" />
+                android:text="@string/btn_sendevent"
+                android:background="@drawable/actionbutton"
+                android:textColor="@color/btn1_font"/>
 
         </RelativeLayout>
     </LinearLayout>
@@ -130,44 +144,51 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:id="@+id/llExpandGoal"
-        android:visibility="visible" >
+        android:visibility="gone" >
         <RadioGroup
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/complementlght"
             android:id="@+id/rgWhoseGol"     >
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/rbDedinjeGol"
+                android:textColor="@color/screen_background"
                 android:text="@string/txtuser"  />
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/rbProtivnikGol"
-                android:gravity="right"
-                android:layout_gravity="right"
+                android:textColor="@color/screen_background"
                 android:text="@string/txtprotivnik" />
         </RadioGroup>
         <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:id="@+id/rgGoalKind"
             android:orientation="vertical"        >
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/screen_font"
                 android:id="@+id/rbGolGame"
                 android:text="@string/golgame"/>
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/screen_font"
                 android:id="@+id/rbGolPenal"
                 android:text="@string/golpenal"/>
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/screen_font"
                 android:id="@+id/rbMissedPenal"
                 android:text="@string/missedpenal"/>
 
@@ -181,8 +202,9 @@
             android:layout_height="wrap_content"
             android:id="@+id/btnGoal"
             android:layout_gravity="center_horizontal"
-            android:text="GOOOOOL"
- />
+            android:text="@string/btn_sendevent"
+            android:background="@drawable/actionbutton"
+            android:textColor="@color/btn1_font" />
     </LinearLayout>
 
     <!--  ============pocetak opisa delova prikaza - kartonivents =====================   -->
@@ -194,20 +216,25 @@
         android:visibility="gone">
 
         <RadioGroup
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center_horizontal"
             android:layout_alignParentRight="true"
+            android:background="@color/basedark"
             android:id="@+id/rgWhoseKarton" >
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/txtuser"
+                android:textColor="@color/screen_font"
                 android:id="@+id/rbKartonDedinje"  />
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/screen_font"
                 android:id="@+id/rbKartonProtivnik"
                 android:text="@string/txtprotivnik"  />
 
@@ -215,6 +242,7 @@
         <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:orientation="vertical"
             android:id="@+id/rgKartoni"
             android:layout_alignParentTop="true"
@@ -222,21 +250,22 @@
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/screen_font"
                 android:id="@+id/rbZutiKarton"
                 android:text="@string/zutikarton"  />
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/screen_font"
                 android:id="@+id/rbDrugiZutiKarton"
                 android:text="@string/drugizutikarton"  />
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/screen_font"
                 android:id="@+id/rbCrveniKarton"
                 android:text="@string/crvenikarton"  />
-
         </RadioGroup>
-
 
         <Spinner
             android:layout_width="match_parent"
@@ -249,7 +278,9 @@
             android:layout_height="wrap_content"
             android:id="@+id/btnKarton"
             android:layout_gravity="center_horizontal"
-            android:text="Karton"  />
+            android:text="@string/btn_sendevent"
+            android:background="@drawable/actionbutton"
+            android:textColor="@color/btn1_font" />
 </LinearLayout>
 
 
@@ -261,6 +292,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_marginTop="20dp"
         android:id="@+id/llExpandIzmena"
         android:visibility="gone" >
         <TextView
@@ -273,6 +305,7 @@
             android:id="@+id/spinPlayerOut" > </Spinner>
         <TextView
             android:layout_width="wrap_content"
+            android:layout_marginTop="20dp"
             android:layout_height="wrap_content"
             android:text="@string/playerin"  />
         <Spinner
@@ -283,8 +316,11 @@
             android:layout_width="160dp"
             android:layout_height="wrap_content"
             android:id="@+id/btnIzmena"
+            android:layout_marginTop="20dp"
             android:layout_gravity="center_horizontal"
-            android:text="Izmena"  />
+            android:text="@string/btn_sendevent"
+            android:background="@drawable/actionbutton"
+            android:textColor="@color/btn1_font" />
 
 
     </LinearLayout>
@@ -302,17 +338,22 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Unesi komentar"/>
+            android:layout_marginTop="20dp"
+            android:text="@string/prompt_komentar"/>
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:lines="5"
             android:id="@+id/etKomentar"  />
         <Button
             android:layout_width="160dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:id="@+id/btnKomentar"
             android:layout_gravity="center_horizontal"
-            android:text="Komentar"  />
+            android:text="@string/btn_sendevent"
+            android:background="@drawable/actionbutton"
+            android:textColor="@color/btn1_font" />
     </LinearLayout>
 
 </LinearLayout>

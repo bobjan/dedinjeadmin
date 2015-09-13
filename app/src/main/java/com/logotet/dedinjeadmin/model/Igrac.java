@@ -111,7 +111,10 @@ public class Igrac {
     }
 
     public String toString() {
-//        return "id=" + id + "\tnaziv=" + naziv + "\tdres=" + brojNaDresu + "\tgodina=" + godinaRodjenja + "\tpoz=" + defaultPozicija + "\timg=" + imageFileName;
         return naziv;
+    }
+    public String punOpis(){
+        return "id=" + id + "\tnaziv=" + naziv + "\tdres=" + brojNaDresu + "\tgodina=" + godinaRodjenja + "\tpoz=" + defaultPozicija + "\tteren=" + isNaTerenu();
+
     }
 }

@@ -53,7 +53,7 @@ public class EventsActivity extends AppCompatActivity implements View.OnClickLis
     Spinner spStrelac;
     Spinner spIgracIn;
     Spinner spIgracOut;
-    NumberPicker npMinut;
+    EditText npMinut;
 
     Igrac igracStrelac;
     Igrac igracKarton;
@@ -69,12 +69,7 @@ public class EventsActivity extends AppCompatActivity implements View.OnClickLis
         naTerenu = BazaIgraca.getInstance().getNaTerenu();
         naKlupi = BazaIgraca.getInstance().getNaKlupi();
         Log.w(TAG, "na terenu = " + naTerenu.size() + "\tna klupi = " + naKlupi.size());
-        npMinut = (NumberPicker) findViewById(R.id.npMinuti);
-        npMinut.setMaxValue(60);
-        npMinut.setMinValue(0);
-        npMinut.setValue(0);
-        npMinut.setWrapSelectorWheel(false);
-
+        npMinut = (EditText) findViewById(R.id.etMinutKorekcije);
 
         btnExpand = new Button[5];
         llExpand = new LinearLayout[5];
@@ -233,6 +228,9 @@ public class EventsActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(View v) {
         Dogadjaj dogadjaj = new Dogadjaj();
+
+        dogadjaj.setMinut(npMinut.getText().toString());
+
         dogadjaj.setTipDogadjaja(-1);
         if (v.getId() == btnSendTime.getId()) {
             switch (rgTimeEvents.getCheckedRadioButtonId()) {
@@ -268,13 +266,11 @@ public class EventsActivity extends AppCompatActivity implements View.OnClickLis
                     } else {
                         dogadjaj.setTipDogadjaja(Dogadjaj.GOLPENALPROTIVNIK);
                     }
-
                     break;
                 case R.id.rbMissedPenal:
                     if (rgWhoseGoal.getCheckedRadioButtonId() == R.id.rbDedinjeGol) {
                         dogadjaj.setTipDogadjaja(Dogadjaj.MISSEDPENALFKDEDINJE);
                         dogadjaj.setPlayerId(igracStrelac.getId());
-
                     } else {
                         dogadjaj.setTipDogadjaja(Dogadjaj.MISSEDPENALPROTIVNIK);
                     }
@@ -298,7 +294,6 @@ public class EventsActivity extends AppCompatActivity implements View.OnClickLis
                         dogadjaj.setTipDogadjaja(Dogadjaj.ZUTIKARTONPROTIVNIK);
                     }
                     break;
-
                 case R.id.rbDrugiZutiKarton:
                     if (rgWhoseKarton.getCheckedRadioButtonId() == R.id.rbKartonDedinje) {
                         dogadjaj.setTipDogadjaja(Dogadjaj.DRUGIZUTIFKDEDINJE);
@@ -307,7 +302,6 @@ public class EventsActivity extends AppCompatActivity implements View.OnClickLis
                         dogadjaj.setTipDogadjaja(Dogadjaj.DRUGIZUTIPROTIVNIK);
                     }
                     break;
-
                 case R.id.rbCrveniKarton:
                     if (rgWhoseKarton.getCheckedRadioButtonId() == R.id.rbKartonDedinje) {
                         dogadjaj.setTipDogadjaja(Dogadjaj.CRVENIKARTONFKDEDINJE);
@@ -332,6 +326,7 @@ public class EventsActivity extends AppCompatActivity implements View.OnClickLis
             Toast.makeText(getApplicationContext(),
                     getApplicationContext().getString(R.string.invalid_entry), Toast.LENGTH_LONG).show();
         }
+        Toast.makeText(getApplicationContext(),getApplicationContext().getString(R.string.simple_message), Toast.LENGTH_LONG).show();
     }
 
     @Override

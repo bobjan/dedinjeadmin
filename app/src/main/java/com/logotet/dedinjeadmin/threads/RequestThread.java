@@ -27,7 +27,7 @@ public class RequestThread extends Thread {
     public RequestThread(int what, String host, Object object) {
         this.what = what;
         requestParams = RequestPreparator.getRequest(what, object);
-        Log.w("REQUEST OARAMSE = ", requestParams);
+//        Log.w("REQUEST OARAMSE = ", requestParams);
         serverAddress = host;
     }
 

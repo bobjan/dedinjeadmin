@@ -4,9 +4,9 @@ android:shape="rectangle">
     <stroke
         android:height="1.0dip"
         android:width="1.0dip"
-        android:color="@color/myultrablue" />
-    <solid android:color="@color/myultrablue" />
-    <gradient android:angle="90" android:startColor="@color/myblue" android:endColor="@color/myultrablue"  />
+        android:color="@color/complementdark" />
+    <solid android:color="@color/complementdark" />
+    <gradient android:angle="90" android:startColor="@color/complementdark" android:endColor="@color/complementclr"  />
     <corners android:bottomRightRadius="3dip"
         android:bottomLeftRadius="3dip"
         android:topRightRadius="3dip"

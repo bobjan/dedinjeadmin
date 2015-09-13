@@ -80,7 +80,6 @@ public class SimpleIgracAdapter extends BaseAdapter {
         }
 
 
-
         tvIgrac.setText(igrac.getNaziv());
 
         return convertView;

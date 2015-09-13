@@ -1,8 +1,14 @@
 package com.logotet.dedinjeadmin;
 
+import android.app.Activity;
 import android.os.Handler;
 import android.os.Message;
+import android.view.View;
 
+import com.logotet.dedinjeadmin.model.BazaIgraca;
+import com.logotet.dedinjeadmin.model.BazaPozicija;
+import com.logotet.dedinjeadmin.model.BazaStadiona;
+import com.logotet.dedinjeadmin.model.BazaTimova;
 import com.logotet.dedinjeadmin.xmlparser.AlleventsXMLHandler;
 import com.logotet.dedinjeadmin.xmlparser.EkipaXMLHandler;
 import com.logotet.dedinjeadmin.xmlparser.FixturesXMLHandler;
@@ -159,46 +165,8 @@ public class HttpCatcher {
         }
     }
 
-    public static void fetchBaseData(final Handler handler) {
 
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Message msg = Message.obtain();
-                HttpCatcher httpCatcher = null;
-                try {
-                    httpCatcher = new HttpCatcher(RequestPreparator.GETSTADION, AllStatic.HTTPHOST, null);
-                    httpCatcher.catchData();
-                    msg.arg1 = 50;
-                    handler.handleMessage(msg);
-                    Thread.sleep(1000);
-                    httpCatcher = new HttpCatcher(RequestPreparator.GETPOZICIJA, AllStatic.HTTPHOST, null);
-                    httpCatcher.catchData();
-                    msg.arg1 = 80;
-                    handler.handleMessage(msg);
-                    Thread.sleep(1000);
-                    httpCatcher = new HttpCatcher(RequestPreparator.GETEKIPA, AllStatic.HTTPHOST, null);
-                    httpCatcher.catchData();
-                    msg.arg1 = 100;
-                    handler.handleMessage(msg);
-                    Thread.sleep(10000);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-
-        thread.start();
-  /*
-
-*/
-
-    }
-
-
-    public static void fetchMatchData(final Handler handler) {
+    public static void fetchMatchData(final Handler handler, final View view, final Activity activity) {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -208,7 +176,7 @@ public class HttpCatcher {
                     httpCatcher = new HttpCatcher(RequestPreparator.GETLIVEMATCH, AllStatic.HTTPHOST, null);
                     httpCatcher.catchData();
 //                    msg.arg1 = 50;
-//                    handler.handleMessage(msg);
+                    handler.handleMessage(msg);
 //                    Thread.sleep(1000);
                     httpCatcher = new HttpCatcher(RequestPreparator.GETSASTAV, AllStatic.HTTPHOST, null);
                     httpCatcher.catchData();
@@ -220,6 +188,13 @@ public class HttpCatcher {
 //                    msg.arg1 = 100;
 //                    handler.handleMessage(msg);
                     Thread.sleep(100);
+                    activity.runOnUiThread(new Runnable() {
+                                               @Override
+                                               public void run() {
+                                                   ((AfterLoginActivity) activity).enableAllButtons();
+                                               }
+                                           }
+                    );
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (InterruptedException e) {

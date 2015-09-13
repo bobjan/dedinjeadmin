@@ -10,6 +10,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 
+import com.logotet.dedinjeadmin.model.BazaIgraca;
+import com.logotet.dedinjeadmin.model.BazaPozicija;
+import com.logotet.dedinjeadmin.model.BazaStadiona;
 import com.logotet.dedinjeadmin.model.Utakmica;
 import com.logotet.dedinjeadmin.xmlparser.RequestPreparator;
 
@@ -84,18 +87,21 @@ public class AfterLoginActivity extends AppCompatActivity {
         });
 
         handler = new Handler();
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        btnStartMatch.setEnabled(true);
+        disableAllButtons();
         if ((System.currentTimeMillis() - AllStatic.lastActiveTime) > AllStatic.TIMEOUT) {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
         }
-        HttpCatcher.fetchBaseData(handler);
-//        checkEveything();
+        progressBar.setVisibility(View.VISIBLE);
+        fetchBaseData();
+        progressBar.setVisibility(View.VISIBLE);
+        fetchmatchdata();
     }
 
     @Override
@@ -105,28 +111,95 @@ public class AfterLoginActivity extends AppCompatActivity {
     }
 
 
+    private void fetchBaseData() {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Message msg = Message.obtain();
+                HttpCatcher httpCatcher = null;
+                try {
+                    if (!BazaStadiona.getInstance().isLoaded()) {
+                        httpCatcher = new HttpCatcher(RequestPreparator.GETSTADION, AllStatic.HTTPHOST, null);
+                        httpCatcher.catchData();
+                    }
+                    if (!BazaPozicija.getInstance().isLoaded()) {
+                        httpCatcher = new HttpCatcher(RequestPreparator.GETPOZICIJA, AllStatic.HTTPHOST, null);
+                        httpCatcher.catchData();
+                    }
+                    if (!BazaIgraca.getInstance().isLoaded()) {
+                        httpCatcher = new HttpCatcher(RequestPreparator.GETEKIPA, AllStatic.HTTPHOST, null);
+                        httpCatcher.catchData();
+                    }
+                    runOnUiThread(new Runnable() {
+                                      @Override
+                                      public void run() {
+                                          btnStartMatch.setEnabled(true);
+                                      }
+                                  }
+                    );
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+    }
 
-    private void checkEveything() {
+    private void fetchmatchdata() {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Message msg = Message.obtain();
+                HttpCatcher httpCatcher = null;
+                try {
+                    httpCatcher = new HttpCatcher(RequestPreparator.GETLIVEMATCH, AllStatic.HTTPHOST, null);
+                    httpCatcher.catchData();
+//                    Thread.sleep(1000);
+                    httpCatcher = new HttpCatcher(RequestPreparator.GETSASTAV, AllStatic.HTTPHOST, null);
+                    httpCatcher.catchData();
+                    httpCatcher = new HttpCatcher(RequestPreparator.ALLEVENTS, AllStatic.HTTPHOST, null);
+                    httpCatcher.catchData();
+                    runOnUiThread(new Runnable() {
+                                      @Override
+                                      public void run() {
+                                          if (eveythingOK())
+                                              enableAllButtons();
+                                          else
+                                              disableAllButtons();
+                                          progressBar.setVisibility(View.INVISIBLE);
+                                      }
+                                  }
+                    );
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+    }
+
+
+    private boolean eveythingOK() {
         Utakmica utakmica = Utakmica.getInstance();
         if (!utakmica.getDatum().isToday()) {
             disableAllButtons();
-            return;
+            return false;
         }
         if (!utakmica.isFromHttpServer())
-            disableAllButtons();
+            return false;
         else {
-            enableAllButtons();
+            return true;
         }
     }
 
-    private void disableAllButtons() {
+    public void disableAllButtons() {
         btnMakeSastav.setEnabled(false);
         btnEnterEvent.setEnabled(false);
         btnDeleteEvent.setEnabled(false);
     }
 
 
-    private void enableAllButtons() {
+    public void enableAllButtons() {
         btnMakeSastav.setEnabled(true);
         btnEnterEvent.setEnabled(true);
         btnDeleteEvent.setEnabled(true);

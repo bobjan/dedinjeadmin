@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="complementdark">#113d00</color>
+    <color name="complementdark">#23600D</color>
     <color name="complementclr">#90c97b</color>
     <color name="complementlght">#c9df89</color>
 
 
     <color name="baseclr">#73225c</color>
-    <color name="basedark">#8f3f79</color>
+    <color name="baseliht">#8f3f79</color>
     <color name="baselight">#b06c9d</color>
+    <color name="basedark">#540B40</color>
 
 
 

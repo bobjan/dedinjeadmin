@@ -34,6 +34,7 @@ public class LoginActivity extends AppCompatActivity {
         etPassword = (EditText) findViewById(R.id.etPassword);
         btnLogin = (Button) findViewById(R.id.btnLogin);
         firstActivity = new Intent(this, AfterLoginActivity.class);
+        btnLogin.setEnabled(false);
 
 //        firstActivity = new Intent(this, EventsActivity.class);
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -53,15 +54,15 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        handler = new Handler() {
+        handler = new Handler();/* {
             @Override
             public void handleMessage(Message msg) {
                 if(msg.arg1 == 1)
                     btnLogin.setEnabled(true);
                 if(msg.arg1 == -1)
-                    Toast.makeText(getApplicationContext(),"URK connection error", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"URL connection error", Toast.LENGTH_LONG).show();
             }
-        };
+        };*/
     }
 
 
@@ -83,11 +84,20 @@ public class LoginActivity extends AppCompatActivity {
                     try {
                         httpCatcher = new HttpCatcher(RequestPreparator.GETLIGA, AllStatic.HTTPHOST, null);
                         httpCatcher.catchData();
-                        msg.arg1 = 1;
-                        handler.handleMessage(msg);
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                btnLogin.setEnabled(true);
+                            }
+                        });
                     } catch (IOException e) {
-                        msg.arg1 = -1;
-                        handler.handleMessage(msg);
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(getApplicationContext(),"URL connection error", Toast.LENGTH_LONG).show();
+                            }
+                        });
+
                     }
                 }
             });

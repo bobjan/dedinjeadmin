@@ -50,7 +50,7 @@ public class DeleteEventsActivity extends AppCompatActivity {
                 });
                 alertDialogBuilder.setNegativeButton("Не", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        Log.w(TAG, " Cance dialog");
+//                        Log.w(TAG, " Cance dialog");
                         dialog.cancel();
                     }
                 });

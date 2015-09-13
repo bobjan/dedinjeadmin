@@ -2,8 +2,10 @@ package com.logotet.dedinjeadmin;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
-
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -17,6 +19,8 @@ import com.logotet.dedinjeadmin.model.BazaIgraca;
 import com.logotet.dedinjeadmin.model.Igrac;
 import com.logotet.dedinjeadmin.threads.RequestThread;
 import com.logotet.dedinjeadmin.xmlparser.RequestPreparator;
+
+import java.io.IOException;
 
 public class SastavActivity extends AppCompatActivity {
     private static final String TAG = "SastavActivity";
@@ -45,6 +49,10 @@ public class SastavActivity extends AppCompatActivity {
     Button btnConfirmsastav;
     Intent intent;
 
+    Handler handler;
+
+    boolean fetched;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +70,7 @@ public class SastavActivity extends AppCompatActivity {
 
         btnSviIgraci = (Button) findViewById(R.id.btnVanProtokola);
         btnUProtokolu = (Button) findViewById(R.id.btnUProtokolu);
-    btnConfirmsastav = (Button) findViewById(R.id.btnConfirmSastav);
+        btnConfirmsastav = (Button) findViewById(R.id.btnConfirmSastav);
 
         lvIgraci = (ListView) findViewById(R.id.lvIgraci);
         lvUProtokolu = (ListView) findViewById(R.id.lvUProtokolu);
@@ -87,6 +95,11 @@ public class SastavActivity extends AppCompatActivity {
                 btnSviIgraci.setBackgroundColor(clrDeselected);
                 llSviIgraci.setVisibility(View.GONE);
                 llUProtokolu.setVisibility(View.VISIBLE);
+                if(fetched) {
+                    fullAdapter.notifyDataSetChanged();
+                    btnUProtokolu.setText(tekstProtokol + "(" + BazaIgraca.getInstance().getuProtokolu().size() + ")");
+                }
+
             }
         });
 
@@ -97,6 +110,10 @@ public class SastavActivity extends AppCompatActivity {
                 btnSviIgraci.setBackgroundColor(clrSelected);
                 llSviIgraci.setVisibility(View.VISIBLE);
                 llUProtokolu.setVisibility(View.GONE);
+                if(fetched) {
+                    fullAdapter.notifyDataSetChanged();
+                    btnUProtokolu.setText(tekstProtokol + "(" + BazaIgraca.getInstance().getuProtokolu().size() + ")");
+                }
             }
         });
 
@@ -120,6 +137,11 @@ public class SastavActivity extends AppCompatActivity {
                 fullAdapter.notifyDataSetChanged();
                 protokolAdapter.notifyDataSetChanged();
                 btnUProtokolu.setText(tekstProtokol + "(" + BazaIgraca.getInstance().getuProtokolu().size() + ")");
+                if (BazaIgraca.getInstance().getuProtokolu().size() < 11)
+                    btnConfirmsastav.setEnabled(false);
+                else
+                    btnConfirmsastav.setEnabled(true);
+
             }
         });
 
@@ -134,6 +156,60 @@ public class SastavActivity extends AppCompatActivity {
                 finish();
             }
         });
+        handler = new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                if(msg.arg1 == 100){
+                    fetched = true;
+                    btnUProtokolu.setEnabled(true);
+                    btnSviIgraci.setEnabled(true);
+                    BazaIgraca.getInstance().refreshProtokol();
+                }
+            }
+        };
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.w(TAG, "onResum()");
+        btnUProtokolu.setEnabled(false);
+        btnSviIgraci.setEnabled(false);
+        BazaIgraca.getInstance().refreshBrojeviNaDresu();
+        fullAdapter.notifyDataSetChanged();
+        protokolAdapter.notifyDataSetChanged();
+        fetched = false;
+        fetchSastav();
+    }
+
+    private void fetchSastav() {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Message msg = Message.obtain();
+                HttpCatcher httpCatcher = null;
+                try {
+                    httpCatcher = new HttpCatcher(RequestPreparator.GETSASTAV, AllStatic.HTTPHOST, null);
+                    httpCatcher.catchData();
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            fetched = true;
+                            btnUProtokolu.setEnabled(true);
+                            btnSviIgraci.setEnabled(true);
+                            BazaIgraca.getInstance().refreshProtokol();
+                            fullAdapter.notifyDataSetChanged();
+                            protokolAdapter.notifyDataSetChanged();
+                            btnUProtokolu.setText(tekstProtokol + "(" + BazaIgraca.getInstance().getuProtokolu().size() + ")");
+
+                        }
+                    });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
     }
 
     @Override
