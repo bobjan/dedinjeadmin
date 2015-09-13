@@ -23,6 +23,7 @@ public class AfterLoginActivity extends AppCompatActivity {
     Button btnMakeSastav;
     Button btnEnterEvent;
     Button btnDeleteEvent;
+    Button btnClientLook;
     Button btnLogout;
 
     Activity ovaAktivnost;
@@ -40,6 +41,7 @@ public class AfterLoginActivity extends AppCompatActivity {
         btnMakeSastav = (Button) findViewById(R.id.btnMakeSastav);
         btnEnterEvent = (Button) findViewById(R.id.btnEnterEvent);
         btnDeleteEvent = (Button) findViewById(R.id.btnDeleteEvent);
+        btnClientLook = (Button) findViewById(R.id.btnClientLook);
         btnLogout = (Button) findViewById(R.id.btnLogout);
 
         progressBar = (ProgressBar) findViewById(R.id.pbProgressBar);
@@ -77,6 +79,15 @@ public class AfterLoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        btnClientLook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ovaAktivnost, ClientLookActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override

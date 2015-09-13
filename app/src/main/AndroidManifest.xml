@@ -5,6 +5,7 @@
     <!-- To access Google+ APIs: -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <!--
  To retrieve OAuth 2.0 tokens or invalidate tokens to disconnect a user. This disconnect
      option is required to comply with the Google+ Sign-In developer policies
@@ -15,8 +16,9 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".LoginActivity" android:screenOrientation="portrait"
-            android:label="@string/app_name" >
+            android:name=".LoginActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,8 +26,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".StartMatchActivity" android:screenOrientation="portrait"
-            android:label="@string/menuStart" >
+            android:name=".StartMatchActivity"
+            android:label="@string/menuStart"
+            android:screenOrientation="portrait" >
         </activity>
 
         <meta-data
@@ -33,20 +36,28 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name=".EventsActivity" android:screenOrientation="portrait"
-            android:label="@string/menuDogadjaj" >
+            android:name=".EventsActivity"
+            android:label="@string/menuDogadjaj"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".DeleteEventsActivity" android:screenOrientation="portrait"
-            android:label="@string/menuBrisanje" >
+            android:name=".DeleteEventsActivity"
+            android:label="@string/menuBrisanje"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".SastavActivity" android:screenOrientation="portrait"
-            android:label="@string/menuSastav" >
+            android:name=".SastavActivity"
+            android:label="@string/menuSastav"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".AfterLoginActivity" android:screenOrientation="portrait"
-            android:label="@string/title_activity_after_login" >
+            android:name=".AfterLoginActivity"
+            android:label="@string/title_activity_after_login"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ClientLookActivity"
+            android:label="Приказ утакмице" >
         </activity>
     </application>
 

@@ -198,6 +198,7 @@ public class SastavActivity extends AppCompatActivity {
                             btnUProtokolu.setEnabled(true);
                             btnSviIgraci.setEnabled(true);
                             BazaIgraca.getInstance().refreshProtokol();
+
                             fullAdapter.notifyDataSetChanged();
                             protokolAdapter.notifyDataSetChanged();
                             btnUProtokolu.setText(tekstProtokol + "(" + BazaIgraca.getInstance().getuProtokolu().size() + ")");

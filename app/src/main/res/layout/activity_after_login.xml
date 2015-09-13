@@ -24,7 +24,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
         android:id="@+id/btnStartMatch"
         android:text="@string/menuStart"
         android:background="@drawable/actionbutton"
@@ -65,6 +65,18 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/btnEnterEvent"/>
 
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:id="@+id/btnClientLook"
+        android:text="@string/menuClientLook"
+        android:background="@drawable/actionbutton"
+        android:textColor="@color/btn1_font"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/btnDeleteEvent"/>
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -74,8 +86,7 @@
         android:background="@drawable/actionbutton"
         android:textColor="@color/btn1_font"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/btnDeleteEvent"/>
-
+        android:layout_below="@+id/btnClientLook"/>
 
 </RelativeLayout>
 

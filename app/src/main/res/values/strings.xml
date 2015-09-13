@@ -11,6 +11,7 @@
     <string name="menuDogadjaj">Унос догађаја</string>
     <string name="menuSastav">Унос састава тима</string>
     <string name="menuBrisanje">Брисање догађаја</string>
+    <string name="menuClientLook">Приказ утакмице</string>
     <string name="menuLogout">Одјава</string>
 
     <string name="creatematch">Креирај утакмицу</string>
@@ -63,6 +64,11 @@
     <string name="btn_sviigraci">Сви играчи</string>
     <string name="btn_protokol">У протоколу</string>
     <string name="btn_sendevent">Пошаљи догађај</string>
+
+    <string name="title_activity_client_look">ClientLookActivity</string>
+
+
+    <string name="action_settings">Settings</string>
 
 
 </resources>

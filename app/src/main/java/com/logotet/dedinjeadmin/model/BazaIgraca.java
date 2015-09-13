@@ -116,9 +116,10 @@ public class BazaIgraca {
             vanProtokola.add(igrac);
             if(igrac.getBrojNaDresu() < Igrac.MAXDRES){
                 ubaciUProtokol(igrac);
-                Log.w(TAG, igrac.punOpis());
+//                Log.w(TAG, igrac.punOpis());
             }
         }
+        sortirajProtokol();
     }
 
     public boolean ubaciUProtokol(Igrac igrac) {
@@ -150,6 +151,11 @@ public class BazaIgraca {
     public void sortirajVanProtokola() {
         IgracComparator ic = new IgracComparator(IgracComparator.BYID);
         Collections.sort(vanProtokola, ic);
+    }
+
+    public void sortirajProtokol() {
+        IgracComparator ic = new IgracComparator(IgracComparator.BYDRES);
+        Collections.sort(uProtokolu, ic);
     }
 
 
