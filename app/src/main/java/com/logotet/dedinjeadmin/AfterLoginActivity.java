@@ -42,6 +42,9 @@ public class AfterLoginActivity extends AppCompatActivity {
 
     Handler handler;
 
+    Thread threadOne = new Thread();
+    Thread threadTwo = new Thread();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,8 +128,27 @@ public class AfterLoginActivity extends AppCompatActivity {
         }
         progressBar.setVisibility(View.VISIBLE);
         fetchBaseData();
+        while (threadOne.isAlive()){
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
         progressBar.setVisibility(View.VISIBLE);
-        fetchmatchdata();
+        fetchMatchData();
+
+        while (threadTwo.isAlive()){
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        BazaIgraca.getInstance().refreshProtokol();
+        Log.w(TAG, "**" +  BazaIgraca.getInstance().getProtokol());
+        Log.w(TAG, "**" +  BazaIgraca.getInstance().getNaTerenu().size() + "......" + BazaIgraca.getInstance().getNaKlupi().size());
+
     }
 
     @Override
@@ -137,7 +159,7 @@ public class AfterLoginActivity extends AppCompatActivity {
 
 
     private void fetchBaseData() {
-        Thread thread = new Thread(new Runnable() {
+        threadOne = new Thread(new Runnable() {
             @Override
             public void run() {
                 Message msg = Message.obtain();
@@ -155,6 +177,8 @@ public class AfterLoginActivity extends AppCompatActivity {
                         httpCatcher = new HttpCatcher(RequestPreparator.GETEKIPA, AllStatic.HTTPHOST, null);
                         httpCatcher.catchData();
                     }
+
+
                     runOnUiThread(new Runnable() {
                                       @Override
                                       public void run() {
@@ -167,11 +191,11 @@ public class AfterLoginActivity extends AppCompatActivity {
                 }
             }
         });
-        thread.start();
+        threadOne.start();
     }
 
-    private void fetchmatchdata() {
-        Thread thread = new Thread(new Runnable() {
+    private void fetchMatchData() {
+        threadTwo = new Thread(new Runnable() {
             @Override
             public void run() {
                 Message msg = Message.obtain();
@@ -183,12 +207,13 @@ public class AfterLoginActivity extends AppCompatActivity {
                     }
                     httpCatcher = new HttpCatcher(RequestPreparator.GETLIVEMATCH, AllStatic.HTTPHOST, null);
                     httpCatcher.catchData();
-//                    Thread.sleep(1000);
+                    BazaIgraca.getInstance().refreshBrojeviNaDresu();
                     httpCatcher = new HttpCatcher(RequestPreparator.GETSASTAV, AllStatic.HTTPHOST, null);
                     httpCatcher.catchData();
+
                     httpCatcher = new HttpCatcher(RequestPreparator.ALLEVENTS, AllStatic.HTTPHOST, null);
                     httpCatcher.catchData();
-                    runOnUiThread(new Runnable() {
+                   runOnUiThread(new Runnable() {
                                       @Override
                                       public void run() {
                                           if (eveythingOK())
@@ -197,23 +222,23 @@ public class AfterLoginActivity extends AppCompatActivity {
                                               disableAllButtons();
                                           progressBar.setVisibility(View.INVISIBLE);
                                           displayMatchInfo();
+                                          BazaIgraca.getInstance().refreshProtokol();
                                       }
                                   }
                     );
                 } catch (IOException e) {
                     e.printStackTrace();
+
                 }
             }
         });
-        thread.start();
+        threadTwo.start();
     }
 
    public void displayMatchInfo(){
-       BazaTimova bazaTimova = BazaTimova.getInstance();
        Utakmica utakmica = Utakmica.getInstance();
        tvMatchInfoFirstLine.setText(utakmica.getDatum().toString());
        tvMatchInfoSecondLine.setText(utakmica.getHomeTeamName() + "  -  " + utakmica.getAwayTeamName());
-//       Log.w(TAG, bazaTimova.toString());
        tvMatchInfoFirstLine.setVisibility(View.VISIBLE);
        tvMatchInfoSecondLine.setVisibility(View.VISIBLE);
    }

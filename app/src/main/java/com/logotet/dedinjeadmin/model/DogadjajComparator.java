@@ -9,7 +9,7 @@ public class DogadjajComparator implements Comparator {
     public int compare(Object o1, Object o2) {
         DogadjajComparable d1 = (DogadjajComparable) o1;
         DogadjajComparable d2 = (DogadjajComparable) o2;
-        return d2.getMinutIgre() - d1.getMinutIgre();
+        return d1.getMinutIgre() - d2.getMinutIgre();
     }
 
     public boolean equals(Object obj) {

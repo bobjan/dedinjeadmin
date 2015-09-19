@@ -120,6 +120,7 @@ public class MatchAnalizator {
             Dogadjaj d = iter.next();
             d.modifyMinut(stvarnoVremePocetka, stvarnoVremeKraja);
         }
+       sortiraj();
     }
 
     public boolean uToku() {
@@ -179,6 +180,47 @@ public class MatchAnalizator {
                 return true;
         }
         return false;
+    }
+    public int getCurrentMinutIgre(){
+        int diffSeconds = Servertime.getInstance().getDiff();
+
+        BJTime now = new BJTime();
+
+        BJTime serverNow = new BJTime(now.getSeconds() + diffSeconds);
+
+        int[] tmpMinut = new int[4];
+        try {
+            tmpMinut[0] = (int) ((serverNow.getSeconds() - stvarnoVremePocetka[0].getSeconds()) / 60);
+        } catch (NullPointerException npe) {
+            tmpMinut[0] = -1;
+        }
+        try {
+            tmpMinut[1] = (int) ((serverNow.getSeconds()- stvarnoVremeKraja[0].getSeconds()) / 60);
+        } catch (NullPointerException npe) {
+            tmpMinut[1] = -1;
+        }
+        try {
+            tmpMinut[2] = (int) ((serverNow.getSeconds()-  stvarnoVremePocetka[1].getSeconds()) / 60);
+        } catch (NullPointerException npe) {
+            tmpMinut[2] = -1;
+        }
+        try {
+            tmpMinut[3] = (int) ((serverNow.getSeconds()-  stvarnoVremeKraja[1].getSeconds()) / 60);
+        } catch (NullPointerException npe) {
+            tmpMinut[3] = -1;
+        }
+
+        if (tmpMinut[0] <= 45) {
+            return tmpMinut[0];
+        }
+        if ((tmpMinut[2] < 0) && (tmpMinut[1] > 0)) {
+            return  45;
+        }
+        if (tmpMinut[2] < 45) {
+           return 45 + tmpMinut[2];
+
+        }
+        return 90;
     }
 
 }

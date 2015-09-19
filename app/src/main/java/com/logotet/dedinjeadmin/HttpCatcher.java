@@ -1,14 +1,5 @@
 package com.logotet.dedinjeadmin;
 
-import android.app.Activity;
-import android.os.Handler;
-import android.os.Message;
-import android.view.View;
-
-import com.logotet.dedinjeadmin.model.BazaIgraca;
-import com.logotet.dedinjeadmin.model.BazaPozicija;
-import com.logotet.dedinjeadmin.model.BazaStadiona;
-import com.logotet.dedinjeadmin.model.BazaTimova;
 import com.logotet.dedinjeadmin.xmlparser.AlleventsXMLHandler;
 import com.logotet.dedinjeadmin.xmlparser.EkipaXMLHandler;
 import com.logotet.dedinjeadmin.xmlparser.FixturesXMLHandler;
@@ -37,6 +28,7 @@ import java.net.URL;
  * Created by boban on 9/11/15.
  */
 public class HttpCatcher {
+    private static int httpCounter = 0;
     private String urlAdresa;
     private String requestParams;
 
@@ -47,6 +39,7 @@ public class HttpCatcher {
     int what;
 
     public HttpCatcher(int what, String host, Object object) throws IOException {
+        httpCounter++;
         this.urlAdresa = host;
         this.what = what;
         requestParams = RequestPreparator.getRequest(what, object);
@@ -99,6 +92,9 @@ public class HttpCatcher {
         return sb;
     }
 
+    public static int getHttpCounter() {
+        return httpCounter;
+    }
 
     public void catchData() {
         try {
@@ -154,8 +150,10 @@ public class HttpCatcher {
                     myXMLHandler = new SastavXMLHandler(instream);
                     break;
             }
-            if (myXMLHandler != null)
+            if (myXMLHandler != null) {
                 myXMLHandler.doEntireJob();
+                httpCounter--;
+            }
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -165,44 +163,4 @@ public class HttpCatcher {
         }
     }
 
-
-    public static void fetchMatchData(final Handler handler, final View view, final Activity activity) {
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Message msg = Message.obtain();
-                HttpCatcher httpCatcher = null;
-                try {
-                    httpCatcher = new HttpCatcher(RequestPreparator.GETLIVEMATCH, AllStatic.HTTPHOST, null);
-                    httpCatcher.catchData();
-//                    msg.arg1 = 50;
-                    handler.handleMessage(msg);
-//                    Thread.sleep(1000);
-                    httpCatcher = new HttpCatcher(RequestPreparator.GETSASTAV, AllStatic.HTTPHOST, null);
-                    httpCatcher.catchData();
-//                    msg.arg1 = 80;
-                    handler.handleMessage(msg);
-//                    Thread.sleep(1000);
-                    httpCatcher = new HttpCatcher(RequestPreparator.ALLEVENTS, AllStatic.HTTPHOST, null);
-                    httpCatcher.catchData();
-//                    msg.arg1 = 100;
-//                    handler.handleMessage(msg);
-                    Thread.sleep(100);
-                    activity.runOnUiThread(new Runnable() {
-                                               @Override
-                                               public void run() {
-                                                   ((AfterLoginActivity) activity).enableAllButtons();
-                                               }
-                                           }
-                    );
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-
-        thread.start();
-    }
 }

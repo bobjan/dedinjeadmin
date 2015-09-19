@@ -199,6 +199,7 @@ public class Utakmica {
     }
 
     public void odrediMinutazu() {
+
         matchAnalizator.odrediMinutazu();
     }
 
@@ -248,6 +249,15 @@ public class Utakmica {
 
     public String getCurrentRezulat(Dogadjaj dogadjaj) {
         return dogadjaj.getRezultat(userTeamDomacin);
+    }
+
+
+    public String getCurrentMinutIgre(){
+        if(isFinished())
+            return "FT";
+        if(!isStarted())
+            return planiranoVremePocetka.toString();
+        return matchAnalizator.getCurrentMinutIgre() + "'";
     }
 
     public String getCurrentMinutIgre(Dogadjaj dogadjaj) {

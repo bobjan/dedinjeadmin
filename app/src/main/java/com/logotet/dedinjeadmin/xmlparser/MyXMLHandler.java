@@ -1,5 +1,7 @@
 package com.logotet.dedinjeadmin.xmlparser;
 
+import android.util.Log;
+
 import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
@@ -14,6 +16,7 @@ import java.net.MalformedURLException;
  * Created by boban on 8/28/15.
  */
 public class MyXMLHandler extends DefaultHandler {
+    private static final String TAG = "MyXMLHandler";
     protected int pcData = 0;
     protected CharArrayWriter contents = new CharArrayWriter();
     protected InputStream inputStream;
@@ -23,7 +26,6 @@ public class MyXMLHandler extends DefaultHandler {
         this.inputStream = inputStream;
         isOk = false;
     }
-
     public final boolean isOk() {
         return isOk;
     }
@@ -41,6 +43,7 @@ public class MyXMLHandler extends DefaultHandler {
 
             // Parse the file...
             xr.parse(new InputSource(inputStream));
+            Log.w(TAG, " gotovo parsiranje");
         } catch (MalformedURLException urle) {
             throw new MalformedURLException();
 

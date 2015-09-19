@@ -165,7 +165,6 @@ public class StartMatchActivity extends AppCompatActivity {
             datum = new BJDatum();
         }
 
-
         vreme = new BJTime(etVremePocetka.getText().toString());
 
         utakmica.setDatum(datum);
@@ -187,7 +186,6 @@ public class StartMatchActivity extends AppCompatActivity {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
         }
-
     }
 
     @Override

@@ -9,7 +9,7 @@ import java.net.URLEncoder;
 /**
  * Created by logotet on 8/26/15.
  */
-public class Dogadjaj implements NumericStringComparable {
+public class Dogadjaj implements NumericStringComparable, DogadjajComparable {
     public static final int STARTUTAKMICE = 0;
     public static final int HALFTIME = 1;
     public static final int STARTDRUGOPOLUVREME = 2;
@@ -214,11 +214,13 @@ public class Dogadjaj implements NumericStringComparable {
                 (tipDogadjaja == TACANMINUT);
     }
 
-    public boolean isInformativni() {
+    public boolean isKomentar() {
         return (tipDogadjaja == KOMENTAR);
     }
 
-
+/**
+ * da bi se trazio unos igraca
+ * */
     public boolean isIgracki() {
         return (tipDogadjaja == GOLFKDEDINJE) ||
                 (tipDogadjaja == GOLPENALFKDEDINJE) ||
@@ -237,10 +239,55 @@ public class Dogadjaj implements NumericStringComparable {
         return ((tipDogadjaja == GOLPROTIVNIK) || (tipDogadjaja == GOLPENALPROTIVNIK));
     }
 
+    public boolean isZutiKarton(){
+        return ((tipDogadjaja == ZUTIKARTONFKDEDINJE) ||
+                (tipDogadjaja == ZUTIKARTONPROTIVNIK));
+    }
+    public boolean isDrugiZuti(){
+        return ((tipDogadjaja == DRUGIZUTIFKDEDINJE) ||
+                (tipDogadjaja == DRUGIZUTIPROTIVNIK));
+    }
+    public boolean isCrveniKarton(){
+        return ((tipDogadjaja == CRVENIKARTONFKDEDINJE) ||
+                (tipDogadjaja == CRVENIKARTONPROTIVNIK));
+    }
+
+    public boolean isMissedPenalty(){
+        return ((tipDogadjaja == MISSEDPENALFKDEDINJE) ||
+                (tipDogadjaja == MISSEDPENALPROTIVNIK));
+    }
 
     public boolean isGoal(){
         return isGoalDedinje() || isGoalProtivnik();
     }
+
+
+    public boolean isIzmena(){
+        return (tipDogadjaja == IZMENAIGRACA);
+    }
+
+
+    public boolean isForDedinje(){
+        return ((tipDogadjaja == GOLFKDEDINJE) ||
+                (tipDogadjaja == GOLPENALFKDEDINJE) ||
+                (tipDogadjaja == MISSEDPENALFKDEDINJE) ||
+                (tipDogadjaja == ZUTIKARTONFKDEDINJE) ||
+                (tipDogadjaja == DRUGIZUTIFKDEDINJE) ||
+                (tipDogadjaja == CRVENIKARTONFKDEDINJE));
+    }
+
+
+    public boolean isForProtivnik(){
+        return ((tipDogadjaja == GOLPROTIVNIK) ||
+                (tipDogadjaja == GOLPENALPROTIVNIK) ||
+                (tipDogadjaja == MISSEDPENALPROTIVNIK) ||
+                (tipDogadjaja == ZUTIKARTONPROTIVNIK) ||
+                (tipDogadjaja == DRUGIZUTIPROTIVNIK) ||
+                (tipDogadjaja == CRVENIKARTONPROTIVNIK));
+    }
+
+
+
     public String toString() {
         StringBuffer sb = new StringBuffer(opis[tipDogadjaja]);
         sb.append(" ");

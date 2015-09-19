@@ -63,6 +63,8 @@ public class EventsActivity extends AppCompatActivity implements View.OnClickLis
     int clrSelected;
     int clrUnselected;
 
+    ArrayAdapter<String> naTerenuAdapter;
+    ArrayAdapter<String> naKlupiAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +72,7 @@ public class EventsActivity extends AppCompatActivity implements View.OnClickLis
 
         naTerenu = BazaIgraca.getInstance().getNaTerenu();
         naKlupi = BazaIgraca.getInstance().getNaKlupi();
-        Log.w(TAG, "na terenu = " + naTerenu.size() + "\tna klupi = " + naKlupi.size());
+//        Log.w(TAG, "na terenu = " + naTerenu.size() + "\tna klupi = " + naKlupi.size());
         npMinut = (EditText) findViewById(R.id.etMinutKorekcije);
 
 
@@ -110,10 +112,10 @@ public class EventsActivity extends AppCompatActivity implements View.OnClickLis
         spIgracOut = (Spinner) findViewById(R.id.spinPlayerOut);
 
 
-        ArrayAdapter<String> naTerenuAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item, naTerenu);
+        naTerenuAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item, naTerenu);
         naTerenuAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
 
-        ArrayAdapter<String> naKlupiAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item, naKlupi);
+        naKlupiAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item, naKlupi);
         naKlupiAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
 
         spKarton.setAdapter(naTerenuAdapter);
@@ -224,6 +226,9 @@ public class EventsActivity extends AppCompatActivity implements View.OnClickLis
         btnSendKarton.setOnClickListener(this);
         btnSendKomentar.setOnClickListener(this);
         setDefaults();
+        naKlupiAdapter.notifyDataSetChanged();
+        naTerenuAdapter.notifyDataSetChanged();
+
     }
 
     private void setDefaults() {

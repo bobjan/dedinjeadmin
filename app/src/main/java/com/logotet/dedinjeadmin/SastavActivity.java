@@ -172,7 +172,7 @@ public class SastavActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Log.w(TAG, "onResum()");
+//        Log.w(TAG, "onResum()");
         btnUProtokolu.setEnabled(false);
         btnSviIgraci.setEnabled(false);
         BazaIgraca.getInstance().refreshBrojeviNaDresu();
@@ -180,6 +180,8 @@ public class SastavActivity extends AppCompatActivity {
         protokolAdapter.notifyDataSetChanged();
         fetched = false;
         fetchSastav();
+        Log.w(TAG, BazaIgraca.getInstance().getNaTerenu().size() + "......" + BazaIgraca.getInstance().getNaKlupi().size());
+
     }
 
     private void fetchSastav() {
@@ -202,7 +204,6 @@ public class SastavActivity extends AppCompatActivity {
                             fullAdapter.notifyDataSetChanged();
                             protokolAdapter.notifyDataSetChanged();
                             btnUProtokolu.setText(tekstProtokol + "(" + BazaIgraca.getInstance().getuProtokolu().size() + ")");
-
                         }
                     });
                 } catch (IOException e) {
