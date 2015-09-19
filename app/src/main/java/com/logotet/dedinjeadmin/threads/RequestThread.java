@@ -1,7 +1,5 @@
 package com.logotet.dedinjeadmin.threads;
 
-import android.util.Log;
-
 import com.logotet.dedinjeadmin.xmlparser.*;
 
 import java.io.BufferedInputStream;

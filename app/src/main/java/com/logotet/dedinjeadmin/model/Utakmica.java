@@ -1,5 +1,6 @@
 package com.logotet.dedinjeadmin.model;
 
+
 import android.util.Log;
 
 import com.logotet.util.BJDatum;
@@ -34,6 +35,7 @@ public class Utakmica {
 
     private boolean sortirano;
 
+    MatchAnalizator matchAnalizator;
 
     public static Utakmica getInstance() {
         if (utakmica == null)
@@ -45,6 +47,7 @@ public class Utakmica {
         svaDogadjanja = new ArrayList<Dogadjaj>();
         sortirano = true;
         fromHttpServer = false;
+        matchAnalizator = new MatchAnalizator(this);
         datum = new BJDatum();
     }
 
@@ -131,13 +134,25 @@ public class Utakmica {
         return svaDogadjanja;
     }
 
-    public void refresh() {
-        svaDogadjanja.clear();
 
+    public ArrayList<Dogadjaj> getVremenskiTok() {
+        return matchAnalizator.getVremenskiTok();
+    }
+
+
+    public ArrayList<Dogadjaj> getTokZaPrikaz() {
+        return matchAnalizator.getTokZaPrikaz();
+    }
+
+
+    public void clear() {
+        svaDogadjanja.clear();
         sortirano = true;
+        matchAnalizator.setRefreshed(false);
     }
 
     public void add(Dogadjaj dogadjaj) {
+        matchAnalizator.setRefreshed(false);
         sortirano = false;
         if (!svaDogadjanja.contains(dogadjaj))
             svaDogadjanja.add(dogadjaj);
@@ -150,19 +165,66 @@ public class Utakmica {
     }
 
     public void remove(Dogadjaj dogadjaj) {
-        if (svaDogadjanja.contains(dogadjaj)){
-            Log.w(TAG," contains dogadja and is to be removed");
-            svaDogadjanja.remove(dogadjaj);}else{
-            Log.w(TAG," NOT containing dogadja NOR removed");
-
+        matchAnalizator.setRefreshed(false);
+        if (svaDogadjanja.contains(dogadjaj)) {
+//            Log.w(TAG," contains dogadja and is to be removed");
+            svaDogadjanja.remove(dogadjaj);
+        } else {
+//            Log.w(TAG," NOT containing dogadja NOR removed");
         }
     }
 
-    public boolean isTodayMatch() {
-        return datum.isToday();
+
+    /**
+     * ako je u livescore.xml mec koji j eplaniran za danas, sutra ...
+     * akoje danasnji, a vec je zavrsen vraca false
+     **/
+    public boolean isNextMatch() {
+        BJDatum danas = new BJDatum();
+        if (danas.daysDifference(datum) > 0) return false;
+        if (datum.isToday() && isFinished()) return false;
+        return true;
+    }
+
+    public boolean isFinished() {
+        return matchAnalizator.isFinished();
+    }
+
+    public boolean uToku() {
+        return matchAnalizator.uToku();
+    }
+
+    public boolean isStarted() {
+        return matchAnalizator.isStarted();
+    }
+
+    public void odrediMinutazu() {
+        matchAnalizator.odrediMinutazu();
     }
 
 
+    public String getHomeTeamName() {
+        if (!isUserTeamDomacin()) {
+            Tim tim = BazaTimova.getInstance().getTim(protivnikId);
+            if(tim == null)
+                return "******";
+            return tim.getNaziv();
+        } else
+            return AppHeaderData.getInstance().getUserTeamName();
+
+
+    }
+
+    public String getAwayTeamName() {
+        if (isUserTeamDomacin()) {
+          Tim tim = BazaTimova.getInstance().getTim(protivnikId);
+            if(tim == null)
+                return "*****";
+            return tim.getNaziv();
+        } else
+            return AppHeaderData.getInstance().getUserTeamName();
+
+    }
 
     public String toString() {
         StringBuffer sb = new StringBuffer();
@@ -174,4 +236,22 @@ public class Utakmica {
         }
         return sb.toString();
     }
+
+    public String getCurrentRezulat() {
+        int[] rez = matchAnalizator.getRezultat();
+        if (userTeamDomacin) {
+            return rez[0] + ":" + rez[1];
+        } else {
+            return rez[1] + ":" + rez[0];
+        }
+    }
+
+    public String getCurrentRezulat(Dogadjaj dogadjaj) {
+        return dogadjaj.getRezultat(userTeamDomacin);
+    }
+
+    public String getCurrentMinutIgre(Dogadjaj dogadjaj) {
+        return dogadjaj.getMinutIgre() + "'";
+    }
+
 }

@@ -6,25 +6,36 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.logotet.dedinjeadmin.model.BazaIgraca;
 import com.logotet.dedinjeadmin.model.BazaPozicija;
 import com.logotet.dedinjeadmin.model.BazaStadiona;
+import com.logotet.dedinjeadmin.model.BazaTimova;
 import com.logotet.dedinjeadmin.model.Utakmica;
 import com.logotet.dedinjeadmin.xmlparser.RequestPreparator;
 
 import java.io.IOException;
 
 public class AfterLoginActivity extends AppCompatActivity {
+    private static final String TAG = "AfterLoginActivity";
+
+
+
     Button btnStartMatch;
     Button btnMakeSastav;
     Button btnEnterEvent;
     Button btnDeleteEvent;
     Button btnClientLook;
     Button btnLogout;
+
+
+    TextView tvMatchInfoFirstLine;
+    TextView tvMatchInfoSecondLine;
 
     Activity ovaAktivnost;
     ProgressBar progressBar;
@@ -43,6 +54,9 @@ public class AfterLoginActivity extends AppCompatActivity {
         btnDeleteEvent = (Button) findViewById(R.id.btnDeleteEvent);
         btnClientLook = (Button) findViewById(R.id.btnClientLook);
         btnLogout = (Button) findViewById(R.id.btnLogout);
+
+        tvMatchInfoFirstLine = (TextView) findViewById(R.id.tvMatchInfoFirstLine);
+        tvMatchInfoSecondLine = (TextView) findViewById(R.id.tvMatchInfoSecondLine);
 
         progressBar = (ProgressBar) findViewById(R.id.pbProgressBar);
 
@@ -163,6 +177,10 @@ public class AfterLoginActivity extends AppCompatActivity {
                 Message msg = Message.obtain();
                 HttpCatcher httpCatcher = null;
                 try {
+                    if (!BazaTimova.getInstance().isLoaded()) {
+                        httpCatcher = new HttpCatcher(RequestPreparator.GETLIGA, AllStatic.HTTPHOST, null);
+                        httpCatcher.catchData();
+                    }
                     httpCatcher = new HttpCatcher(RequestPreparator.GETLIVEMATCH, AllStatic.HTTPHOST, null);
                     httpCatcher.catchData();
 //                    Thread.sleep(1000);
@@ -178,6 +196,7 @@ public class AfterLoginActivity extends AppCompatActivity {
                                           else
                                               disableAllButtons();
                                           progressBar.setVisibility(View.INVISIBLE);
+                                          displayMatchInfo();
                                       }
                                   }
                     );
@@ -189,13 +208,23 @@ public class AfterLoginActivity extends AppCompatActivity {
         thread.start();
     }
 
+   public void displayMatchInfo(){
+       BazaTimova bazaTimova = BazaTimova.getInstance();
+       Utakmica utakmica = Utakmica.getInstance();
+       tvMatchInfoFirstLine.setText(utakmica.getDatum().toString());
+       tvMatchInfoSecondLine.setText(utakmica.getHomeTeamName() + "  -  " + utakmica.getAwayTeamName());
+//       Log.w(TAG, bazaTimova.toString());
+       tvMatchInfoFirstLine.setVisibility(View.VISIBLE);
+       tvMatchInfoSecondLine.setVisibility(View.VISIBLE);
+   }
+
 
     private boolean eveythingOK() {
         Utakmica utakmica = Utakmica.getInstance();
-        if (!utakmica.getDatum().isToday()) {
-            disableAllButtons();
-            return false;
-        }
+//        if (!utakmica.isNextMatch()) {
+//            disableAllButtons();
+//            return false;
+//        }
         if (!utakmica.isFromHttpServer())
             return false;
         else {
@@ -209,11 +238,9 @@ public class AfterLoginActivity extends AppCompatActivity {
         btnDeleteEvent.setEnabled(false);
     }
 
-
     public void enableAllButtons() {
         btnMakeSastav.setEnabled(true);
         btnEnterEvent.setEnabled(true);
         btnDeleteEvent.setEnabled(true);
     }
-
 }

@@ -10,6 +10,7 @@ public class Fixtures {
     private static Fixtures raspored = null;
     private ArrayList<FixturesRow> lista;
 
+    private String sezona;
     public static Fixtures getInstance() {
         if (raspored == null)
             raspored = new Fixtures();
@@ -18,6 +19,15 @@ public class Fixtures {
 
     private Fixtures() {
         lista = new ArrayList<FixturesRow>();
+    }
+
+
+    public String getSezona() {
+        return sezona;
+    }
+
+    public void setSezona(String sezona) {
+        this.sezona = sezona;
     }
 
     public void add(FixturesRow row) {

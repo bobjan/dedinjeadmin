@@ -18,6 +18,7 @@
             android:layout_marginRight="30dp"
             android:textColor="@color/screen_font"
             android:layout_gravity="center_horizontal"
+            android:gravity="center_vertical"
             android:text="@string/prompt_lateminutes"    />
         <EditText
             android:layout_width="60dp"
@@ -36,39 +37,66 @@
 
         <Button
             android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_weight="0.2"
+            android:layout_height="42dp"
+            android:layout_weight="1"
+            android:padding="0dp"
+            android:layout_margin="2dp"
             android:id="@+id/btnExpandTime"
+            android:background="@color/baselight"
+            android:textColor="@color/screen_font"
             android:textAllCaps="false"
-            android:drawableLeft="@drawable/watch"  />
+            android:text="@string/btn_vreme"
+            android:drawableLeft="@drawable/watch30x30"    />
         <Button
             android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_weight="0.2"
-            android:id="@+id/btnExpandGoal"
+            android:layout_height="42dp"
+            android:layout_weight="1"
+            android:layout_margin="2dp"
+            android:text="@string/btn_kartoni"
+            android:textColor="@color/screen_font"
+            android:background="@color/baseclr"
             android:textAllCaps="false"
-            android:drawableLeft="@drawable/goal"  />
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_weight="0.2"
             android:id="@+id/btnExpandKarton"
-            android:drawableLeft="@drawable/kartoni"  />
+            android:drawableLeft="@drawable/secondyellow30x30"  />
         <Button
             android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_weight="0.2"
+            android:layout_height="42dp"
+            android:layout_margin="2dp"
+            android:layout_weight="1"
+            android:text="@string/btn_izmena"
+            android:textColor="@color/screen_font"
+            android:background="@color/baseclr"
             android:id="@+id/btnExpandIzmena"
             android:textAllCaps="false"
-            android:drawableLeft="@drawable/arrows"  />
+            android:drawableLeft="@drawable/swap30x30"  />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="42dp"
+            android:layout_weight="1"
+            android:layout_margin="2dp"
+            android:id="@+id/btnExpandGoal"
+            android:background="@color/baseclr"
+            android:text="@string/btn_golpenal"
+            android:textColor="@color/screen_font"
+            android:textAllCaps="false"
+            android:drawableLeft="@drawable/football30x30"  />
 
         <Button
             android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_weight="0.2"
+            android:layout_height="42dp"
+            android:layout_weight="1"
+            android:layout_margin="2dp"
+            android:background="@color/baseclr"
+            android:textColor="@color/screen_font"
+            android:text="@string/btn_komentar"
             android:id="@+id/btnExpandKomentar"
             android:textAllCaps="false"
-            android:drawableLeft="@drawable/komentar"   />
+            android:drawableLeft="@drawable/komentar30x30"   />
 
     </LinearLayout>
 
@@ -151,7 +179,7 @@
             android:orientation="vertical"
             android:layout_marginTop="20dp"
             android:layout_gravity="center_horizontal"
-            android:background="@color/complementlght"
+            android:background="@color/baselight"
             android:id="@+id/rgWhoseGol"     >
 
             <RadioButton
@@ -178,6 +206,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/screen_font"
                 android:id="@+id/rbGolGame"
+                android:checked="true"
                 android:text="@string/golgame"/>
             <RadioButton
                 android:layout_width="wrap_content"
@@ -202,6 +231,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/btnGoal"
             android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
             android:text="@string/btn_sendevent"
             android:background="@drawable/actionbutton"
             android:textColor="@color/btn1_font" />
@@ -222,7 +252,7 @@
             android:layout_marginTop="20dp"
             android:layout_gravity="center_horizontal"
             android:layout_alignParentRight="true"
-            android:background="@color/basedark"
+            android:background="@color/baselight"
             android:id="@+id/rgWhoseKarton" >
 
             <RadioButton
@@ -251,6 +281,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/screen_font"
+                android:checked="true"
                 android:id="@+id/rbZutiKarton"
                 android:text="@string/zutikarton"  />
             <RadioButton
@@ -277,6 +308,7 @@
             android:layout_width="160dp"
             android:layout_height="wrap_content"
             android:id="@+id/btnKarton"
+            android:layout_marginTop="20dp"
             android:layout_gravity="center_horizontal"
             android:text="@string/btn_sendevent"
             android:background="@drawable/actionbutton"
@@ -298,19 +330,23 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/screen_font"
             android:text="@string/playerout"  />
         <Spinner
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/screen_font"
             android:id="@+id/spinPlayerOut" > </Spinner>
         <TextView
             android:layout_width="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_height="wrap_content"
+            android:textColor="@color/screen_font"
             android:text="@string/playerin"  />
         <Spinner
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/screen_font"
             android:id="@+id/spinPlayerIn" >    </Spinner>
         <Button
             android:layout_width="160dp"
@@ -321,8 +357,6 @@
             android:text="@string/btn_sendevent"
             android:background="@drawable/actionbutton"
             android:textColor="@color/btn1_font" />
-
-
     </LinearLayout>
 
 
@@ -339,11 +373,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:textColor="@color/screen_font"
             android:text="@string/prompt_komentar"/>
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:lines="5"
+            android:textColor="@color/screen_font"
             android:id="@+id/etKomentar"  />
         <Button
             android:layout_width="160dp"

@@ -41,7 +41,7 @@ public class Dogadjaj implements NumericStringComparable {
 
 
     private int tipDogadjaja;
-    private int minut;
+    private int minut;       // minut iz http requesta NE MENJATI !!!
     private int playerId;
     private int playerInId;
     private int playerOutId;
@@ -51,21 +51,24 @@ public class Dogadjaj implements NumericStringComparable {
     private BJTime serverTime;
     private int stringServerTime;
 
+    private int[] rezultat;  // rezultat nakon dogadjaja 0 - dedinje 1 - protivnik
 
     private boolean toBeCreated;
 
+    private int minutIgre;
+
     public Dogadjaj() {
         toBeCreated = true;
+        rezultat = new int[2];
     }
 
     public Dogadjaj(String file, String serverVreme, int tipDogadjaja) {
         toBeCreated = false;
+        rezultat = new int[2];
         this.tipDogadjaja = tipDogadjaja;
         this.fileName = file;
         int tmpTime = Integer.parseInt(serverVreme.trim());
         stringServerTime = tmpTime;
-        this.minut = -1;
-
         int sec = tmpTime % 100;
         tmpTime /= 100;
         int min = tmpTime % 100;
@@ -73,31 +76,8 @@ public class Dogadjaj implements NumericStringComparable {
         serverTime = new BJTime(hour, min, sec);
     }
 
-
-    public Dogadjaj(String file, String serverVreme, int tipDogadjaja, int someInt) {
-        this(file, serverVreme, tipDogadjaja);
-        if (isIgracki())
-            this.playerId = someInt;
-        else if (isVremenski())
-            this.minut = someInt;
-        else
-            System.out.println("GRESKA !!!!!!");
-    }
-
-
-    public Dogadjaj(String file, String serverVreme, int tipDogadjaja, int playerInId, int playerOutId) {
-        this(file, serverVreme, tipDogadjaja);
-        this.playerInId = playerInId;
-        this.playerOutId = playerOutId;
-    }
-
-    public Dogadjaj(String file, String serverVreme, int tipDogadjaja, String komentar) {
-        this(file, serverVreme, tipDogadjaja);
-        this.komentar = komentar;
-    }
-
     public void setTipDogadjaja(int tipDogadjaja) {
-        if(toBeCreated)
+        if (toBeCreated)
             this.tipDogadjaja = tipDogadjaja;
     }
 
@@ -184,6 +164,20 @@ public class Dogadjaj implements NumericStringComparable {
         return playerOutId;
     }
 
+
+    public int[] getRezultat() {
+        return rezultat;
+    }
+
+    public void setRezultat(int[] rez) {
+        rezultat[0] = rez[0];
+        rezultat[1] = rez[1];
+    }
+
+    public int getMinutIgre() {
+        return minutIgre;
+    }
+
     public String getPlayerName() {
         try {
             return BazaIgraca.getInstance().getIgrac(playerId).getNaziv();
@@ -235,11 +229,25 @@ public class Dogadjaj implements NumericStringComparable {
                 (tipDogadjaja == IZMENAIGRACA);
     }
 
+    public boolean isGoalDedinje() {
+        return ((tipDogadjaja == GOLFKDEDINJE) || (tipDogadjaja == GOLPENALFKDEDINJE));
+    }
 
+    public boolean isGoalProtivnik() {
+        return ((tipDogadjaja == GOLPROTIVNIK) || (tipDogadjaja == GOLPENALPROTIVNIK));
+    }
+
+
+    public boolean isGoal(){
+        return isGoalDedinje() || isGoalProtivnik();
+    }
     public String toString() {
         StringBuffer sb = new StringBuffer(opis[tipDogadjaja]);
-        if (isIgracki())
+        sb.append(" ");
+        if (!isIgracki())
             sb.append("  " + AppHeaderData.getInstance().getUserTeamName());
+        else
+            sb.append(getIgrackiTekst());
         return sb.toString();
 
 //        return fileName + "\t" + tipDogadjaja + "\t" + serverTime.toString();
@@ -259,31 +267,50 @@ public class Dogadjaj implements NumericStringComparable {
         return stringServerTime;
     }
 
+    /**
+     *
+     *
+     * */
     public void modifyMinut(BJTime[] vremePocetka, BJTime[] vremeKraja) {
         int[] tmpMinut = new int[4];
-        tmpMinut[0] = (int) ((serverTime.getSeconds() - vremePocetka[0].getSeconds()) / 60);
-        tmpMinut[1] = (int) ((serverTime.getSeconds() - vremeKraja[0].getSeconds()) / 60);
-        tmpMinut[2] = (int) ((serverTime.getSeconds() - vremePocetka[1].getSeconds()) / 60);
-        tmpMinut[3] = (int) ((serverTime.getSeconds() - vremePocetka[1].getSeconds()) / 60);
+        try {
+            tmpMinut[0] = (int) ((serverTime.getSeconds() - (60*minut) - vremePocetka[0].getSeconds()) / 60);
+        } catch (NullPointerException npe) {
+            tmpMinut[0] = -1;
+        }
+        try {
+            tmpMinut[1] = (int) ((serverTime.getSeconds()- (60*minut) - vremeKraja[0].getSeconds()) / 60);
+        } catch (NullPointerException npe) {
+            tmpMinut[1] = -1;
+        }
+        try {
+            tmpMinut[2] = (int) ((serverTime.getSeconds()- (60*minut) - vremePocetka[1].getSeconds()) / 60);
+        } catch (NullPointerException npe) {
+            tmpMinut[2] = -1;
+        }
+        try {
+            tmpMinut[3] = (int) ((serverTime.getSeconds()- (60*minut) - vremeKraja[1].getSeconds()) / 60);
+        } catch (NullPointerException npe) {
+            tmpMinut[3] = -1;
+        }
 
         if (tmpMinut[0] < 45) {
-            minut = tmpMinut[0];
+            minutIgre = tmpMinut[0];
             return;
         }
         if ((tmpMinut[2] < 0) && (tmpMinut[1] > 0)) {
-            minut = 45;
+            minutIgre = 45;
             return;
         }
         if (tmpMinut[2] < 45) {
-            minut = 45 + tmpMinut[2];
+            minutIgre = 45 + tmpMinut[2];
             return;
         }
-        minut = 90;
-
+        minutIgre = 90;
     }
 
     public String getCreationHttpParams() {
-        if(!toBeCreated)
+        if (!toBeCreated)
             return "";
         StringBuffer sb = new StringBuffer("?eventid=" + tipDogadjaja);
         if (minut >= 0)
@@ -301,6 +328,13 @@ public class Dogadjaj implements NumericStringComparable {
 //            e.printStackTrace();
         }
         return sb.toString();
+    }
 
+    public String getRezultat(boolean userTeamDomacin) {
+        if (userTeamDomacin) {
+            return rezultat[0] + ":" + rezultat[1];
+        } else {
+            return rezultat[1] + ":" + rezultat[0];
+        }
     }
 }

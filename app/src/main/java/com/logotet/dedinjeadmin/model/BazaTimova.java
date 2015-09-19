@@ -38,7 +38,7 @@ public class BazaTimova {
 
     public Tim getTim(int id) {
         for (int i = 0; i < protivnici.size(); i++) {
-            Tim tmp = protivnici.get(id);
+            Tim tmp = protivnici.get(i);
             if (tmp.getId() == id)
                 return tmp;
         }

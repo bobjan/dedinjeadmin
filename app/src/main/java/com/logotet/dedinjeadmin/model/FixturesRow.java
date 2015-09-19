@@ -16,6 +16,7 @@ public class FixturesRow {
     private int wescored;
     private int theyscored;
 
+
     public FixturesRow(String kolo, String datum, String protivnik, String domacin, String played, String wescored, String theyscored) {
 
         this.protivnik = protivnik;
@@ -78,6 +79,8 @@ public class FixturesRow {
     public int getTheyscored() {
         return theyscored;
     }
+
+
 
     @Override
     public String toString() {

@@ -10,6 +10,8 @@ public class Tabela {
     private static Tabela tabela = null;
     private ArrayList<TabelaRow> lista;
 
+    private String sezona;
+    private int lastRound;
     public static Tabela getInstance() {
         if (tabela == null)
             tabela = new Tabela();
@@ -18,6 +20,31 @@ public class Tabela {
 
     private Tabela() {
         lista = new ArrayList<TabelaRow>();
+    }
+
+
+
+    public String getSezona() {
+        return sezona;
+    }
+
+    public void setSezona(String sezona) {
+        this.sezona = sezona;
+    }
+
+    public int getLastRound() {
+        return lastRound;
+    }
+
+    public void setLastRound(int lastRound) {
+        this.lastRound = lastRound;
+    }
+    public void setLastRound(String lround) {
+        try{
+            setLastRound(Integer.parseInt(lround.trim()));
+        }catch (NumberFormatException nfe){
+            setLastRound(0);
+        }
     }
 
     public void add(TabelaRow row) {

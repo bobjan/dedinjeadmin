@@ -1,5 +1,7 @@
 package com.logotet.dedinjeadmin.model;
 
+import java.util.StringTokenizer;
+
 /**
  * Created by logotet on 8/27/15.
  */
@@ -9,6 +11,15 @@ public class TabelaRow {
     private String pwdl;
     private String goaldif;
     private String points;
+    private boolean userTeam;
+
+    private int goalsFor;
+    private int goalsAgainst;
+
+    private int win;
+    private int draw;
+    private int lose;
+    private int played;
 
     public TabelaRow(String broj, String naziv, String pwdl, String goaldif, String points) {
         this.broj = broj;
@@ -16,6 +27,44 @@ public class TabelaRow {
         this.pwdl = pwdl;
         this.goaldif = goaldif;
         this.points = points;
+        parseAll();
+    }
+
+    private void parseAll() {
+        StringTokenizer st = new StringTokenizer(pwdl, " ");
+        try {
+           played = Integer.parseInt(st.nextToken().trim());
+        } catch (NumberFormatException nfe) {
+            played = 0;
+        }
+
+        try {
+           win = Integer.parseInt(st.nextToken().trim());
+        } catch (NumberFormatException nfe) {
+            win = 0;
+        }
+        try {
+           draw = Integer.parseInt(st.nextToken().trim());
+        } catch (NumberFormatException nfe) {
+            draw = 0;
+        }
+        try {
+           lose = Integer.parseInt(st.nextToken().trim());
+        } catch (NumberFormatException nfe) {
+            lose = 0;
+        }
+
+        st = new StringTokenizer(goaldif,":");
+        try {
+           goalsFor = Integer.parseInt(st.nextToken().trim());
+        } catch (NumberFormatException nfe) {
+            goalsFor = 0;
+        }
+        try {
+           goalsAgainst = Integer.parseInt(st.nextToken().trim());
+        } catch (NumberFormatException nfe) {
+            goalsAgainst = 0;
+        }
     }
 
     public String getBroj() {
@@ -35,8 +84,28 @@ public class TabelaRow {
     }
 
     public String getPoints() {
-        return points;
+        return points.trim();
     }
+
+    public boolean isUserTeam() {
+        return userTeam;
+    }
+
+    public void setUserTeam(boolean userTeam) {
+        this.userTeam = userTeam;
+    }
+
+    public void setUserTeam(String userTeam) {
+        try {
+            int tmp = Integer.parseInt(userTeam.trim());
+            setUserTeam(tmp == 1);
+        } catch (NumberFormatException nfe) {
+            setUserTeam(false);
+        } catch (NullPointerException npe) {
+            setUserTeam(false);
+        }
+    }
+
 
     @Override
     public String toString() {

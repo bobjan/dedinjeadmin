@@ -11,8 +11,6 @@ import java.io.InputStream;
  * Klasa koja parsira config.xml
  */
 public class FixturesXMLHandler extends MyXMLHandler {
-
-
     private Fixtures fixtures;
     final static int KOLO = 123;
 
@@ -32,14 +30,14 @@ public class FixturesXMLHandler extends MyXMLHandler {
         if (rawName.equals("fixtures")) {
             isOk = true;
             fixtures = Fixtures.getInstance();
+            fixtures.setSezona(attr.getValue("sezona"));
         }
         if (rawName.equals("kolo")) {
             pcData = KOLO;
             fixtures.add(new FixturesRow(attr.getValue("broj"),
-                    attr.getValue("datum"), attr.getValue("protivnik"),
-                    attr.getValue("domacin"), attr.getValue("played"),
-                    attr.getValue("wescored"), attr.getValue("theyscored")));
-
+                                            attr.getValue("datum"), attr.getValue("protivnik"),
+                                            attr.getValue("domacin"), attr.getValue("played"),
+                                            attr.getValue("wescored"), attr.getValue("theyscored")));
         }
     }
 

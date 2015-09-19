@@ -57,13 +57,22 @@
     <string name="prompt_komentar">Унеси коментар:</string>
 
     <string name="prompt_domacin">ФК Дедиње домаћин?</string>
-    <string name="prompt_lateminutes">Минути корекције</string>
+    <string name="prompt_lateminutes">Минути корекције:</string>
 
 
     <string name="btn_confirmsastav">Коначан састав</string>
     <string name="btn_sviigraci">Сви играчи</string>
     <string name="btn_protokol">У протоколу</string>
     <string name="btn_sendevent">Пошаљи догађај</string>
+
+
+
+    <string name="btn_vreme">време</string>
+    <string name="btn_golpenal">гол / пенал</string>
+    <string name="btn_kartoni">картони</string>
+    <string name="btn_izmena">измена</string>
+    <string name="btn_komentar">коментар</string>
+
 
     <string name="title_activity_client_look">ClientLookActivity</string>
 

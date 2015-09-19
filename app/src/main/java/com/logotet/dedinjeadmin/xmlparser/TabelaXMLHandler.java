@@ -12,7 +12,7 @@ import java.io.InputStream;
  */
 public class TabelaXMLHandler extends MyXMLHandler {
 
-
+      TabelaRow row;
     Tabela tabela;
 
     public TabelaXMLHandler(InputStream inputStream) {
@@ -31,12 +31,16 @@ public class TabelaXMLHandler extends MyXMLHandler {
             isOk = true;
             tabela = Tabela.getInstance();
             pcData = 0;
+            tabela.setSezona(attr.getValue("sezona"));
+            tabela.setLastRound(attr.getValue("lastround"));
         }
 
         if (rawName.equals("mesto")) {
             pcData = 2;
-            tabela.add(new TabelaRow(attr.getValue("broj"), attr.getValue("naziv"),
-                    attr.getValue("pwdl"), attr.getValue("goaldif"), attr.getValue("points")));
+            row = new TabelaRow(attr.getValue("broj"), attr.getValue("naziv"),
+                                attr.getValue("pwdl"), attr.getValue("goaldif"), attr.getValue("points"));
+            row.setUserTeam(attr.getValue("user"));
+            tabela.add(row);
         }
     }
 

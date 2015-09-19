@@ -11,7 +11,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.logotet.dedinjeadmin.model.AppHeaderData;
-import com.logotet.dedinjeadmin.threads.RequestThread;
 import com.logotet.dedinjeadmin.xmlparser.RequestPreparator;
 
 import java.io.IOException;
@@ -70,7 +69,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        if(!Checker.isInternetAvailable(getApplicationContext())){
+        if(!NetworkChecker.isInternetAvailable(getApplicationContext())){
             btnLogin.setEnabled(false);
             Toast.makeText(getApplicationContext(),
                     getApplicationContext().getString(R.string.network_error),Toast.LENGTH_LONG).show();

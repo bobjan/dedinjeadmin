@@ -1,6 +1,7 @@
 package com.logotet.dedinjeadmin;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -10,7 +11,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.NumberPicker;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -60,6 +60,8 @@ public class EventsActivity extends AppCompatActivity implements View.OnClickLis
     Igrac igracNapolje;
     Igrac igracUnutra;
 
+    int clrSelected;
+    int clrUnselected;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +72,10 @@ public class EventsActivity extends AppCompatActivity implements View.OnClickLis
         naKlupi = BazaIgraca.getInstance().getNaKlupi();
         Log.w(TAG, "na terenu = " + naTerenu.size() + "\tna klupi = " + naKlupi.size());
         npMinut = (EditText) findViewById(R.id.etMinutKorekcije);
+
+
+        clrUnselected = getResources().getColor(R.color.baseclr);
+        clrSelected = getResources().getColor(R.color.baselight);
 
         btnExpand = new Button[5];
         llExpand = new LinearLayout[5];
@@ -104,11 +110,11 @@ public class EventsActivity extends AppCompatActivity implements View.OnClickLis
         spIgracOut = (Spinner) findViewById(R.id.spinPlayerOut);
 
 
-        ArrayAdapter<String> naTerenuAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, naTerenu);
-        naTerenuAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<String> naTerenuAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item, naTerenu);
+        naTerenuAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
 
-        ArrayAdapter<String> naKlupiAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, naKlupi);
-        naKlupiAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<String> naKlupiAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item, naKlupi);
+        naKlupiAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
 
         spKarton.setAdapter(naTerenuAdapter);
         spStrelac.setAdapter(naTerenuAdapter);
@@ -163,23 +169,24 @@ public class EventsActivity extends AppCompatActivity implements View.OnClickLis
             }
         });
 
-        for (btnIdx = 0; btnIdx < btnExpand.length; btnIdx++) {
+        for (btnIdx = 0; btnIdx < btnExpand.length; btnIdx++)
             btnExpand[btnIdx].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     for (int j = 0; j < llExpand.length; j++) {
                         llExpand[j].setVisibility(View.GONE);
-                        btnExpand[j].setBackgroundResource(R.drawable.unselbutton);
+//                        btnExpand[j].setBackgroundResource(R.drawable.unselbutton);
+                        btnExpand[j].setBackgroundColor(clrUnselected);
                     }
                     for (int i = 0; i < btnExpand.length; i++) {
                         if (btnExpand[i].getId() == v.getId()) {
                             llExpand[i].setVisibility(View.VISIBLE);
-                            btnExpand[i].setBackgroundResource(R.drawable.selbutton);
+//                            btnExpand[i].setBackgroundResource(R.drawable.selbutton);
+                            btnExpand[i].setBackgroundColor(clrSelected);
                         }
                     }
                 }
             });
-        }
 
         rgWhoseKarton.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -326,7 +333,7 @@ public class EventsActivity extends AppCompatActivity implements View.OnClickLis
             Toast.makeText(getApplicationContext(),
                     getApplicationContext().getString(R.string.invalid_entry), Toast.LENGTH_LONG).show();
         }
-        Toast.makeText(getApplicationContext(),getApplicationContext().getString(R.string.simple_message), Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.simple_message), Toast.LENGTH_LONG).show();
     }
 
     @Override

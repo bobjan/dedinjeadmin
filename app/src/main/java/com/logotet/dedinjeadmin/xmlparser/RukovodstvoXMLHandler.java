@@ -1,8 +1,6 @@
 package com.logotet.dedinjeadmin.xmlparser;
 
-import com.logotet.dedinjeadmin.model.BazaIgraca;
 import com.logotet.dedinjeadmin.model.BazaOsoba;
-import com.logotet.dedinjeadmin.model.Igrac;
 import com.logotet.dedinjeadmin.model.Osoba;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;

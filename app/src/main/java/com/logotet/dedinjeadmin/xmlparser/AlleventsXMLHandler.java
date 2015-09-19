@@ -39,7 +39,7 @@ public class AlleventsXMLHandler extends MyXMLHandler {
 
         if (rawName.equals("allevents")) {
             utakmica = Utakmica.getInstance();
-            utakmica.refresh();
+            utakmica.clear();
             pcData = ALLEVENTS;
         }
 
