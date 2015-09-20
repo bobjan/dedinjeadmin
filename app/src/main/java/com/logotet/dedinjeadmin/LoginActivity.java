@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.logotet.dedinjeadmin.model.AppHeaderData;
+import com.logotet.dedinjeadmin.model.Servertime;
 import com.logotet.dedinjeadmin.xmlparser.RequestPreparator;
 
 import java.io.IOException;
@@ -83,6 +84,7 @@ public class LoginActivity extends AppCompatActivity {
                     try {
                         httpCatcher = new HttpCatcher(RequestPreparator.SERVERTIME, AllStatic.HTTPHOST, null);
                         httpCatcher.catchData();
+                        Servertime st = Servertime.getInstance();
                         Thread.sleep(1000);
                         httpCatcher = new HttpCatcher(RequestPreparator.GETLIGA, AllStatic.HTTPHOST, null);
                         httpCatcher.catchData();

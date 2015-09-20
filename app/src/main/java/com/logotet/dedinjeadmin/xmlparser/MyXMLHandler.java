@@ -22,6 +22,8 @@ public class MyXMLHandler extends DefaultHandler {
     protected InputStream inputStream;
     protected boolean isOk;
 
+    protected String tempTekst;
+
     public MyXMLHandler(InputStream inputStream) {
         this.inputStream = inputStream;
         isOk = false;

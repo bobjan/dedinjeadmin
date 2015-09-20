@@ -11,8 +11,6 @@ import java.io.InputStream;
  * Klasa koja parsira servertime.xml
  */
 public class ServertimeXMLHandler extends MyXMLHandler {
-
-
     final int SERVERTIME = 10;
 
     public ServertimeXMLHandler(InputStream inputStream) {
@@ -30,7 +28,7 @@ public class ServertimeXMLHandler extends MyXMLHandler {
 
         if (rawName.equals("servertime")) {
             isOk = true;
-            pcData = SERVERTIME;
+//            pcData = SERVERTIME;
         }
     }
 
@@ -40,18 +38,19 @@ public class ServertimeXMLHandler extends MyXMLHandler {
     public void endElement(String namespaceURI, String localName,
                            String rawName) throws SAXException {
         if (rawName.equals("servertime")) {
-            pcData = SERVERTIME + 200;
+            Servertime.getInstance(tempTekst);
+//            pcData = SERVERTIME + 200;
         }
     }
-
     /**
      * Za sve PCDATA iz XML fajla
      */
     public void characters(char[] ch, int start, int length) throws SAXException {
         contents.write(ch, start, length);//ne znam cemu sluzi ali neka ostane
-        String tekst = new String(ch, start, length);
-        if (pcData == SERVERTIME)
-            Servertime.getInstance(tekst.trim());
+        tempTekst = new String(ch, start, length);
+//        String tekst = new String(ch, start, length);
+//        if (pcData == SERVERTIME)
+//            Servertime.getInstance(tekst.trim());
     }
 
 
