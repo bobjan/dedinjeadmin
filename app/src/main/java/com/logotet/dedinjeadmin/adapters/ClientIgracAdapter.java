@@ -55,39 +55,24 @@ public class ClientIgracAdapter extends BaseAdapter {
         TextView tvIgrac = (TextView) convertView.findViewById(R.id.tvcIgracUProtokolu);
         TextView tvBrojNaDresu = (TextView) convertView.findViewById(R.id.tvcBrojNaDresu);
 
-        int clrKlupa = parent.getResources().getColor(R.color.complementclr);
-        int clrStarter = parent.getResources().getColor(R.color.complementlght);
-
+        int clrKlupa = parent.getResources().getColor(R.color.grey);
+        int clrStarter = parent.getResources().getColor(R.color.screen_font);
 
         Igrac igrac = (Igrac) getItem(position);
 
         tvIgrac.setText(igrac.getNaziv());
         tvBrojNaDresu.setText(igrac.getBrojNaDresu() + "");
 
-  /*      tvIgrac.setTextColor(Color.WHITE);
+      tvIgrac.setTextColor(Color.WHITE);
 
-        if(igrac.getBrojNaDresu() < 12)
+        if(igrac.getBrojNaDresu() < 12){
             tvBrojNaDresu.setTextColor(clrStarter);
-        else
-            tvBrojNaDresu.setTextColor(clrKlupa);
-*/
-
-/*
-        switch(igrac.getDefaultPozicija()){
-            case 1:
-                tvIgrac.setBackgroundResource(R.drawable.golmanbutton);
-                break;
-            case 2:
-                tvIgrac.setBackgroundResource(R.drawable.odbranabutton);
-                break;
-            case 3:
-                tvIgrac.setBackgroundResource(R.drawable.veznibutton);
-                break;
-            default:
-                tvIgrac.setBackgroundResource(R.drawable.napadbutton);
-                break;
+            tvIgrac.setTextColor(clrStarter);
         }
-        */
+        else {
+            tvBrojNaDresu.setTextColor(clrKlupa);
+            tvIgrac.setTextColor(clrKlupa);
+        }
         return convertView;
     }
 }

@@ -63,6 +63,10 @@ public class SimpleIgracAdapter extends BaseAdapter {
 
         tvIgrac.setBackgroundResource(R.drawable.veznibutton);
 
+
+
+        tvIgrac.setBackgroundResource(R.drawable.veznibutton);
+/*
         switch(igrac.getDefaultPozicija()){
             case 1:
                 tvIgrac.setBackgroundResource(R.drawable.golmanbutton);
@@ -79,7 +83,7 @@ public class SimpleIgracAdapter extends BaseAdapter {
 
         }
 
-
+*/
         tvIgrac.setText(igrac.getNaziv());
 
         return convertView;

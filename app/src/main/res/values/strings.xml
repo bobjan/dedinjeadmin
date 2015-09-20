@@ -73,6 +73,8 @@
     <string name="btn_izmena">измена</string>
     <string name="btn_komentar">коментар</string>
 
+    <string name="btn_events">ток уткмице</string>
+    <string name="btn_lineup">састав</string>
 
     <string name="title_activity_client_look">ClientLookActivity</string>
 

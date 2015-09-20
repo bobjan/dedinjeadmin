@@ -8,17 +8,16 @@
         android:padding="0dp"
         android:layout_height="wrap_content"
         android:background="@color/verydark"
-        android:textSize="14sp"
+        android:textSize="12sp"
         android:textColor="@color/complementlght"/>
 
     <TextView
         android:id="@+id/tvcIgracUProtokolu"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         android:padding="0dp"
-        android:textSize="14sp"
+        android:textSize="12sp"
         android:background="@color/verydark"
-        android:textColor="@color/screen_font"
         android:paddingLeft="10dp"/>
 
 </LinearLayout>

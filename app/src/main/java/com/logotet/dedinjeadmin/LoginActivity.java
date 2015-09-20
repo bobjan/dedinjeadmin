@@ -81,6 +81,9 @@ public class LoginActivity extends AppCompatActivity {
                     Message msg = new Message();
                     HttpCatcher httpCatcher = null;
                     try {
+                        httpCatcher = new HttpCatcher(RequestPreparator.SERVERTIME, AllStatic.HTTPHOST, null);
+                        httpCatcher.catchData();
+                        Thread.sleep(1000);
                         httpCatcher = new HttpCatcher(RequestPreparator.GETLIGA, AllStatic.HTTPHOST, null);
                         httpCatcher.catchData();
                         handler.post(new Runnable() {
@@ -97,6 +100,8 @@ public class LoginActivity extends AppCompatActivity {
                             }
                         });
 
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
                 }
             });

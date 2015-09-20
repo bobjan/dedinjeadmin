@@ -121,115 +121,135 @@ public class ClientEventsAdapter extends BaseAdapter {
 
             }
         }
-        TextView tvMinut;
-        TextView tvPlayer;
+        TextView tvhMinut;
+        TextView tvhPlayer;
+        TextView tvhScore;
+        ImageView ivhFirstIcon;
+        ImageView ivhSecondIcon;
+
+
+
+
+        TextView tvaMinut;
+        TextView tvaPlayer;
+        TextView tvaScore;
+        ImageView ivaFirstIcon;
+        ImageView ivaSecondIcon;
+
+
+        TextView tvsMinut;
+        ImageView ivsFirstIcon;
         TextView tvPlayerIn;
         TextView tvPlayerOut;
-        TextView tvScore;
+        TextView tvkMinut;
         TextView tvKomentar;
-        ImageView ivFirstIcon;
-        ImageView ivSecondIcon;
 
 
         switch (getItemViewType(position)){
             case 1:
-                tvMinut = (TextView) convertView.findViewById(R.id.tvhEventMinut);
-                tvPlayer = (TextView) convertView.findViewById(R.id.tvhPlayer);
-                tvScore = (TextView) convertView.findViewById(R.id.tvhScore);
-                ivFirstIcon = (ImageView) convertView.findViewById(R.id.ivhFirstIcon);
-                ivSecondIcon = (ImageView) convertView.findViewById(R.id.ivhSecondIcon);
+                tvhMinut = (TextView) convertView.findViewById(R.id.tvhEventMinut);
+                tvhPlayer = (TextView) convertView.findViewById(R.id.tvhPlayer);
+                tvhScore = (TextView) convertView.findViewById(R.id.tvhScore);
+                ivhFirstIcon = (ImageView) convertView.findViewById(R.id.ivhFirstIcon);
+                ivhSecondIcon = (ImageView) convertView.findViewById(R.id.ivhSecondIcon);
+                ivhFirstIcon.setImageDrawable(null);
+                ivhSecondIcon.setImageDrawable(null);
+                tvhScore.setText("");
 
-                tvMinut.setText(dogadjaj.getMinutIgre() + "'");
+                tvhMinut.setText(dogadjaj.getMinutIgre() + "'");
                 if(dogadjaj.isIgracki())
-                    tvPlayer.setText(dogadjaj.getPlayerName());
+                    tvhPlayer.setText(dogadjaj.getPlayerName());
                 if(dogadjaj.isForDedinje()) {
                     if (dogadjaj.isGoal())
-                        ivFirstIcon.setImageDrawable(football);
+                        ivhFirstIcon.setImageDrawable(football);
                     if (dogadjaj.isZutiKarton())
-                        ivFirstIcon.setImageDrawable(yellowCard);
+                        ivhFirstIcon.setImageDrawable(yellowCard);
                     if (dogadjaj.isDrugiZuti())
-                        ivFirstIcon.setImageDrawable(secondYellow);
+                        ivhFirstIcon.setImageDrawable(secondYellow);
                     if (dogadjaj.isCrveniKarton())
-                        ivFirstIcon.setImageDrawable(redCard);
+                        ivhFirstIcon.setImageDrawable(redCard);
                     if (dogadjaj.isMissedPenalty())
-                        ivFirstIcon.setImageDrawable(missedPenalty);
+                        ivhFirstIcon.setImageDrawable(missedPenalty);
                 }else{
                     if (dogadjaj.isGoal())
-                        ivSecondIcon.setImageDrawable(football);
+                        ivhSecondIcon.setImageDrawable(football);
                     if (dogadjaj.isZutiKarton())
-                        ivSecondIcon.setImageDrawable(yellowCard);
+                        ivhSecondIcon.setImageDrawable(yellowCard);
                     if (dogadjaj.isDrugiZuti())
-                        ivSecondIcon.setImageDrawable(secondYellow);
+                        ivhSecondIcon.setImageDrawable(secondYellow);
                     if (dogadjaj.isCrveniKarton())
-                        ivSecondIcon.setImageDrawable(redCard);
+                        ivhSecondIcon.setImageDrawable(redCard);
                     if (dogadjaj.isMissedPenalty())
-                        ivSecondIcon.setImageDrawable(missedPenalty);
+                        ivhSecondIcon.setImageDrawable(missedPenalty);
                 }
                 if(dogadjaj.isGoal()){
                     int[] rez = dogadjaj.getRezultat();
-                    tvScore.setText(rez[0] + " : " + rez[1]);
+                    tvhScore.setText(rez[0] + " : " + rez[1]);
                 }
 
                 break;
             case 2:
-                tvMinut = (TextView) convertView.findViewById(R.id.tvaEventMinut);
-                tvPlayer = (TextView) convertView.findViewById(R.id.tvaPlayer);
-                tvScore = (TextView) convertView.findViewById(R.id.tvaScore);
-                ivFirstIcon = (ImageView) convertView.findViewById(R.id.ivaFirstIcon);
-                ivSecondIcon = (ImageView) convertView.findViewById(R.id.ivaSecondIcon);
-                tvMinut.setText(dogadjaj.getMinutIgre() + "'");
+                tvaMinut = (TextView) convertView.findViewById(R.id.tvaEventMinut);
+                tvaPlayer = (TextView) convertView.findViewById(R.id.tvaPlayer);
+                tvaScore = (TextView) convertView.findViewById(R.id.tvaScore);
+                ivaFirstIcon = (ImageView) convertView.findViewById(R.id.ivaFirstIcon);
+                ivaSecondIcon = (ImageView) convertView.findViewById(R.id.ivaSecondIcon);
+                tvaMinut.setText(dogadjaj.getMinutIgre() + "'");
+                ivaFirstIcon.setImageDrawable(null);
+                ivaSecondIcon.setImageDrawable(null);
+                tvaScore.setText("");
 
                 if(dogadjaj.isIgracki())
-                    tvPlayer.setText(dogadjaj.getPlayerName());
+                    tvaPlayer.setText(dogadjaj.getPlayerName());
                 if(dogadjaj.isForDedinje()) {
                     if (dogadjaj.isGoal())
-                        ivFirstIcon.setImageDrawable(football);
+                        ivaFirstIcon.setImageDrawable(football);
                     if (dogadjaj.isZutiKarton())
-                        ivFirstIcon.setImageDrawable(yellowCard);
+                        ivaFirstIcon.setImageDrawable(yellowCard);
                     if (dogadjaj.isDrugiZuti())
-                        ivFirstIcon.setImageDrawable(secondYellow);
+                        ivaFirstIcon.setImageDrawable(secondYellow);
                     if (dogadjaj.isCrveniKarton())
-                        ivFirstIcon.setImageDrawable(redCard);
+                        ivaFirstIcon.setImageDrawable(redCard);
                     if (dogadjaj.isMissedPenalty())
-                        ivFirstIcon.setImageDrawable(missedPenalty);
+                        ivaFirstIcon.setImageDrawable(missedPenalty);
                 }else{
                     if (dogadjaj.isGoal())
-                        ivSecondIcon.setImageDrawable(football);
+                        ivaSecondIcon.setImageDrawable(football);
                     if (dogadjaj.isZutiKarton())
-                        ivSecondIcon.setImageDrawable(yellowCard);
+                        ivaSecondIcon.setImageDrawable(yellowCard);
                     if (dogadjaj.isDrugiZuti())
-                        ivSecondIcon.setImageDrawable(secondYellow);
+                        ivaSecondIcon.setImageDrawable(secondYellow);
                     if (dogadjaj.isCrveniKarton())
-                        ivSecondIcon.setImageDrawable(redCard);
+                        ivaSecondIcon.setImageDrawable(redCard);
                     if (dogadjaj.isMissedPenalty())
-                        ivSecondIcon.setImageDrawable(missedPenalty);
+                        ivaSecondIcon.setImageDrawable(missedPenalty);
                 }
                 if(dogadjaj.isGoal()){
                     int[] rez = dogadjaj.getRezultat();
-                    tvScore.setText(rez[1] + " : " + rez[0]);
+                    tvaScore.setText(rez[1] + " : " + rez[0]);
                 }
                 break;
             case 3:
-                tvMinut = (TextView) convertView.findViewById(R.id.tvEventMinutSwap);
-                ivFirstIcon = (ImageView) convertView.findViewById(R.id.ivFirstIconSwap);
+                tvsMinut = (TextView) convertView.findViewById(R.id.tvEventMinutSwap);
+                ivsFirstIcon = (ImageView) convertView.findViewById(R.id.ivFirstIconSwap);
                 tvPlayerIn = (TextView) convertView.findViewById(R.id.tvPlayerIn);
                 tvPlayerOut = (TextView) convertView.findViewById(R.id.tvPlayerOut);
 
-                tvMinut.setText(dogadjaj.getMinutIgre() + "'");
+                tvsMinut.setText(dogadjaj.getMinutIgre() + "'");
                 tvPlayerIn.setText(dogadjaj.getPlayerInName());
                 tvPlayerOut.setText(dogadjaj.getPlayerOutName());
 
                 break;
             case 4:
-                tvMinut = (TextView) convertView.findViewById(R.id.tvKomentarMinut);
+                tvkMinut = (TextView) convertView.findViewById(R.id.tvKomentarMinut);
                 tvKomentar = (TextView) convertView.findViewById(R.id.tvKomentar);
-                tvMinut.setText(dogadjaj.getMinutIgre() + "'");
+                tvkMinut.setText(dogadjaj.getMinutIgre() + "'");
                 tvKomentar.setText(dogadjaj.getKomentar());
                 break;
             default:
-                tvMinut = (TextView) convertView.findViewById(R.id.tvKomentarMinut);
+                tvkMinut = (TextView) convertView.findViewById(R.id.tvKomentarMinut);
                 tvKomentar = (TextView) convertView.findViewById(R.id.tvKomentar);
-                tvMinut.setText(" *");
+                tvkMinut.setText(" *");
                 tvKomentar.setText("      ****   ");
                 break;
 

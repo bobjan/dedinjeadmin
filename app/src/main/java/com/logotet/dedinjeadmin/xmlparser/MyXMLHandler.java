@@ -43,7 +43,7 @@ public class MyXMLHandler extends DefaultHandler {
 
             // Parse the file...
             xr.parse(new InputSource(inputStream));
-            Log.w(TAG, " gotovo parsiranje");
+//            Log.w(TAG, " gotovo parsiranje");
         } catch (MalformedURLException urle) {
             throw new MalformedURLException();
 

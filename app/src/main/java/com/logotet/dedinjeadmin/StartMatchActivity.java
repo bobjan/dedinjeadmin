@@ -25,6 +25,7 @@ import com.logotet.dedinjeadmin.xmlparser.RequestPreparator;
 import com.logotet.util.BJDatum;
 import com.logotet.util.BJTime;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 
@@ -51,6 +52,7 @@ public class StartMatchActivity extends AppCompatActivity {
     ArrayList listaProtivnika;
 
     Intent nextIntent;
+    Utakmica utakmica;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +68,6 @@ public class StartMatchActivity extends AppCompatActivity {
         spStadion = (Spinner) findViewById(R.id.spStadion);
         btnCreateMatch = (Button) findViewById(R.id.btnCreateMatch);
         cbDomacin = (CheckBox) findViewById(R.id.cbDomacin);
-
         listaStadiona = BazaStadiona.getInstance().getTereni();
         listaProtivnika = BazaTimova.getInstance().getProtivnici();
 
@@ -87,7 +88,6 @@ public class StartMatchActivity extends AppCompatActivity {
 
         spProtivnik.setAdapter(protivnikAdapter);
 
-
         spStadion.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -99,7 +99,6 @@ public class StartMatchActivity extends AppCompatActivity {
                 selectedStadion = (Stadion) listaStadiona.get(0);
             }
         });
-
 
         spProtivnik.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -113,16 +112,16 @@ public class StartMatchActivity extends AppCompatActivity {
             }
         });
 
-
         nextIntent = new Intent(this, AfterLoginActivity.class);
 
         btnCreateMatch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Utakmica utakmica = Utakmica.getInstance();
+                Utakmica.getInstance().setUserTeamDomacin(cbDomacin.isChecked());
                 if ((utakmica.isFromHttpServer()) && utakmica.getDatum().isToday()) {
                     AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(StartMatchActivity.this);
-                    alertDialogBuilder.setTitle("Већ постоји данашња утакмица. Креирањем нове ће бити обрисани сви постојећи подаци(састав...)");
+                    alertDialogBuilder.setTitle("Креирањем нове ће бити обрисани сви постојећи подаци(састав...)");
 
                     alertDialogBuilder.setMessage("Да, за креирање утакмице!");
                     alertDialogBuilder.setCancelable(false);
@@ -157,23 +156,36 @@ public class StartMatchActivity extends AppCompatActivity {
     }
 
     private void kreirajUtakmicu() {
-        Utakmica utakmica = Utakmica.getInstance();
+        utakmica = Utakmica.getInstance();
 
         try {
             datum = new BJDatum(etDatumUtakmice.getText().toString());
         } catch (ParseException e) {
             datum = new BJDatum();
         }
-
         vreme = new BJTime(etVremePocetka.getText().toString());
 
         utakmica.setDatum(datum);
         utakmica.setProtivnikId(selectedProtivnik.getId());
         utakmica.setStadionId(selectedStadion.getId());
         utakmica.setPlaniranoVremePocetka(vreme);
-        Thread th = new RequestThread(RequestPreparator.STARTMATCH, AllStatic.HTTPHOST, utakmica);
-        th.start();
+
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    HttpCatcher catcher = new HttpCatcher(RequestPreparator.DELETEALL, AllStatic.HTTPHOST, null);
+                    catcher.catchData();
+                    catcher = new HttpCatcher(RequestPreparator.STARTMATCH, AllStatic.HTTPHOST, utakmica);
+                    catcher.catchData();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
         Toast.makeText(getApplicationContext(), "Utakmica je kreirana", Toast.LENGTH_LONG).show();
+
         startActivity(nextIntent);
         finish();
     }

@@ -21,8 +21,7 @@ public class Servertime {
 
 
     public static Servertime getInstance(String stime) {
-        if (servertime == null)
-            servertime = new Servertime();
+        servertime = new Servertime();
         servertime.setClientTime(new BJTime());
 
         int numtime = Integer.parseInt(stime.trim());

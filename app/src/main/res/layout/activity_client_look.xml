@@ -21,17 +21,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tvHomeTeamName"
-        android:text="abc abc abc"
         android:layout_alignParentLeft="true"
         android:layout_toLeftOf="@+id/tvCurrentScore"
-        android:textColor="@color/screen_font"/>
+       android:textColor="@color/screen_font"/>
 
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tvAwayTeamName"
-        android:text="abc abc abc"
         android:gravity="right"
         android:layout_alignParentRight="true"
         android:layout_toRightOf="@+id/tvCurrentScore"
@@ -41,17 +39,23 @@
         android:layout_height="wrap_content"
         android:id="@+id/tvCurrentMinute"
         android:layout_alignParentLeft="true"
+        android:textColor="@color/screen_font"
         android:layout_below="@id/tvHomeTeamName"/>
+
+
     <Button
         android:layout_width="fill_parent"
-        android:layout_height="14dp"
-        android:padding="0dp"
+        android:layout_height="18dp"
         android:id="@+id/btnShowEvents"
         android:layout_marginTop="10dp"
-        android:text="ovo je neki tekst"
+        android:text="@string/btn_events"
         android:textAllCaps="false"
-        android:textSize="10dp"
+        android:textSize="12dp"
         android:gravity="right"
+        android:paddingLeft="0dp"
+        android:paddingTop="0dp"
+        android:paddingBottom="0dp"
+        android:paddingRight="15dp"
         android:background="@drawable/actionbutton"
         android:textColor="@color/screen_font"
         android:layout_below="@id/tvCurrentMinute"/>
@@ -62,7 +66,7 @@
         android:id="@+id/llEvents"
         android:orientation="vertical"
         android:layout_below="@+id/btnShowEvents"
-        android:visibility="gone">
+        android:visibility="visible">
         <ListView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -72,12 +76,15 @@
     <Button
         android:layout_width="fill_parent"
         android:layout_height="14dp"
-        android:padding="0dp"
         android:id="@+id/btnShowSastav"
         android:layout_marginTop="10dp"
-        android:text="i opet tekst malo drugaciji"
+        android:text="@string/btn_lineup"
         android:textAllCaps="false"
-        android:textSize="10dp"
+        android:textSize="12dp"
+        android:paddingLeft="0dp"
+        android:paddingTop="0dp"
+        android:paddingBottom="0dp"
+        android:paddingRight="15dp"
         android:gravity="right"
         android:background="@drawable/actionbutton"
         android:textColor="@color/screen_font"
@@ -94,6 +101,5 @@
             android:layout_height="wrap_content"
             android:id="@+id/lvClientIgrac"></ListView>
     </LinearLayout>
-
 
 </RelativeLayout>

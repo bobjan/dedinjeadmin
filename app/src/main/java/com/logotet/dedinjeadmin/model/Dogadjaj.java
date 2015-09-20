@@ -291,9 +291,12 @@ public class Dogadjaj implements NumericStringComparable, DogadjajComparable {
     public String toString() {
         StringBuffer sb = new StringBuffer(opis[tipDogadjaja]);
         sb.append(" ");
-        if (!isIgracki())
+        if (!isIgracki()) {
+            if(isForDedinje())
             sb.append("  " + AppHeaderData.getInstance().getUserTeamName());
-        else
+            else
+                sb.append("  **** ");
+        }else
             sb.append(getIgrackiTekst());
         return sb.toString();
 

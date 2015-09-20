@@ -40,7 +40,7 @@ public class ServertimeXMLHandler extends MyXMLHandler {
     public void endElement(String namespaceURI, String localName,
                            String rawName) throws SAXException {
         if (rawName.equals("servertime")) {
-            pcData = SERVERTIME;
+            pcData = SERVERTIME + 200;
         }
     }
 

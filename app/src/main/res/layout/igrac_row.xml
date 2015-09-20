@@ -8,9 +8,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:gravity="center_horizontal"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:textColor="@color/screen_font"
-        android:paddingBottom="4dp"
-        android:paddingTop="4dp"/>
+        android:paddingBottom="3dp"
+        android:paddingTop="3dp"/>
 
 </LinearLayout>

@@ -6,7 +6,7 @@
         android:id="@+id/tvBrojNaDresu"
         android:layout_width="60dp"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:textColor="@color/complementlght"/>
 
     <TextView
@@ -14,6 +14,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:textColor="@color/screen_font"
+        android:textSize="16sp"
         android:paddingLeft="10dp"/>
 
 </LinearLayout>

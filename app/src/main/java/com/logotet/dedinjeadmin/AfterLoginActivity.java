@@ -146,8 +146,8 @@ public class AfterLoginActivity extends AppCompatActivity {
             }
         }
         BazaIgraca.getInstance().refreshProtokol();
-        Log.w(TAG, "**" +  BazaIgraca.getInstance().getProtokol());
-        Log.w(TAG, "**" +  BazaIgraca.getInstance().getNaTerenu().size() + "......" + BazaIgraca.getInstance().getNaKlupi().size());
+//        Log.w(TAG, "**" +  BazaIgraca.getInstance().getProtokol());
+//        Log.w(TAG, "**" +  BazaIgraca.getInstance().getNaTerenu().size() + "......" + BazaIgraca.getInstance().getNaKlupi().size());
 
     }
 

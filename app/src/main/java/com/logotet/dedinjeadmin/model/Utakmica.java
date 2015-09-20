@@ -253,6 +253,7 @@ public class Utakmica {
 
 
     public String getCurrentMinutIgre(){
+        odrediMinutazu();
         if(isFinished())
             return "FT";
         if(!isStarted())

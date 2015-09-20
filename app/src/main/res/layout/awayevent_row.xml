@@ -16,7 +16,7 @@
         android:textSize="12sp" />
 
     <ImageView
-        android:id="@+id/ivaFirstIcon"
+        android:id="@+id/ivaSecondIcon"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_centerVertical="true"
@@ -33,7 +33,7 @@
 
 
     <ImageView
-        android:id="@+id/ivaSecondIcon"
+        android:id="@+id/ivaFirstIcon"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_toLeftOf="@id/tvaPlayer"
@@ -46,7 +46,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginLeft="10dp"
-        android:layout_toLeftOf="@id/ivaSecondIcon"
+        android:layout_toLeftOf="@id/ivaFirstIcon"
         android:gravity="clip_horizontal"
         android:textColor="@color/complementlght"
         android:textSize="12sp" />

@@ -180,7 +180,7 @@ public class SastavActivity extends AppCompatActivity {
         protokolAdapter.notifyDataSetChanged();
         fetched = false;
         fetchSastav();
-        Log.w(TAG, BazaIgraca.getInstance().getNaTerenu().size() + "......" + BazaIgraca.getInstance().getNaKlupi().size());
+//        Log.w(TAG, BazaIgraca.getInstance().getNaTerenu().size() + "......" + BazaIgraca.getInstance().getNaKlupi().size());
 
     }
 

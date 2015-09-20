@@ -72,7 +72,8 @@ public class DresIgracAdapter extends BaseAdapter {
             tvBrojNaDresu.setTextColor(clrKlupa);
 
 
-
+        tvIgrac.setBackgroundResource(R.drawable.odbranabutton);
+/*
         switch(igrac.getDefaultPozicija()){
             case 1:
                 tvIgrac.setBackgroundResource(R.drawable.golmanbutton);
@@ -87,6 +88,7 @@ public class DresIgracAdapter extends BaseAdapter {
                 tvIgrac.setBackgroundResource(R.drawable.napadbutton);
                 break;
         }
+        */
         return convertView;
     }
 }

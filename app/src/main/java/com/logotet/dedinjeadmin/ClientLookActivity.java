@@ -64,6 +64,7 @@ public class ClientLookActivity extends AppCompatActivity {
         Utakmica utakmica = Utakmica.getInstance();
         utakmica.odrediMinutazu();
         tvCurrentScore.setText(utakmica.getCurrentRezulat());
+        tvCurrentMinute.setText(utakmica.getCurrentMinutIgre());
         tvHomeTeam.setText(utakmica.getHomeTeamName());
         tvAwayTeam.setText(utakmica.getAwayTeamName());
 
