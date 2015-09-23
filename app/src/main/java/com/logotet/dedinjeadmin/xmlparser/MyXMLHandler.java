@@ -1,6 +1,5 @@
 package com.logotet.dedinjeadmin.xmlparser;
 
-import android.util.Log;
 
 import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
@@ -22,7 +21,7 @@ public class MyXMLHandler extends DefaultHandler {
     protected InputStream inputStream;
     protected boolean isOk;
 
-    protected String tempTekst;
+    protected StringBuffer textBuffer;
 
     public MyXMLHandler(InputStream inputStream) {
         this.inputStream = inputStream;

@@ -38,7 +38,7 @@ public class TabelaXMLHandler extends MyXMLHandler {
         if (rawName.equals("mesto")) {
             pcData = 2;
             row = new TabelaRow(attr.getValue("broj"), attr.getValue("naziv"),
-                                attr.getValue("pwdl"), attr.getValue("goaldif"), attr.getValue("points"));
+                                attr.getValue("wdl"), attr.getValue("goaldif"), attr.getValue("points"));
             row.setUserTeam(attr.getValue("user"));
             tabela.add(row);
         }

@@ -33,12 +33,6 @@ public class TabelaRow {
     private void parseAll() {
         StringTokenizer st = new StringTokenizer(pwdl, " ");
         try {
-           played = Integer.parseInt(st.nextToken().trim());
-        } catch (NumberFormatException nfe) {
-            played = 0;
-        }
-
-        try {
            win = Integer.parseInt(st.nextToken().trim());
         } catch (NumberFormatException nfe) {
             win = 0;
@@ -65,6 +59,7 @@ public class TabelaRow {
         } catch (NumberFormatException nfe) {
             goalsAgainst = 0;
         }
+        played = win + draw + lose;
     }
 
     public String getBroj() {
@@ -106,6 +101,29 @@ public class TabelaRow {
         }
     }
 
+    public int getGoalsFor() {
+        return goalsFor;
+    }
+
+    public int getGoalsAgainst() {
+        return goalsAgainst;
+    }
+
+    public int getWin() {
+        return win;
+    }
+
+    public int getDraw() {
+        return draw;
+    }
+
+    public int getLose() {
+        return lose;
+    }
+
+    public int getPlayed() {
+        return played;
+    }
 
     @Override
     public String toString() {

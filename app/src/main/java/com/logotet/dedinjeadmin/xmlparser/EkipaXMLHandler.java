@@ -27,7 +27,7 @@ public class EkipaXMLHandler extends MyXMLHandler {
     public void startElement(String namespaceURI, String localName,
                              String rawName, Attributes attr) throws SAXException {
         contents.reset();
-
+         textBuffer = new StringBuffer("");
         if (rawName.equals("ekipa")) {
             bazaIgraca = BazaIgraca.getInstance();
             isOk = true;
@@ -57,6 +57,8 @@ public class EkipaXMLHandler extends MyXMLHandler {
         if (rawName.equals("player")) {
             pcData = 1;
         }
+        if(rawName.equals("napomena"))
+            currentIgrac.setNapomena(textBuffer.toString());
     }
 
     /**
@@ -64,7 +66,7 @@ public class EkipaXMLHandler extends MyXMLHandler {
      */
     public void characters(char[] ch, int start, int length) throws SAXException {
         contents.write(ch, start, length);//ne znam cemu sluzi ali neka ostane
-        String tekst = new String(ch, start, length);
+        textBuffer.append(new String(ch, start, length));
     }
 
 

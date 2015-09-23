@@ -99,6 +99,11 @@ public class SastavActivity extends AppCompatActivity {
                     fullAdapter.notifyDataSetChanged();
                     btnUProtokolu.setText(tekstProtokol + "(" + BazaIgraca.getInstance().getuProtokolu().size() + ")");
                 }
+                if (BazaIgraca.getInstance().getuProtokolu().size() < 11)
+                    btnConfirmsastav.setEnabled(false);
+                else
+                    btnConfirmsastav.setEnabled(true);
+
 
             }
         });

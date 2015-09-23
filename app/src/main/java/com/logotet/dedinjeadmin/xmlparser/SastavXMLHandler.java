@@ -1,5 +1,6 @@
 package com.logotet.dedinjeadmin.xmlparser;
 
+import com.logotet.dedinjeadmin.model.BazaIgraca;
 import com.logotet.dedinjeadmin.model.Sastav;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -42,6 +43,7 @@ public class SastavXMLHandler extends MyXMLHandler {
     public void endElement(String namespaceURI, String localName,
                            String rawName) throws SAXException {
         if (rawName.equals("sastav")) {
+            BazaIgraca.getInstance().refreshProtokol();
             pcData = 0;
         }
         if (rawName.equals("player")) {

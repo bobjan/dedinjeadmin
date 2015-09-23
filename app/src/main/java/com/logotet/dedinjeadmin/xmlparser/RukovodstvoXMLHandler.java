@@ -1,6 +1,6 @@
 package com.logotet.dedinjeadmin.xmlparser;
 
-import com.logotet.dedinjeadmin.model.BazaOsoba;
+import com.logotet.dedinjeadmin.model.Klub;
 import com.logotet.dedinjeadmin.model.Osoba;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -11,7 +11,7 @@ import java.io.InputStream;
  * Klasa koja parsira stadion.xml
  */
 public class RukovodstvoXMLHandler extends MyXMLHandler {
-    BazaOsoba bazaOsoba;
+    Klub klub;
     Osoba currentOsoba;
     final private int OSOBA = 123;
 
@@ -27,10 +27,22 @@ public class RukovodstvoXMLHandler extends MyXMLHandler {
     public void startElement(String namespaceURI, String localName,
                              String rawName, Attributes attr) throws SAXException {
         contents.reset();
-
+        textBuffer = new StringBuffer("");
         if (rawName.equals("rukovodstvo")) {
-            bazaOsoba = BazaOsoba.getInstance();
+            klub = Klub.getInstance();
             isOk = true;
+        }
+        if (rawName.equals("klub")) {
+            klub = Klub.getInstance();
+            isOk = true;
+            klub.setAdresa(attr.getValue("adresa"));
+            klub.setMesto(attr.getValue("grad"));
+            klub.setEmail(attr.getValue("email"));
+            klub.setWeb(attr.getValue("web"));
+            klub.setPib(attr.getValue("pib"));
+            klub.setDatumOsnivanja(attr.getValue("datum"));
+            klub.setTekrac(attr.getValue("tekrac"));
+
         }
         if (rawName.equals("osoba")) {
             pcData = OSOBA;
@@ -38,7 +50,7 @@ public class RukovodstvoXMLHandler extends MyXMLHandler {
                 int id = Integer.parseInt(attr.getValue("oid").trim());
                 currentOsoba = new Osoba(id, attr.getValue("naziv"), attr.getValue("funkcija"),
                          attr.getValue("img"));
-                bazaOsoba.add(currentOsoba);
+                klub.add(currentOsoba);
             } catch (NumberFormatException nfe) {
             }
         }
@@ -51,11 +63,13 @@ public class RukovodstvoXMLHandler extends MyXMLHandler {
                            String rawName) throws SAXException {
         if (rawName.equals("rukovodstvo")) {
             pcData = 0;
-            bazaOsoba.setLoaded(true);
+            klub.setLoaded(true);
         }
         if (rawName.equals("osoba")) {
             pcData = 1;
         }
+        if(rawName.equals("napomena"))
+            currentOsoba.setNapomena(textBuffer.toString());
     }
 
     /**
@@ -63,8 +77,7 @@ public class RukovodstvoXMLHandler extends MyXMLHandler {
      */
     public void characters(char[] ch, int start, int length) throws SAXException {
         contents.write(ch, start, length);//ne znam cemu sluzi ali neka ostane
-        String tekst = new String(ch, start, length);
+        textBuffer.append(new String(ch, start, length));
     }
-
 
 }

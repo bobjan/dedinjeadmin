@@ -1,7 +1,9 @@
 package com.logotet.dedinjeadmin.model;
 
+import com.logotet.util.AzbukaConvertor;
 import com.logotet.util.BJTime;
 import com.logotet.util.NumericStringComparable;
+import com.logotet.util.TimeComparable;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -9,7 +11,7 @@ import java.net.URLEncoder;
 /**
  * Created by logotet on 8/26/15.
  */
-public class Dogadjaj implements NumericStringComparable, DogadjajComparable {
+public class Dogadjaj implements TimeComparable {
     public static final int STARTUTAKMICE = 0;
     public static final int HALFTIME = 1;
     public static final int STARTDRUGOPOLUVREME = 2;
@@ -41,15 +43,20 @@ public class Dogadjaj implements NumericStringComparable, DogadjajComparable {
 
 
     private int tipDogadjaja;
+    private String fileName;
+    private String stringServerTime;
+
+
     private int minut;       // minut iz http requesta NE MENJATI !!!
     private int playerId;
     private int playerInId;
     private int playerOutId;
     private String komentar;
 
-    private String fileName;
     private BJTime serverTime;
-    private int stringServerTime;
+
+
+    private BJTime clientTime;
 
     private int[] rezultat;  // rezultat nakon dogadjaja 0 - dedinje 1 - protivnik
 
@@ -57,9 +64,13 @@ public class Dogadjaj implements NumericStringComparable, DogadjajComparable {
 
     private int minutIgre;
 
+    private  static AzbukaConvertor azbukaConvertor = null;
+
     public Dogadjaj() {
         toBeCreated = true;
         rezultat = new int[2];
+        komentar = "";
+
     }
 
     public Dogadjaj(String file, String serverVreme, int tipDogadjaja) {
@@ -67,8 +78,12 @@ public class Dogadjaj implements NumericStringComparable, DogadjajComparable {
         rezultat = new int[2];
         this.tipDogadjaja = tipDogadjaja;
         this.fileName = file;
-        int tmpTime = Integer.parseInt(serverVreme.trim());
-        stringServerTime = tmpTime;
+        stringServerTime = serverVreme;
+        createServerTime();
+
+    }
+    private void createServerTime(){
+        int tmpTime = Integer.parseInt(stringServerTime.trim());
         int sec = tmpTime % 100;
         tmpTime /= 100;
         int min = tmpTime % 100;
@@ -89,9 +104,12 @@ public class Dogadjaj implements NumericStringComparable, DogadjajComparable {
         return minut;
     }
 
-
     public String getKomentar() {
-        return komentar;
+        if(azbukaConvertor == null)
+            azbukaConvertor = new AzbukaConvertor();
+        if(azbukaConvertor == null)
+            return komentar;
+        return azbukaConvertor.latinToCyrilic(komentar);
     }
 
     public String getFileName() {
@@ -178,6 +196,10 @@ public class Dogadjaj implements NumericStringComparable, DogadjajComparable {
         return minutIgre;
     }
 
+    public void setMinutIgre(int minutIgre) {
+        this.minutIgre = minutIgre;
+    }
+
     public String getPlayerName() {
         try {
             return BazaIgraca.getInstance().getIgrac(playerId).getNaziv();
@@ -204,6 +226,14 @@ public class Dogadjaj implements NumericStringComparable, DogadjajComparable {
 
     public BJTime getServerTime() {
         return serverTime;
+    }
+
+    public BJTime getClientTime() {
+        return clientTime;
+    }
+
+    public void setClientTime(BJTime clientTime) {
+        this.clientTime = clientTime;
     }
 
     public boolean isVremenski() {
@@ -294,6 +324,8 @@ public class Dogadjaj implements NumericStringComparable, DogadjajComparable {
         if (!isIgracki()) {
             if(isForDedinje())
             sb.append("  " + AppHeaderData.getInstance().getUserTeamName());
+            else if(isKomentar())
+                sb.append(getKomentar());
             else
                 sb.append("  **** ");
         }else
@@ -311,10 +343,6 @@ public class Dogadjaj implements NumericStringComparable, DogadjajComparable {
                 return getPlayerName();
             }
         return "";
-    }
-
-    public int getNumericString() {
-        return stringServerTime;
     }
 
     /**
@@ -386,5 +414,13 @@ public class Dogadjaj implements NumericStringComparable, DogadjajComparable {
         } else {
             return rezultat[1] + ":" + rezultat[0];
         }
+    }
+
+
+    /**
+     * vraca ono tacno vreme kada se dogadjaj desio. serversko vreme umanjeno za minute korkcije
+     * **/
+    public BJTime getBJTime() {
+        return new BJTime(serverTime.getSeconds() - minut * 60);
     }
 }

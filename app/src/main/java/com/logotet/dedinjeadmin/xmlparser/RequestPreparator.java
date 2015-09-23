@@ -32,9 +32,10 @@ public class RequestPreparator {
     public static final int GETLIVEMATCH = 13;
     public static final int GETRUKOVODSTVO = 14;
     public static final int GETSASTAV = 15;
+    public static final int GETSAOPSTENJA = 16;
 
     private static final String[] request = {"servertime.php", "pozicija.xml", "stadion.xml", "ekipa.xml", "liga.xml", "tabela.xml", "fixtures.xml",
-            "startmatch.php", "makesastav.php", "makeevent.php", "deleteevent.php", "deleteall.php", "allevents.php", "livematch.xml", "rukovodstvo.xml", "sastav.xml"};
+            "startmatch.php", "makesastav.php", "makeevent.php", "deleteevent.php", "deleteall.php", "allevents.php", "livematch.xml", "rukovodstvo.xml", "sastav.xml","saopstenja.xml"};
 
     public static String getRequest(int what, Object object) {
         switch (what) {
@@ -50,6 +51,7 @@ public class RequestPreparator {
             case GETLIVEMATCH:
             case GETRUKOVODSTVO:
             case GETSASTAV:
+            case GETSAOPSTENJA:
                 return request[what];
             case STARTMATCH:
                 return request[what] + startMatch();
@@ -106,12 +108,13 @@ public class RequestPreparator {
         Dogadjaj dogadjaj;
         try {
             dogadjaj = (Dogadjaj) object;
+            if(dogadjaj == null)
+                throw new ClassCastException();
         } catch (ClassCastException cce) {
             dogadjaj = new Dogadjaj();
             dogadjaj.setTipDogadjaja(Dogadjaj.KOMENTAR);
-            dogadjaj.setKomentar("Class cast exception ");
+            dogadjaj.setKomentar(" **Gresska u aplikaciji prilikom kreiranja dogadjaja ** ");
         }
-
         return dogadjaj.getCreationHttpParams();
     }
 }

@@ -1,13 +1,8 @@
 package com.logotet.dedinjeadmin.model;
 
-import com.logotet.dedinjeadmin.model.Dogadjaj;
-import com.logotet.dedinjeadmin.model.Utakmica;
 import com.logotet.util.BJDatum;
-import com.logotet.util.BJTime;
-import com.logotet.util.NumericStringComparator;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 
 /**
@@ -19,8 +14,7 @@ public class MatchAnalizator {
 
     private BJDatum datum; // livematch.xml time
 
-    private BJTime[] stvarnoVremePocetka; // server time
-    private BJTime[] stvarnoVremeKraja; // server time
+    MatchTimer matchTimer;
 
     Utakmica utakmica;
 
@@ -30,15 +24,10 @@ public class MatchAnalizator {
     public MatchAnalizator(Utakmica utakmica) {
         vremenskiTok = new ArrayList<Dogadjaj>();
         tokZaPrikaz = new ArrayList<Dogadjaj>();
-        stvarnoVremePocetka = new BJTime[2];
-        stvarnoVremeKraja = new BJTime[2];
-        stvarnoVremePocetka[0] = null;
-        stvarnoVremePocetka[1] = null;
-        stvarnoVremeKraja[0] = null;
-        stvarnoVremeKraja[1] = null;
         this.utakmica = utakmica;
         refreshed = false;
         rezultat = new int[2];
+        matchTimer = new MatchTimer();
     }
 
     public ArrayList<Dogadjaj> getVremenskiTok() {
@@ -61,6 +50,7 @@ public class MatchAnalizator {
         datum = utakmica.getDatum();
         vremenskiTok.clear();
         tokZaPrikaz.clear();
+        utakmica.sortiraj();
         Iterator<Dogadjaj> iter = utakmica.getSvaDogadjanja().iterator();
 
         while (iter.hasNext()) {
@@ -71,64 +61,19 @@ public class MatchAnalizator {
             } else if (!tokZaPrikaz.contains(dogadjaj))
                 tokZaPrikaz.add(dogadjaj);
         }
-        sortiraj();
         refreshed = true;
-    }
-
-    private void sortiraj() {
-        DogadjajComparator dc = new DogadjajComparator();
-        NumericStringComparator nsc = new NumericStringComparator();
-        Collections.sort(vremenskiTok, nsc);
-        Collections.sort(tokZaPrikaz, dc);
     }
 
     public void odrediMinutazu() {
         if(!refreshed)
             refresh();
-        Iterator<Dogadjaj> iter = vremenskiTok.iterator();
-        while (iter.hasNext()) {
-            Dogadjaj d = iter.next();
-            if (d.getTipDogadjaja() == Dogadjaj.STARTUTAKMICE)
-                stvarnoVremePocetka[0] = new BJTime(d.getServerTime().getSeconds() + d.getMinut() * 60);
-            if (d.getTipDogadjaja() == Dogadjaj.HALFTIME)
-                stvarnoVremeKraja[0] = new BJTime(d.getServerTime().getSeconds());
-
-            if (d.getTipDogadjaja() == Dogadjaj.STARTDRUGOPOLUVREME)
-                stvarnoVremePocetka[1] = new BJTime(d.getServerTime().getSeconds() + d.getMinut() * 60);
-            if (d.getTipDogadjaja() == Dogadjaj.FINALTIME)
-                stvarnoVremeKraja[1] = new BJTime(d.getServerTime().getSeconds());
-        }
-
-
-// za slucaj da nema pocetka a ima dogadjaja
-        if (stvarnoVremePocetka[0] == null)
-            if (tokZaPrikaz.size() > 0) {
-                Dogadjaj d = tokZaPrikaz.get(0);
-                stvarnoVremePocetka[0] = new BJTime(d.getServerTime().getSeconds() - 300);// 5 minuta pre prvog dogadjaja
-                if (stvarnoVremePocetka[1] == null)
-                    stvarnoVremePocetka[1] = new BJTime(stvarnoVremePocetka[0].getSeconds() + (60 * 60));  // sat nakon pocetka
-
-                if (stvarnoVremeKraja[0] == null)
-                    stvarnoVremeKraja[0] = new BJTime(stvarnoVremePocetka[0].getSeconds() + (50 * 60));  // 50 minuta nakonpocetka
-
-                if (stvarnoVremeKraja[1] == null)
-                    stvarnoVremeKraja[0] = new BJTime(stvarnoVremePocetka[1].getSeconds() + (50 * 60));  // 50 minuta nakon pocetka II
-            }
-//
-        iter = tokZaPrikaz.iterator();
-        while (iter.hasNext()) {
-            Dogadjaj d = iter.next();
-            d.modifyMinut(stvarnoVremePocetka, stvarnoVremeKraja);
-        }
-       sortiraj();
+        matchTimer.recalculateAll(utakmica.getSvaDogadjanja());
     }
 
     public boolean uToku() {
         if(!refreshed)
             refresh();
         if (!datum.isToday())
-            return false;
-        if ((tokZaPrikaz.size() == 0) && (vremenskiTok.size() == 0))
             return false;
         if (isFinished())
             return false;
@@ -138,19 +83,7 @@ public class MatchAnalizator {
     public boolean isStarted() {
         if(!refreshed)
             refresh();
-        if (tokZaPrikaz.size() > 0)
-            return true;
-        if (vremenskiTok.size() > 0)
-            return true;
-
-        Iterator<Dogadjaj> iter = tokZaPrikaz.iterator();
-        while (iter.hasNext()) {
-            Dogadjaj d = iter.next();
-            if (d.getTipDogadjaja() != Dogadjaj.KOMENTAR)
-                return true;
-        }
-
-        return false;
+        return matchTimer.isStarted();
     }
 
     public int[] getRezultat(){
@@ -173,54 +106,18 @@ public class MatchAnalizator {
     public boolean isFinished() {
         if(!refreshed)
             refresh();
-        Iterator<Dogadjaj> iter = vremenskiTok.iterator();
-        while (iter.hasNext()) {
-            Dogadjaj d = iter.next();
-            if (d.getTipDogadjaja() == Dogadjaj.FINALTIME)
-                return true;
-        }
-        return false;
+        return matchTimer.isFinished();
     }
+
+    public boolean isFirstHalfFinished() {
+        if(!refreshed)
+            refresh();
+        return matchTimer.isFirstHalfFinished();
+    }
+
+
     public int getCurrentMinutIgre(){
-        int diffSeconds = Servertime.getInstance().getDiff();
-
-        BJTime now = new BJTime();
-
-        BJTime serverNow = new BJTime(now.getSeconds() + diffSeconds);
-
-        int[] tmpMinut = new int[4];
-        try {
-            tmpMinut[0] = (int) ((serverNow.getSeconds() - stvarnoVremePocetka[0].getSeconds()) / 60);
-        } catch (NullPointerException npe) {
-            tmpMinut[0] = -1;
-        }
-        try {
-            tmpMinut[1] = (int) ((serverNow.getSeconds()- stvarnoVremeKraja[0].getSeconds()) / 60);
-        } catch (NullPointerException npe) {
-            tmpMinut[1] = -1;
-        }
-        try {
-            tmpMinut[2] = (int) ((serverNow.getSeconds()-  stvarnoVremePocetka[1].getSeconds()) / 60);
-        } catch (NullPointerException npe) {
-            tmpMinut[2] = -1;
-        }
-        try {
-            tmpMinut[3] = (int) ((serverNow.getSeconds()-  stvarnoVremeKraja[1].getSeconds()) / 60);
-        } catch (NullPointerException npe) {
-            tmpMinut[3] = -1;
-        }
-
-        if (tmpMinut[0] <= 45) {
-            return tmpMinut[0];
-        }
-        if ((tmpMinut[2] < 0) && (tmpMinut[1] > 0)) {
-            return  45;
-        }
-        if (tmpMinut[2] < 45) {
-           return 45 + tmpMinut[2];
-
-        }
-        return 90;
+        return matchTimer.getCurrentMinut();
     }
 
 }

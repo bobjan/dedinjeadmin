@@ -25,7 +25,7 @@ public class ServertimeXMLHandler extends MyXMLHandler {
     public void startElement(String namespaceURI, String localName,
                              String rawName, Attributes attr) throws SAXException {
         contents.reset();
-
+        textBuffer = new StringBuffer("");
         if (rawName.equals("servertime")) {
             isOk = true;
 //            pcData = SERVERTIME;
@@ -38,7 +38,7 @@ public class ServertimeXMLHandler extends MyXMLHandler {
     public void endElement(String namespaceURI, String localName,
                            String rawName) throws SAXException {
         if (rawName.equals("servertime")) {
-            Servertime.getInstance(tempTekst);
+            Servertime.getInstance(textBuffer.toString());
 //            pcData = SERVERTIME + 200;
         }
     }
@@ -47,7 +47,7 @@ public class ServertimeXMLHandler extends MyXMLHandler {
      */
     public void characters(char[] ch, int start, int length) throws SAXException {
         contents.write(ch, start, length);//ne znam cemu sluzi ali neka ostane
-        tempTekst = new String(ch, start, length);
+        textBuffer.append(new String(ch, start, length));
 //        String tekst = new String(ch, start, length);
 //        if (pcData == SERVERTIME)
 //            Servertime.getInstance(tekst.trim());

@@ -1,10 +1,12 @@
 package com.logotet.dedinjeadmin.xmlparser;
 
+import com.logotet.dedinjeadmin.HttpCatcher;
 import com.logotet.dedinjeadmin.model.BazaSaopstenja;
 import com.logotet.dedinjeadmin.model.Saopstenje;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 /**
@@ -31,7 +33,7 @@ public class SaopstenjaXMLHandler extends MyXMLHandler {
     public void startElement(String namespaceURI, String localName,
                              String rawName, Attributes attr) throws SAXException {
         contents.reset();
-
+         textBuffer = new StringBuffer("");
         if (rawName.equals("saopstenje")) {
             isOk = true;
             bazaSaopstenja = BazaSaopstenja.getInstance();
@@ -67,13 +69,13 @@ public class SaopstenjaXMLHandler extends MyXMLHandler {
         }
 
         if (rawName.equals("naslov")) {
-            pcData = NASLOV + 100;
+            currentSaopstenje.setNaslov(textBuffer.toString());
         }
         if (rawName.equals("tekst")) {
-            pcData = TEXT + 100;
+            currentSaopstenje.setFullText(textBuffer.toString());
         }
         if (rawName.equals("slika")) {
-            pcData = SLIKA + 100;
+            currentSaopstenje.setImageFileName(textBuffer.toString());
         }
     }
 
@@ -82,25 +84,24 @@ public class SaopstenjaXMLHandler extends MyXMLHandler {
      */
     public void characters(char[] ch, int start, int length) throws SAXException {
         contents.write(ch, start, length);//ne znam cemu sluzi ali neka ostane
-        String tekst = new String(ch, start, length);
-        if (pcData == NASLOV)
-            currentSaopstenje.setNaslov(tekst.trim());
-        if (pcData == TEXT)
-            currentSaopstenje.setFullText(tekst.trim());
-        if (pcData == SLIKA)
-            currentSaopstenje.setImageFileName(tekst.trim());
+        textBuffer.append(new String(ch, start, length));
     }
+
 
 /*
     public static void main(String[] args) {
-        HttpCatcher http = new HttpCatcher("http://www.logotet.com/fkdedinje/saopstenja.xml");
-        SaopstenjaXMLHandler hip = new SaopstenjaXMLHandler(http.getInputStream());
-        hip.doEntireJob();
-        http.disconnect();
-        if(hip.isOk()){
-            BazaSaopstenja.getInstance().sortiraj();
-            System.out.println(BazaSaopstenja.getInstance().toString());
+        HttpCatcher http = null;
+        try {
+            http = new HttpCatcher(RequestPreparator.GETSAOPSTENJA,"http://www.logotet.com/fkdedinje/",null);
+            SaopstenjaXMLHandler hip = new SaopstenjaXMLHandler(http.getInputStream());
+            hip.doEntireJob();
+            http.disconnect();
+            if(hip.isOk()){
+                BazaSaopstenja.getInstance().sortiraj();
+                System.out.println(BazaSaopstenja.getInstance().toString());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
     }*/
 }

@@ -145,7 +145,6 @@ public class BazaIgraca {
         return false;
     }
 
-
     public void sortirajVanProtokola() {
         IgracComparator ic = new IgracComparator(IgracComparator.BYID);
         Collections.sort(vanProtokola, ic);
@@ -155,7 +154,6 @@ public class BazaIgraca {
         IgracComparator ic = new IgracComparator(IgracComparator.BYDRES);
         Collections.sort(uProtokolu, ic);
     }
-
 
     private void prenumerisiProtokol() {
         for (int i = 0; i < uProtokolu.size(); i++) {
@@ -167,7 +165,6 @@ public class BazaIgraca {
                 tmp.setNaTerenu(false);
         }
     }
-
 
     public String getProtokol() {
         StringBuffer sb = new StringBuffer();
@@ -182,5 +179,4 @@ public class BazaIgraca {
         }
         return sb.toString();
     }
-
 }

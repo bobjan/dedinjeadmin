@@ -1,11 +1,9 @@
 package com.logotet.dedinjeadmin.model;
 
 
-import android.util.Log;
-
 import com.logotet.util.BJDatum;
 import com.logotet.util.BJTime;
-import com.logotet.util.NumericStringComparator;
+import com.logotet.util.TimeBasedComparator;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -23,7 +21,6 @@ public class Utakmica {
 
     private BJDatum datum;
     private BJTime planiranoVremePocetka; // livematch.xml time
-
 
     private int protivnikId;
     private int stadionId;
@@ -74,7 +71,6 @@ public class Utakmica {
     public void setPlaniranoVremePocetka(BJTime planiranoVremePocetka) {
         this.planiranoVremePocetka = planiranoVremePocetka;
     }
-
 
     public void setPlaniranoVremePocetka(String vreme) {
         this.planiranoVremePocetka = new BJTime(vreme.trim());
@@ -134,7 +130,6 @@ public class Utakmica {
         return svaDogadjanja;
     }
 
-
     public ArrayList<Dogadjaj> getVremenskiTok() {
         return matchAnalizator.getVremenskiTok();
     }
@@ -159,9 +154,11 @@ public class Utakmica {
     }
 
     public void sortiraj() {
-        NumericStringComparator dc = new NumericStringComparator();
-        Collections.sort(svaDogadjanja, dc);
-        sortirano = true;
+        if (!sortirano) {
+            TimeBasedComparator dc = new TimeBasedComparator();
+            Collections.sort(svaDogadjanja, dc);
+            sortirano = true;
+        }
     }
 
     public void remove(Dogadjaj dogadjaj) {
@@ -189,6 +186,9 @@ public class Utakmica {
     public boolean isFinished() {
         return matchAnalizator.isFinished();
     }
+    public boolean isFirstHalfFinished() {
+        return matchAnalizator.isFirstHalfFinished();
+    }
 
     public boolean uToku() {
         return matchAnalizator.uToku();
@@ -199,7 +199,6 @@ public class Utakmica {
     }
 
     public void odrediMinutazu() {
-
         matchAnalizator.odrediMinutazu();
     }
 
@@ -207,24 +206,21 @@ public class Utakmica {
     public String getHomeTeamName() {
         if (!isUserTeamDomacin()) {
             Tim tim = BazaTimova.getInstance().getTim(protivnikId);
-            if(tim == null)
+            if (tim == null)
                 return "******";
             return tim.getNaziv();
         } else
             return AppHeaderData.getInstance().getUserTeamName();
-
-
     }
 
     public String getAwayTeamName() {
         if (isUserTeamDomacin()) {
-          Tim tim = BazaTimova.getInstance().getTim(protivnikId);
-            if(tim == null)
+            Tim tim = BazaTimova.getInstance().getTim(protivnikId);
+            if (tim == null)
                 return "*****";
             return tim.getNaziv();
         } else
             return AppHeaderData.getInstance().getUserTeamName();
-
     }
 
     public String toString() {
@@ -252,17 +248,20 @@ public class Utakmica {
     }
 
 
-    public String getCurrentMinutIgre(){
+    public String getCurrentMinutIgre() {
         odrediMinutazu();
-        if(isFinished())
+        if (isFinished())
             return "FT";
-        if(!isStarted())
+        if (!isStarted())
             return planiranoVremePocetka.toString();
         return matchAnalizator.getCurrentMinutIgre() + "'";
     }
 
     public String getCurrentMinutIgre(Dogadjaj dogadjaj) {
         return dogadjaj.getMinutIgre() + "'";
+    }
+    public String getAllInOne(){
+      return  datum.toString() + planiranoVremePocetka.toString() + protivnikId + stadionId + ((userTeamDomacin) ? "1" : "0");
     }
 
 }

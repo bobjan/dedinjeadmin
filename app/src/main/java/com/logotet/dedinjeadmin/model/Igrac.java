@@ -13,6 +13,7 @@ public class Igrac {
     private int visina;
     private int tezina;
     private String imageFileName;
+    private String napomena;
 
     private int defaultPozicija;
 
@@ -20,12 +21,16 @@ public class Igrac {
 
     private boolean naTerenu;
 
+    private boolean imageLoaded;
+
     private Igrac(int id, String naziv, String imgFileName) {
         this.id = id;
         this.naziv = naziv;
         this.imageFileName = imgFileName;
         naTerenu = false;
         brojNaDresu = MAXDRES;
+        imageLoaded = false;
+        this.napomena = "";
     }
 
 
@@ -89,6 +94,13 @@ public class Igrac {
         return imageFileName;
     }
 
+    public boolean isImageLoaded() {
+        return imageLoaded;
+    }
+
+    public void setImageLoaded(boolean imageLoaded) {
+        this.imageLoaded = imageLoaded;
+    }
 
     public int getBrojNaDresu() {
         return brojNaDresu;
@@ -102,12 +114,26 @@ public class Igrac {
         return defaultPozicija;
     }
 
+    public String getNapomena() {
+        if(napomena == null)
+            napomena = "";
+        return napomena;
+    }
+
+    public void setNapomena(String napomena) {
+        this.napomena = napomena;
+    }
+
     public boolean isNaTerenu() {
         return naTerenu;
     }
 
     public void setNaTerenu(boolean naTerenu) {
         this.naTerenu = naTerenu;
+    }
+
+    public String stringId(){
+        return id + "I";
     }
 
     public String toString() {
