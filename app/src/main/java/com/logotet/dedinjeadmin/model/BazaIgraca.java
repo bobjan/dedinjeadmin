@@ -97,14 +97,28 @@ public class BazaIgraca {
         }
         return sb.toString();
     }
+
+
+
+    /**
+     *
+     * sve brojeve svima vraca na MAXDRES
+     * **/
     public void refreshBrojeviNaDresu(){
         Iterator<Igrac> iter = squad.iterator();
         while(iter.hasNext()){
             Igrac igrac = iter.next();
             igrac.setBrojNaDresu(Igrac.MAXDRES);
         }
+        vanProtokola.clear();
+        uProtokolu.clear();
     }
 
+
+    /**
+     * na osnovi broja na dresu kreira protokol
+     *
+     * */
     public void refreshProtokol() {
         vanProtokola.clear();
         uProtokolu.clear();
@@ -120,42 +134,56 @@ public class BazaIgraca {
         sortirajProtokol();
     }
 
-    public boolean ubaciUProtokol(Igrac igrac) {
+    public void ubaciUProtokol(Igrac igrac) {
         if (vanProtokola.contains(igrac)) {
-            igrac.setBrojNaDresu(uProtokolu.size() + 1);
+            if(igrac.getBrojNaDresu() == Igrac.MAXDRES)
+                igrac.setBrojNaDresu(uProtokolu.size() + 1);
             uProtokolu.add(igrac);
             vanProtokola.remove(igrac);
             if(igrac.getBrojNaDresu() < 12)
                 igrac.setNaTerenu(true);
             else
                 igrac.setNaTerenu(false);
-            return true;
+            return;
         }
-        return false;
     }
 
-    public boolean izbaciIzProtokola(Igrac igrac) {
+
+    /**
+     * kada se vrsi interaktivna promena protokola obavezno je prenumersianje
+     * */
+    public void izbaciIzProtokola(Igrac igrac) {
         if (uProtokolu.contains(igrac)) {
             igrac.setBrojNaDresu(Igrac.MAXDRES);
+            igrac.setNaTerenu(false);
             uProtokolu.remove(igrac);
             vanProtokola.add(igrac);
             prenumerisiProtokol();
-            return true;
+            return;
         }
-        return false;
+
     }
 
+
+    /**
+     * igraci van protokola su sortirani po id[ radi displaya prilikom unosenja sastava
+     *
+     */
     public void sortirajVanProtokola() {
         IgracComparator ic = new IgracComparator(IgracComparator.BYID);
         Collections.sort(vanProtokola, ic);
     }
 
+    /**
+     * sortira po broju a dresu
+     * */
     public void sortirajProtokol() {
         IgracComparator ic = new IgracComparator(IgracComparator.BYDRES);
         Collections.sort(uProtokolu, ic);
     }
 
     private void prenumerisiProtokol() {
+        sortirajProtokol();
         for (int i = 0; i < uProtokolu.size(); i++) {
             Igrac tmp = uProtokolu.get(i);
             tmp.setBrojNaDresu(i + 1);
@@ -166,7 +194,11 @@ public class BazaIgraca {
         }
     }
 
+
+    /**
+     * rado slanja serveru i upisa sastava**/
     public String getProtokol() {
+        prenumerisiProtokol(); // konac delo krasi
         StringBuffer sb = new StringBuffer();
         int idx = 0;
         Iterator<Igrac> iter = uProtokolu.iterator();

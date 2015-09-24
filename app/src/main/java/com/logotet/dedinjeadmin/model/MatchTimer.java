@@ -203,7 +203,7 @@ public class MatchTimer {
         return currentTimeSlice == MATCHENDED;
     }
     public boolean isFirstHalfFinished(){
-        return currentTimeSlice == FIRSTHALFSTARTED;
+        return currentTimeSlice == FIRSTHALFENDED;
     }
     public boolean isStarted(){
         return (currentTimeSlice != NOTSTARTED);

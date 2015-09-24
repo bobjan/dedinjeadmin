@@ -75,7 +75,7 @@
 
     <Button
         android:layout_width="fill_parent"
-        android:layout_height="14dp"
+        android:layout_height="18dp"
         android:id="@+id/btnShowSastav"
         android:layout_marginTop="10dp"
         android:text="@string/btn_lineup"

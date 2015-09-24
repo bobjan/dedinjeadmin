@@ -19,6 +19,7 @@ import com.logotet.dedinjeadmin.model.BazaTimova;
 import com.logotet.dedinjeadmin.model.Utakmica;
 import com.logotet.dedinjeadmin.xmlparser.RequestPreparator;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class AfterLoginActivity extends AppCompatActivity {
@@ -207,25 +208,27 @@ public class AfterLoginActivity extends AppCompatActivity {
                     }
                     httpCatcher = new HttpCatcher(RequestPreparator.GETLIVEMATCH, AllStatic.HTTPHOST, null);
                     httpCatcher.catchData();
-                    BazaIgraca.getInstance().refreshBrojeviNaDresu();
-                    httpCatcher = new HttpCatcher(RequestPreparator.GETSASTAV, AllStatic.HTTPHOST, null);
-                    httpCatcher.catchData();
-
+                    try {
+                        httpCatcher = new HttpCatcher(RequestPreparator.GETSASTAV, AllStatic.HTTPHOST, null);
+                        httpCatcher.catchData();
+                    }catch (FileNotFoundException fne){
+                        BazaIgraca.getInstance().refreshBrojeviNaDresu();
+                    }
                     httpCatcher = new HttpCatcher(RequestPreparator.ALLEVENTS, AllStatic.HTTPHOST, null);
                     httpCatcher.catchData();
                    runOnUiThread(new Runnable() {
-                                      @Override
-                                      public void run() {
-                                          if (eveythingOK())
-                                              enableAllButtons();
-                                          else
-                                              disableAllButtons();
-                                          progressBar.setVisibility(View.INVISIBLE);
-                                          displayMatchInfo();
-                                          BazaIgraca.getInstance().refreshProtokol();
-                                      }
-                                  }
-                    );
+                                     @Override
+                                     public void run() {
+                                         if (eveythingOK())
+                                             enableAllButtons();
+                                         else
+                                             disableAllButtons();
+                                         progressBar.setVisibility(View.INVISIBLE);
+                                         displayMatchInfo();
+                                         BazaIgraca.getInstance().refreshProtokol();
+                                     }
+                                 }
+                   );
                 } catch (IOException e) {
                     e.printStackTrace();
 

@@ -38,7 +38,6 @@ public class ClientEventsAdapter extends BaseAdapter {
     Drawable missedPenalty;
 
 
-
     ArrayList<Dogadjaj> arrayList;
 
     public ClientEventsAdapter(Activity activity) {
@@ -101,8 +100,8 @@ public class ClientEventsAdapter extends BaseAdapter {
 
         Dogadjaj dogadjaj = (Dogadjaj) getItem(position);
 
-        if (convertView == null){
-            switch (getItemViewType(position)){
+        if (convertView == null) {
+            switch (getItemViewType(position)) {
                 case 1:
                     convertView = inflater.inflate(R.layout.homeevent_row, null);
                     break;
@@ -127,15 +126,11 @@ public class ClientEventsAdapter extends BaseAdapter {
         ImageView ivhFirstIcon;
         ImageView ivhSecondIcon;
 
-
-
-
         TextView tvaMinut;
         TextView tvaPlayer;
         TextView tvaScore;
         ImageView ivaFirstIcon;
         ImageView ivaSecondIcon;
-
 
         TextView tvsMinut;
         ImageView ivsFirstIcon;
@@ -144,8 +139,7 @@ public class ClientEventsAdapter extends BaseAdapter {
         TextView tvkMinut;
         TextView tvKomentar;
 
-
-        switch (getItemViewType(position)){
+        switch (getItemViewType(position)) {
             case 1:
                 tvhMinut = (TextView) convertView.findViewById(R.id.tvhEventMinut);
                 tvhPlayer = (TextView) convertView.findViewById(R.id.tvhPlayer);
@@ -156,10 +150,14 @@ public class ClientEventsAdapter extends BaseAdapter {
                 ivhSecondIcon.setImageDrawable(null);
                 tvhScore.setText("");
 
-                tvhMinut.setText(dogadjaj.getMinutIgre() + "'");
-                if(dogadjaj.isIgracki())
+                if (dogadjaj.getMinut() >= 0)
+                    tvhMinut.setText(dogadjaj.getMinutIgre() + "'");
+                else
+                    tvhMinut.setText(dogadjaj.getBJTime().toString().substring(0, 5));
+
+                if (dogadjaj.isIgracki())
                     tvhPlayer.setText(dogadjaj.getPlayerName());
-                if(dogadjaj.isForDedinje()) {
+                if (dogadjaj.isForDedinje()) {
                     if (dogadjaj.isGoal())
                         ivhFirstIcon.setImageDrawable(football);
                     if (dogadjaj.isZutiKarton())
@@ -170,7 +168,7 @@ public class ClientEventsAdapter extends BaseAdapter {
                         ivhFirstIcon.setImageDrawable(redCard);
                     if (dogadjaj.isMissedPenalty())
                         ivhFirstIcon.setImageDrawable(missedPenalty);
-                }else{
+                } else {
                     if (dogadjaj.isGoal())
                         ivhSecondIcon.setImageDrawable(football);
                     if (dogadjaj.isZutiKarton())
@@ -182,11 +180,10 @@ public class ClientEventsAdapter extends BaseAdapter {
                     if (dogadjaj.isMissedPenalty())
                         ivhSecondIcon.setImageDrawable(missedPenalty);
                 }
-                if(dogadjaj.isGoal()){
+                if (dogadjaj.isGoal()) {
                     int[] rez = dogadjaj.getRezultat();
                     tvhScore.setText(rez[0] + " : " + rez[1]);
                 }
-
                 break;
             case 2:
                 tvaMinut = (TextView) convertView.findViewById(R.id.tvaEventMinut);
@@ -194,14 +191,19 @@ public class ClientEventsAdapter extends BaseAdapter {
                 tvaScore = (TextView) convertView.findViewById(R.id.tvaScore);
                 ivaFirstIcon = (ImageView) convertView.findViewById(R.id.ivaFirstIcon);
                 ivaSecondIcon = (ImageView) convertView.findViewById(R.id.ivaSecondIcon);
-                tvaMinut.setText(dogadjaj.getMinutIgre() + "'");
+
+                if (dogadjaj.getMinut() >= 0)
+                    tvaMinut.setText(dogadjaj.getMinutIgre() + "'");
+                else
+                    tvaMinut.setText(dogadjaj.getBJTime().toString().substring(0, 5));
+
                 ivaFirstIcon.setImageDrawable(null);
                 ivaSecondIcon.setImageDrawable(null);
                 tvaScore.setText("");
 
-                if(dogadjaj.isIgracki())
+                if (dogadjaj.isIgracki())
                     tvaPlayer.setText(dogadjaj.getPlayerName());
-                if(dogadjaj.isForDedinje()) {
+                if (dogadjaj.isForDedinje()) {
                     if (dogadjaj.isGoal())
                         ivaFirstIcon.setImageDrawable(football);
                     if (dogadjaj.isZutiKarton())
@@ -212,7 +214,7 @@ public class ClientEventsAdapter extends BaseAdapter {
                         ivaFirstIcon.setImageDrawable(redCard);
                     if (dogadjaj.isMissedPenalty())
                         ivaFirstIcon.setImageDrawable(missedPenalty);
-                }else{
+                } else {
                     if (dogadjaj.isGoal())
                         ivaSecondIcon.setImageDrawable(football);
                     if (dogadjaj.isZutiKarton())
@@ -224,7 +226,7 @@ public class ClientEventsAdapter extends BaseAdapter {
                     if (dogadjaj.isMissedPenalty())
                         ivaSecondIcon.setImageDrawable(missedPenalty);
                 }
-                if(dogadjaj.isGoal()){
+                if (dogadjaj.isGoal()) {
                     int[] rez = dogadjaj.getRezultat();
                     tvaScore.setText(rez[1] + " : " + rez[0]);
                 }
@@ -235,15 +237,21 @@ public class ClientEventsAdapter extends BaseAdapter {
                 tvPlayerIn = (TextView) convertView.findViewById(R.id.tvPlayerIn);
                 tvPlayerOut = (TextView) convertView.findViewById(R.id.tvPlayerOut);
 
-                tvsMinut.setText(dogadjaj.getMinutIgre() + "'");
+                if (dogadjaj.getMinut() >= 0)
+                    tvsMinut.setText(dogadjaj.getMinutIgre() + "'");
+                else
+                    tvsMinut.setText(dogadjaj.getBJTime().toString().substring(0, 5));
                 tvPlayerIn.setText(dogadjaj.getPlayerInName());
                 tvPlayerOut.setText(dogadjaj.getPlayerOutName());
-
                 break;
             case 4:
                 tvkMinut = (TextView) convertView.findViewById(R.id.tvKomentarMinut);
                 tvKomentar = (TextView) convertView.findViewById(R.id.tvKomentar);
-                tvkMinut.setText(dogadjaj.getMinutIgre() + "'");
+
+                if (dogadjaj.getMinut() >= 0)
+                    tvkMinut.setText(dogadjaj.getMinutIgre() + "'");
+                else
+                    tvkMinut.setText(dogadjaj.getBJTime().toString().substring(0, 5));
                 tvKomentar.setText(dogadjaj.getKomentar());
                 break;
             default:
@@ -252,7 +260,6 @@ public class ClientEventsAdapter extends BaseAdapter {
                 tvkMinut.setText(" *");
                 tvKomentar.setText("      ****   ");
                 break;
-
         }
         return convertView;
     }

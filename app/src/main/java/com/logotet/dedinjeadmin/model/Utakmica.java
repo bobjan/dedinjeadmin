@@ -251,9 +251,11 @@ public class Utakmica {
     public String getCurrentMinutIgre() {
         odrediMinutazu();
         if (isFinished())
-            return "FT";
+            return "К";
+        if (isFirstHalfFinished())
+            return "П";
         if (!isStarted())
-            return planiranoVremePocetka.toString();
+            return planiranoVremePocetka.toString().substring(0,5);
         return matchAnalizator.getCurrentMinutIgre() + "'";
     }
 
