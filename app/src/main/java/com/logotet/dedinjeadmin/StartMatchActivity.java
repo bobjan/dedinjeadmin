@@ -158,11 +158,8 @@ public class StartMatchActivity extends AppCompatActivity {
     private void kreirajUtakmicu() {
         utakmica = Utakmica.getInstance();
 
-        try {
-            datum = new BJDatum(etDatumUtakmice.getText().toString());
-        } catch (ParseException e) {
-            datum = new BJDatum();
-        }
+        datum = new BJDatum();
+        datum.parseFreeString(etDatumUtakmice.getText().toString());
         vreme = new BJTime(etVremePocetka.getText().toString());
 
         utakmica.setDatum(datum);

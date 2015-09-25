@@ -228,7 +228,6 @@ public class EventsActivity extends AppCompatActivity implements View.OnClickLis
         setDefaults();
         naKlupiAdapter.notifyDataSetChanged();
         naTerenuAdapter.notifyDataSetChanged();
-
     }
 
     private void setDefaults() {

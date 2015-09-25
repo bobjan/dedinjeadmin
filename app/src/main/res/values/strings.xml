@@ -46,6 +46,7 @@
     <string name="playerout">Излази играч:</string>
 
     <string name="simple_message">Податак је послат</string>
+    <string name="sastav_message">Састав је унет</string>
     <string name="network_error">Не постоји интернет веза!!</string>
     <string name="wrong_password">Погрешна лозинка, покушај поново</string>
 
@@ -73,7 +74,7 @@
     <string name="btn_izmena">измена</string>
     <string name="btn_komentar">коментар</string>
 
-    <string name="btn_events">ток уткмице</string>
+    <string name="btn_events">ток утакмице</string>
     <string name="btn_lineup">састав</string>
 
     <string name="title_activity_client_look">ClientLookActivity</string>

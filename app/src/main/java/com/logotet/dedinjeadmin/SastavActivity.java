@@ -156,7 +156,7 @@ public class SastavActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Thread th = new RequestThread(RequestPreparator.MAKESASTAV, AllStatic.HTTPHOST, null);
                 th.start();
-                Toast.makeText(getApplicationContext(), "Sastav je unet", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.sastav_message), Toast.LENGTH_LONG).show();
 //                startActivity(intent);
                 finish();
             }

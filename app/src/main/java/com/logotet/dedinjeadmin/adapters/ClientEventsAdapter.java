@@ -150,7 +150,7 @@ public class ClientEventsAdapter extends BaseAdapter {
                 ivhSecondIcon.setImageDrawable(null);
                 tvhScore.setText("");
 
-                if (dogadjaj.getMinut() >= 0)
+                if (dogadjaj.getMinutIgre() >= 0)
                     tvhMinut.setText(dogadjaj.getMinutIgre() + "'");
                 else
                     tvhMinut.setText(dogadjaj.getBJTime().toString().substring(0, 5));
@@ -192,7 +192,7 @@ public class ClientEventsAdapter extends BaseAdapter {
                 ivaFirstIcon = (ImageView) convertView.findViewById(R.id.ivaFirstIcon);
                 ivaSecondIcon = (ImageView) convertView.findViewById(R.id.ivaSecondIcon);
 
-                if (dogadjaj.getMinut() >= 0)
+                if (dogadjaj.getMinutIgre() >= 0)
                     tvaMinut.setText(dogadjaj.getMinutIgre() + "'");
                 else
                     tvaMinut.setText(dogadjaj.getBJTime().toString().substring(0, 5));
@@ -237,7 +237,7 @@ public class ClientEventsAdapter extends BaseAdapter {
                 tvPlayerIn = (TextView) convertView.findViewById(R.id.tvPlayerIn);
                 tvPlayerOut = (TextView) convertView.findViewById(R.id.tvPlayerOut);
 
-                if (dogadjaj.getMinut() >= 0)
+                if (dogadjaj.getMinutIgre() >= 0)
                     tvsMinut.setText(dogadjaj.getMinutIgre() + "'");
                 else
                     tvsMinut.setText(dogadjaj.getBJTime().toString().substring(0, 5));
@@ -248,7 +248,7 @@ public class ClientEventsAdapter extends BaseAdapter {
                 tvkMinut = (TextView) convertView.findViewById(R.id.tvKomentarMinut);
                 tvKomentar = (TextView) convertView.findViewById(R.id.tvKomentar);
 
-                if (dogadjaj.getMinut() >= 0)
+                if (dogadjaj.getMinutIgre() >= 0)
                     tvkMinut.setText(dogadjaj.getMinutIgre() + "'");
                 else
                     tvkMinut.setText(dogadjaj.getBJTime().toString().substring(0, 5));
