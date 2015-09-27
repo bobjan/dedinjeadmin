@@ -290,7 +290,10 @@ public class Dogadjaj implements TimeComparable {
     public boolean isGoal(){
         return isGoalDedinje() || isGoalProtivnik();
     }
-
+    public boolean isPenaltyGoal(){
+        return ((tipDogadjaja == GOLPENALFKDEDINJE) ||
+                (tipDogadjaja == GOLPENALPROTIVNIK));
+    }
 
     public boolean isIzmena(){
         return (tipDogadjaja == IZMENAIGRACA);

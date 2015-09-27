@@ -22,7 +22,10 @@ public class Klub {
     private String web;
     private String pib;
     private String matbroj;
+    private String frontimage;
+    private boolean imageLoaded;
     private String tekrac;
+
 
 
     public static Klub getInstance() {
@@ -34,8 +37,28 @@ public class Klub {
     private Klub() {
         rukovodstvo = new ArrayList<Osoba>();
         loaded = false;
+        imageLoaded = false;
     }
 
+    public ArrayList<Osoba> getRukovodstvo() {
+        return rukovodstvo;
+    }
+
+    public boolean isImageLoaded() {
+        return imageLoaded;
+    }
+
+    public void setImageLoaded(boolean imageLoaded) {
+        this.imageLoaded = imageLoaded;
+    }
+
+    public String getFrontimage() {
+        return frontimage;
+    }
+
+    public void setFrontimage(String frontimage) {
+        this.frontimage = frontimage;
+    }
 
     public BJDatum getDatumOsnivanja() {
         return datumOsnivanja;

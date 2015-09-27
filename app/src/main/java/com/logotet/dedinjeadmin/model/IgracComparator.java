@@ -22,8 +22,8 @@ public class IgracComparator implements Comparator {
         if (bywhat == BYID)
             return d1.getId() - d2.getId();
         else if (bywhat == BYDRES){
-            int koef1 = d1.isNaTerenu() ? 0 : 100;
-            int koef2 = d2.isNaTerenu() ? 0 : 100;
+            int koef1 = d1.isNaTerenu() ? 1 : 100;
+            int koef2 = d2.isNaTerenu() ? 1 : 100;
             return (koef1 * d1.getBrojNaDresu()) - (koef2 * d2.getBrojNaDresu());
         }
         else

@@ -45,6 +45,10 @@ public class BazaIgraca {
             squad.add(igrac);
     }
 
+    public ArrayList<Igrac> getSquad() {
+        return squad;
+    }
+
     public ArrayList<Igrac> getVanProtokola() {
         if (vanProtokola.size() == 0)
             refreshProtokol();

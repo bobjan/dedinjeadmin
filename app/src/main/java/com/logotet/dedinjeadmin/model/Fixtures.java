@@ -7,20 +7,34 @@ import java.util.Iterator;
  * Created by logotet on 8/27/15.
  */
 public class Fixtures {
-    private static Fixtures raspored = null;
-    private ArrayList<FixturesRow> lista;
+    private static Fixtures fixtures = null;
+    private ArrayList<FixturesRow> raspored;
+
+    private boolean loaded;
 
     private String sezona;
     public static Fixtures getInstance() {
-        if (raspored == null)
-            raspored = new Fixtures();
-        return raspored;
+        if (fixtures == null)
+            fixtures = new Fixtures();
+        return fixtures;
     }
 
     private Fixtures() {
-        lista = new ArrayList<FixturesRow>();
+        raspored = new ArrayList<FixturesRow>();
+        loaded = false;
     }
 
+    public boolean isLoaded() {
+        return loaded;
+    }
+
+    public void setLoaded(boolean loaded) {
+        this.loaded = loaded;
+    }
+
+    public ArrayList<FixturesRow> getRaspored() {
+        return raspored;
+    }
 
     public String getSezona() {
         return sezona;
@@ -31,13 +45,13 @@ public class Fixtures {
     }
 
     public void add(FixturesRow row) {
-        if (!lista.contains(row))
-            lista.add(row);
+        if (!raspored.contains(row))
+            raspored.add(row);
     }
 
     public String toString() {
         StringBuffer sb = new StringBuffer();
-        Iterator iter = lista.iterator();
+        Iterator iter = raspored.iterator();
         while (iter.hasNext()) {
             sb.append(iter.next().toString());
             sb.append("\n");

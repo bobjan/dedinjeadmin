@@ -8,7 +8,9 @@ import java.util.Iterator;
  */
 public class Tabela {
     private static Tabela tabela = null;
-    private ArrayList<TabelaRow> lista;
+    private ArrayList<TabelaRow> plasman;
+
+    private boolean loaded;
 
     private String sezona;
     private int lastRound;
@@ -19,10 +21,22 @@ public class Tabela {
     }
 
     private Tabela() {
-        lista = new ArrayList<TabelaRow>();
+        plasman = new ArrayList<TabelaRow>();
+        loaded = false;
+    }
+
+    public ArrayList<TabelaRow> getPlasman() {
+        return plasman;
     }
 
 
+    public boolean isLoaded() {
+        return loaded;
+    }
+
+    public void setLoaded(boolean loaded) {
+        this.loaded = loaded;
+    }
 
     public String getSezona() {
         return sezona;
@@ -48,13 +62,13 @@ public class Tabela {
     }
 
     public void add(TabelaRow row) {
-        if (!lista.contains(row))
-            lista.add(row);
+        if (!plasman.contains(row))
+            plasman.add(row);
     }
 
     public String toString() {
         StringBuffer sb = new StringBuffer();
-        Iterator iter = lista.iterator();
+        Iterator iter = plasman.iterator();
         while (iter.hasNext()) {
             sb.append(iter.next().toString());
             sb.append("\n");

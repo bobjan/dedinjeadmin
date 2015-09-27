@@ -40,9 +40,10 @@ public class RukovodstvoXMLHandler extends MyXMLHandler {
             klub.setEmail(attr.getValue("email"));
             klub.setWeb(attr.getValue("web"));
             klub.setPib(attr.getValue("pib"));
+            klub.setMatbroj(attr.getValue("matbroj"));
             klub.setDatumOsnivanja(attr.getValue("datum"));
             klub.setTekrac(attr.getValue("tekrac"));
-
+            klub.setFrontimage(attr.getValue("frontimage"));
         }
         if (rawName.equals("osoba")) {
             pcData = OSOBA;

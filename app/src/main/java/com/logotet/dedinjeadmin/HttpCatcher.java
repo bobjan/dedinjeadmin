@@ -17,6 +17,7 @@ import com.logotet.dedinjeadmin.xmlparser.TabelaXMLHandler;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -44,6 +45,16 @@ public class HttpCatcher {
         this.what = what;
         requestParams = RequestPreparator.getRequest(what, object);
         URL url = new URL(urlAdresa + requestParams);
+        urlConnection = (HttpURLConnection) url.openConnection();
+        urlConnection.addRequestProperty("Cache-Control", "no-cache");
+
+    }
+
+
+    public HttpCatcher(String host) throws IOException {
+        httpCounter++;
+        this.urlAdresa = host;
+        URL url = new URL(urlAdresa);
         urlConnection = (HttpURLConnection) url.openConnection();
         urlConnection.addRequestProperty("Cache-Control", "no-cache");
     }
@@ -163,4 +174,25 @@ public class HttpCatcher {
         }
     }
 
+    public byte[] catchByteArray() {
+        ByteArrayOutputStream outstream = new ByteArrayOutputStream();
+        try {
+            if (urlConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                int bytesRead = 0;
+                byte[] buffer = new byte[1024];
+                while ((bytesRead = urlConnection.getInputStream().read(buffer)) > 0) {
+                    outstream.write(buffer, 0, bytesRead);
+                }
+                outstream.flush();
+                outstream.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            urlConnection.disconnect();
+        }
+        return outstream.toByteArray();
+    }
+
 }
+

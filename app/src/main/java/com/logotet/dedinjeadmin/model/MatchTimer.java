@@ -187,9 +187,19 @@ public class MatchTimer {
 
         switch (currentTimeSlice) {
             case FIRSTHALFSTARTED:
-                return (int) ((serverNow.getSeconds() - granicnoVreme[0].getSeconds()) / 60);
+                int tmp =(int) ((serverNow.getSeconds() - granicnoVreme[0].getSeconds()) / 60);
+                if(tmp == 0)
+                    tmp++;
+                if(tmp > 45)
+                    tmp = 45;
+                return tmp;
             case SECONDHALFSTARTED:
-                return (int) ((serverNow.getSeconds() - granicnoVreme[2].getSeconds()) / 60);
+                tmp =(int) ((serverNow.getSeconds() - granicnoVreme[2].getSeconds()) / 60);
+                if(tmp == 0)
+                    tmp++;
+                if(tmp > 45)
+                    tmp = 45;
+                return (int)(45 + tmp);
             case FIRSTHALFENDED:
                 return 45;
             case MATCHENDED:

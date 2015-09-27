@@ -16,7 +16,7 @@ public class Sastav {
         else
             System.out.printf("Sastav.add() error:tmp == NUll");
     }
-
+/*
     public static ArrayList<Igrac> getSastav() {
         ArrayList<Igrac> sastav = new ArrayList<Igrac>();
         BazaIgraca baza = BazaIgraca.getInstance();
@@ -37,5 +37,5 @@ public class Sastav {
         while (iter.hasNext()) {
             System.out.println(++i + ".\t" + iter.next().toString());
         }
-    }
+    }*/
 }
