@@ -10,7 +10,7 @@ public class BazaTimova {
     private static BazaTimova bazaTimova = null;
     private ArrayList<Tim> protivnici;
 
-    private boolean loaded;
+    private boolean loaded;  // load from liga.xml completed
 
     public static BazaTimova getInstance() {
         if (bazaTimova == null)

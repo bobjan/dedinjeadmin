@@ -46,6 +46,13 @@ public class MatchAnalizator {
         this.refreshed = refreshed;
     }
 
+
+    /**
+     *
+     * iznova rasporedjuje dogadjaje na vremenske i one za prikaz
+     *
+     *
+     * */
     private void refresh() {
         datum = utakmica.getDatum();
         vremenskiTok.clear();
@@ -114,7 +121,6 @@ public class MatchAnalizator {
             refresh();
         return matchTimer.isFirstHalfFinished();
     }
-
 
     public int getCurrentMinutIgre(){
         return matchTimer.getCurrentMinut();

@@ -30,11 +30,9 @@ public class RukovodstvoXMLHandler extends MyXMLHandler {
         textBuffer = new StringBuffer("");
         if (rawName.equals("rukovodstvo")) {
             klub = Klub.getInstance();
-            isOk = true;
         }
         if (rawName.equals("klub")) {
             klub = Klub.getInstance();
-            isOk = true;
             klub.setAdresa(attr.getValue("adresa"));
             klub.setMesto(attr.getValue("grad"));
             klub.setEmail(attr.getValue("email"));

@@ -18,10 +18,12 @@ import android.widget.Toast;
 import com.logotet.dedinjeadmin.model.BazaIgraca;
 import com.logotet.dedinjeadmin.model.Dogadjaj;
 import com.logotet.dedinjeadmin.model.Igrac;
+import com.logotet.dedinjeadmin.model.Utakmica;
 import com.logotet.dedinjeadmin.threads.RequestThread;
 import com.logotet.dedinjeadmin.xmlparser.RequestPreparator;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class EventsActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "EventActivity";
@@ -69,9 +71,21 @@ public class EventsActivity extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_events);
+        BazaIgraca bazaIgraca = BazaIgraca.getInstance();
 
-        naTerenu = BazaIgraca.getInstance().getNaTerenu();
-        naKlupi = BazaIgraca.getInstance().getNaKlupi();
+        ArrayList<Dogadjaj> matchEvents = Utakmica.getInstance().getTokZaPrikaz();
+
+        Iterator<Dogadjaj> iterator = matchEvents.iterator();
+        while(iterator.hasNext()){
+            Dogadjaj dogadjaj = iterator.next();
+            if(dogadjaj.isIzmena()){
+                dogadjaj.getIgracIn().setNaTerenu(true);
+                dogadjaj.getIgracOut().setNaTerenu(false);
+            }
+        }
+
+        naTerenu = bazaIgraca.getNaTerenu();
+        naKlupi = bazaIgraca.getNaKlupi();
 //        Log.w(TAG, "na terenu = " + naTerenu.size() + "\tna klupi = " + naKlupi.size());
         npMinut = (EditText) findViewById(R.id.etMinutKorekcije);
 

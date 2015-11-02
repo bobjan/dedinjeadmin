@@ -24,6 +24,7 @@ import java.io.IOException;
 
 public class SastavActivity extends AppCompatActivity {
     private static final String TAG = "SastavActivity";
+    private static final int MIN_BROJ_IGRACA = 8;
     BazaIgraca bazaIgraca;
 
     Button btnSviIgraci;
@@ -39,12 +40,10 @@ public class SastavActivity extends AppCompatActivity {
     private int clrSelected;
     private int clrDeselected;
 
-
     SimpleIgracAdapter fullAdapter;
     DresIgracAdapter protokolAdapter;
 
     String tekstProtokol;
-
 
     Button btnConfirmsastav;
     Intent intent;
@@ -99,11 +98,10 @@ public class SastavActivity extends AppCompatActivity {
                     fullAdapter.notifyDataSetChanged();
                     btnUProtokolu.setText(tekstProtokol + "(" + BazaIgraca.getInstance().getuProtokolu().size() + ")");
                 }
-                if (BazaIgraca.getInstance().getuProtokolu().size() < 11)
+                if (BazaIgraca.getInstance().getuProtokolu().size() < MIN_BROJ_IGRACA)
                     btnConfirmsastav.setEnabled(false);
                 else
                     btnConfirmsastav.setEnabled(true);
-
 
             }
         });
@@ -142,7 +140,7 @@ public class SastavActivity extends AppCompatActivity {
                 fullAdapter.notifyDataSetChanged();
                 protokolAdapter.notifyDataSetChanged();
                 btnUProtokolu.setText(tekstProtokol + "(" + BazaIgraca.getInstance().getuProtokolu().size() + ")");
-                if (BazaIgraca.getInstance().getuProtokolu().size() < 11)
+                if (BazaIgraca.getInstance().getuProtokolu().size() < MIN_BROJ_IGRACA)
                     btnConfirmsastav.setEnabled(false);
                 else
                     btnConfirmsastav.setEnabled(true);
@@ -157,10 +155,11 @@ public class SastavActivity extends AppCompatActivity {
                 Thread th = new RequestThread(RequestPreparator.MAKESASTAV, AllStatic.HTTPHOST, null);
                 th.start();
                 Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.sastav_message), Toast.LENGTH_LONG).show();
-//                startActivity(intent);
                 finish();
+                startActivity(intent);
             }
         });
+
         handler = new Handler(){
             @Override
             public void handleMessage(Message msg) {

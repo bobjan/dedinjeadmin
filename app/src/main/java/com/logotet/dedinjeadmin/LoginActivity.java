@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.logotet.dedinjeadmin.model.AppHeaderData;
+import com.logotet.dedinjeadmin.model.BazaTimova;
 import com.logotet.dedinjeadmin.model.Servertime;
 import com.logotet.dedinjeadmin.xmlparser.RequestPreparator;
 
@@ -84,8 +85,7 @@ public class LoginActivity extends AppCompatActivity {
                     try {
                         httpCatcher = new HttpCatcher(RequestPreparator.SERVERTIME, AllStatic.HTTPHOST, null);
                         httpCatcher.catchData();
-                        Servertime st = Servertime.getInstance();
-                        Thread.sleep(1000);
+                        BazaTimova.getInstance().getProtivnici().clear();
                         httpCatcher = new HttpCatcher(RequestPreparator.GETLIGA, AllStatic.HTTPHOST, null);
                         httpCatcher.catchData();
                         handler.post(new Runnable() {
@@ -101,9 +101,6 @@ public class LoginActivity extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(),"URL connection error", Toast.LENGTH_LONG).show();
                             }
                         });
-
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
                     }
                 }
             });

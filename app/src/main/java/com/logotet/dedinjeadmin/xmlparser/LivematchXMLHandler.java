@@ -32,12 +32,11 @@ public class LivematchXMLHandler extends MyXMLHandler {
     public void startElement(String namespaceURI, String localName,
                              String rawName, Attributes attr) throws SAXException {
         contents.reset();
+        textBuffer = new StringBuffer("");
 
         if (rawName.equals("match")) {
             pcData = MATCH;
             utakmica = Utakmica.getInstance();
-            utakmica.setFromHttpServer(true);
-
         }
         if (rawName.equals("datum")) {
             pcData = DATUM;
@@ -63,24 +62,22 @@ public class LivematchXMLHandler extends MyXMLHandler {
     public void endElement(String namespaceURI, String localName,
                            String rawName) throws SAXException {
         if (rawName.equals("match")) {
-
-            pcData = MATCH;
+            utakmica.setFromHttpServer(true);
         }
         if (rawName.equals("datum")) {
-            pcData = DATUM + 100;
+            utakmica.setDatum(textBuffer.toString());
         }
-
         if (rawName.equals("vreme")) {
-            pcData = VREME + 100;
+            utakmica.setPlaniranoVremePocetka(textBuffer.toString());
         }
         if (rawName.equals("domacin")) {
-            pcData = DOMACIN + 100;
+            utakmica.setUserTeamDomacin(textBuffer.toString().trim().equals("1"));
         }
         if (rawName.equals("protivnik")) {
-            pcData = PROTIVNIK + 100;
+            utakmica.setProtivnikId(textBuffer.toString());
         }
         if (rawName.equals("stadion")) {
-            pcData = STADION + 100;
+            utakmica.setStadionId(textBuffer.toString());
         }
     }
 
@@ -89,25 +86,6 @@ public class LivematchXMLHandler extends MyXMLHandler {
      */
     public void characters(char[] ch, int start, int length) throws SAXException {
         contents.write(ch, start, length);//ne znam cemu sluzi ali neka ostane
-        String tekst = new String(ch, start, length);
-        switch (pcData) {
-            case DATUM:
-                utakmica.setDatum(tekst);
-                break;
-            case VREME:
-                utakmica.setPlaniranoVremePocetka(tekst);
-                break;
-            case PROTIVNIK:
-                utakmica.setProtivnikId(tekst);
-                break;
-            case DOMACIN:
-                utakmica.setUserTeamDomacin(tekst.trim().equals("1"));
-                break;
-            case STADION:
-                utakmica.setStadionId(tekst);
-                break;
-            default:
-                break;
-        }
+        textBuffer.append(new String(ch, start, length));
     }
 }

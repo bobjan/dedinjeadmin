@@ -35,7 +35,6 @@ public class SaopstenjaXMLHandler extends MyXMLHandler {
         contents.reset();
          textBuffer = new StringBuffer("");
         if (rawName.equals("saopstenje")) {
-            isOk = true;
             bazaSaopstenja = BazaSaopstenja.getInstance();
             pcData = 0;
         }

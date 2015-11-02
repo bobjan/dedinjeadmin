@@ -10,7 +10,7 @@ public class Tabela {
     private static Tabela tabela = null;
     private ArrayList<TabelaRow> plasman;
 
-    private boolean loaded;
+    private boolean loaded; // load from tabela.xml
 
     private String sezona;
     private int lastRound;

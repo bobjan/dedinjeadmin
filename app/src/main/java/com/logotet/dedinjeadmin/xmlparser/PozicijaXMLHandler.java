@@ -30,7 +30,7 @@ public class PozicijaXMLHandler extends MyXMLHandler {
 
         if (rawName.equals("pozicija")) {
             bazaPozicija = BazaPozicija.getInstance();
-            isOk = true;
+            bazaPozicija.getTimposition().clear();
         }
         if (rawName.equals("mestoutimu")) {
             pcData = POZICIJA;

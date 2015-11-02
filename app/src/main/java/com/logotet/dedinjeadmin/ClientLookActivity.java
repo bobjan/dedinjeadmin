@@ -43,7 +43,6 @@ public class ClientLookActivity extends AppCompatActivity {
         llEvents = (LinearLayout) findViewById(R.id.llEvents);
         llSastav = (LinearLayout) findViewById(R.id.llSastav);
 
-
         lvClientEvents = (ListView) findViewById(R.id.lvClientEvents);
         lvClientIgrac = (ListView) findViewById(R.id.lvClientIgrac);
 
@@ -53,13 +52,10 @@ public class ClientLookActivity extends AppCompatActivity {
         lvClientEvents.setAdapter(eventsAdapter);
         lvClientIgrac.setAdapter(sastavAdapter);
 
-
         tvCurrentScore = (TextView) findViewById(R.id.tvCurrentScore);
         tvCurrentMinute = (TextView) findViewById(R.id.tvCurrentMinute);
         tvHomeTeam = (TextView) findViewById(R.id.tvHomeTeamName);
         tvAwayTeam = (TextView) findViewById(R.id.tvAwayTeamName);
-
-
 
         Utakmica utakmica = Utakmica.getInstance();
         utakmica.odrediMinutazu();
@@ -70,7 +66,6 @@ public class ClientLookActivity extends AppCompatActivity {
 
         showSastav = true;
         showEvents = true;
-
 
         btnShowSastav.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,10 +88,5 @@ public class ClientLookActivity extends AppCompatActivity {
                     llEvents.setVisibility(View.GONE);
             }
         });
-
-
-
     }
-
-
 }

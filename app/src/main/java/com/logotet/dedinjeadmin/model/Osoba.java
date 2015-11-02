@@ -14,6 +14,7 @@ public class Osoba {
 
     private boolean imageLoaded;
 
+private Object image;
 
     public Osoba(int id, String naziv,String funkcija, String imgFileName) {
         this.id = id;
@@ -31,6 +32,18 @@ public class Osoba {
 
     public String getNaziv() {
         return naziv;
+    }
+
+    public void setNaziv(String naziv) {
+        this.naziv = naziv;
+    }
+
+    public void setFunkcija(String funkcija) {
+        this.funkcija = funkcija;
+    }
+
+    public void setImageFileName(String imageFileName) {
+        this.imageFileName = imageFileName;
     }
 
     public String getImageFileName() {
@@ -55,6 +68,14 @@ public class Osoba {
 
     public void setNapomena(String napomena) {
         this.napomena = napomena;
+    }
+
+    public Object getImage() {
+        return image;
+    }
+
+    public void setImage(Object image) {
+        this.image = image;
     }
 
     public String stringId(){

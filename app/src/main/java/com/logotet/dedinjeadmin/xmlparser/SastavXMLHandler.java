@@ -23,9 +23,9 @@ public class SastavXMLHandler extends MyXMLHandler {
     public void startElement(String namespaceURI, String localName,
                              String rawName, Attributes attr) throws SAXException {
         contents.reset();
+        textBuffer = new StringBuffer("");
 
         if (rawName.equals("sastav")) {
-            isOk = true;
         }
         if (rawName.equals("player")) {
             try {
@@ -56,7 +56,7 @@ public class SastavXMLHandler extends MyXMLHandler {
      */
     public void characters(char[] ch, int start, int length) throws SAXException {
         contents.write(ch, start, length);//ne znam cemu sluzi ali neka ostane
-        String tekst = new String(ch, start, length);
+        textBuffer.append(new String(ch, start, length));
     }
 
 

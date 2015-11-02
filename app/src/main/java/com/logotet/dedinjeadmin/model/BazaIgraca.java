@@ -17,7 +17,7 @@ public class BazaIgraca {
     private ArrayList<Igrac> vanProtokola;  // svi registrovani igraci
     private ArrayList<Igrac> uProtokolu;  // svi registrovani igraci
 
-    private boolean loaded;
+    private boolean loaded; // load from ekipa.xml completed (without images)
 
     private BazaIgraca() {
         squad = new ArrayList<Igrac>();
@@ -41,8 +41,23 @@ public class BazaIgraca {
     }
 
     public void add(Igrac igrac) {
-        if (!squad.contains(igrac))
+        Igrac tmp = getIgrac(igrac.getId());
+        if(tmp == null)
             squad.add(igrac);
+        else{
+            tmp.setNaziv(igrac.getNaziv());
+            tmp.setNapomena(igrac.getNapomena());
+            tmp.setBrojNaDresu(igrac.getBrojNaDresu());
+            tmp.setNaTerenu(igrac.isNaTerenu());
+            tmp.setTezina(igrac.getTezina());
+            tmp.setVisina(igrac.getVisina());
+            tmp.setImageFileName(igrac.getImageFileName());
+            tmp.setImageLoaded(igrac.isImageLoaded());
+            tmp.setImage(igrac.getImage());
+            tmp.setDefaultPozicija(igrac.getDefaultPozicija());
+        }
+//        if (!squad.contains(igrac))
+//            squad.add(igrac);
     }
 
     public ArrayList<Igrac> getSquad() {

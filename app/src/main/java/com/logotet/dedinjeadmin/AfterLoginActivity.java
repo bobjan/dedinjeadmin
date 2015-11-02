@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -15,7 +14,6 @@ import android.widget.TextView;
 import com.logotet.dedinjeadmin.model.BazaIgraca;
 import com.logotet.dedinjeadmin.model.BazaPozicija;
 import com.logotet.dedinjeadmin.model.BazaStadiona;
-import com.logotet.dedinjeadmin.model.BazaTimova;
 import com.logotet.dedinjeadmin.model.Utakmica;
 import com.logotet.dedinjeadmin.xmlparser.RequestPreparator;
 
@@ -25,15 +23,12 @@ import java.io.IOException;
 public class AfterLoginActivity extends AppCompatActivity {
     private static final String TAG = "AfterLoginActivity";
 
-
-
     Button btnStartMatch;
     Button btnMakeSastav;
     Button btnEnterEvent;
     Button btnDeleteEvent;
     Button btnClientLook;
     Button btnLogout;
-
 
     TextView tvMatchInfoFirstLine;
     TextView tvMatchInfoSecondLine;
@@ -46,6 +41,7 @@ public class AfterLoginActivity extends AppCompatActivity {
     Thread threadOne = new Thread();
     Thread threadTwo = new Thread();
 
+    private boolean sastavKreiran;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +61,7 @@ public class AfterLoginActivity extends AppCompatActivity {
         progressBar = (ProgressBar) findViewById(R.id.pbProgressBar);
 
         ovaAktivnost = this;
+        sastavKreiran = false;
 
         btnStartMatch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,11 +122,12 @@ public class AfterLoginActivity extends AppCompatActivity {
         disableAllButtons();
         if ((System.currentTimeMillis() - AllStatic.lastActiveTime) > AllStatic.TIMEOUT) {
             Intent intent = new Intent(this, LoginActivity.class);
+            finish();
             startActivity(intent);
         }
         progressBar.setVisibility(View.VISIBLE);
         fetchBaseData();
-        while (threadOne.isAlive()){
+        while (threadOne.isAlive()) {
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {
@@ -139,7 +137,7 @@ public class AfterLoginActivity extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
         fetchMatchData();
 
-        while (threadTwo.isAlive()){
+        while (threadTwo.isAlive()) {
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {
@@ -166,20 +164,26 @@ public class AfterLoginActivity extends AppCompatActivity {
                 Message msg = Message.obtain();
                 HttpCatcher httpCatcher = null;
                 try {
+//                    if (!BazaTimova.getInstance().isLoaded()) {
+//                        BazaTimova.getInstance().getProtivnici().clear();
+//                        httpCatcher = new HttpCatcher(RequestPreparator.GETLIGA, AllStatic.HTTPHOST, null);
+//                        httpCatcher.catchData();
+//                    }
                     if (!BazaStadiona.getInstance().isLoaded()) {
+                        BazaStadiona.getInstance().getTereni().clear();
                         httpCatcher = new HttpCatcher(RequestPreparator.GETSTADION, AllStatic.HTTPHOST, null);
                         httpCatcher.catchData();
                     }
                     if (!BazaPozicija.getInstance().isLoaded()) {
+                        BazaPozicija.getInstance().getTimposition().clear();
                         httpCatcher = new HttpCatcher(RequestPreparator.GETPOZICIJA, AllStatic.HTTPHOST, null);
                         httpCatcher.catchData();
                     }
                     if (!BazaIgraca.getInstance().isLoaded()) {
+                        BazaIgraca.getInstance().getSquad().clear();
                         httpCatcher = new HttpCatcher(RequestPreparator.GETEKIPA, AllStatic.HTTPHOST, null);
                         httpCatcher.catchData();
                     }
-
-
                     runOnUiThread(new Runnable() {
                                       @Override
                                       public void run() {
@@ -202,33 +206,33 @@ public class AfterLoginActivity extends AppCompatActivity {
                 Message msg = Message.obtain();
                 HttpCatcher httpCatcher = null;
                 try {
-                    if (!BazaTimova.getInstance().isLoaded()) {
-                        httpCatcher = new HttpCatcher(RequestPreparator.GETLIGA, AllStatic.HTTPHOST, null);
-                        httpCatcher.catchData();
-                    }
                     httpCatcher = new HttpCatcher(RequestPreparator.GETLIVEMATCH, AllStatic.HTTPHOST, null);
                     httpCatcher.catchData();
                     try {
                         httpCatcher = new HttpCatcher(RequestPreparator.GETSASTAV, AllStatic.HTTPHOST, null);
                         httpCatcher.catchData();
-                    }catch (FileNotFoundException fne){
+                        if (BazaIgraca.getInstance().getuProtokolu().size() < 8)
+                            sastavKreiran = false;
+                        else
+                            sastavKreiran = true;
+                    } catch (FileNotFoundException fne) {
                         BazaIgraca.getInstance().refreshBrojeviNaDresu();
                     }
                     httpCatcher = new HttpCatcher(RequestPreparator.ALLEVENTS, AllStatic.HTTPHOST, null);
                     httpCatcher.catchData();
-                   runOnUiThread(new Runnable() {
-                                     @Override
-                                     public void run() {
-                                         if (eveythingOK())
-                                             enableAllButtons();
-                                         else
-                                             disableAllButtons();
-                                         progressBar.setVisibility(View.INVISIBLE);
-                                         displayMatchInfo();
-                                         BazaIgraca.getInstance().refreshProtokol();
-                                     }
-                                 }
-                   );
+                    runOnUiThread(new Runnable() {
+                                      @Override
+                                      public void run() {
+                                          if (eveythingOK())
+                                              enableAllButtons();
+                                          else
+                                              disableAllButtons();
+                                          progressBar.setVisibility(View.INVISIBLE);
+                                          displayMatchInfo();
+                                          BazaIgraca.getInstance().refreshProtokol();
+                                      }
+                                  }
+                    );
                 } catch (IOException e) {
                     e.printStackTrace();
 
@@ -238,21 +242,17 @@ public class AfterLoginActivity extends AppCompatActivity {
         threadTwo.start();
     }
 
-   public void displayMatchInfo(){
-       Utakmica utakmica = Utakmica.getInstance();
-       tvMatchInfoFirstLine.setText(utakmica.getDatum().toString());
-       tvMatchInfoSecondLine.setText(utakmica.getHomeTeamName() + "  -  " + utakmica.getAwayTeamName());
-       tvMatchInfoFirstLine.setVisibility(View.VISIBLE);
-       tvMatchInfoSecondLine.setVisibility(View.VISIBLE);
-   }
+    public void displayMatchInfo() {
+        Utakmica utakmica = Utakmica.getInstance();
+        tvMatchInfoFirstLine.setText(utakmica.getDatum().toString());
+        tvMatchInfoSecondLine.setText(utakmica.getHomeTeamName() + "  -  " + utakmica.getAwayTeamName());
+        tvMatchInfoFirstLine.setVisibility(View.VISIBLE);
+        tvMatchInfoSecondLine.setVisibility(View.VISIBLE);
+    }
 
 
     private boolean eveythingOK() {
         Utakmica utakmica = Utakmica.getInstance();
-//        if (!utakmica.isNextMatch()) {
-//            disableAllButtons();
-//            return false;
-//        }
         if (!utakmica.isFromHttpServer())
             return false;
         else {
@@ -268,7 +268,9 @@ public class AfterLoginActivity extends AppCompatActivity {
 
     public void enableAllButtons() {
         btnMakeSastav.setEnabled(true);
-        btnEnterEvent.setEnabled(true);
-        btnDeleteEvent.setEnabled(true);
+        if (sastavKreiran) {
+            btnEnterEvent.setEnabled(true);
+            btnDeleteEvent.setEnabled(true);
+        }
     }
 }

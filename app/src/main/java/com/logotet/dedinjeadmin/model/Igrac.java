@@ -23,6 +23,8 @@ public class Igrac {
 
     private boolean imageLoaded;
 
+    private Object image;
+
     private Igrac(int id, String naziv, String imgFileName) {
         this.id = id;
         this.naziv = naziv;
@@ -36,34 +38,23 @@ public class Igrac {
 
     public Igrac(int id, String naziv, String godinaRodjenja, String pozic, String visina, String tezina, String imgFileName) {
         this(id, naziv, imgFileName);
-        try {
-            this.godinaRodjenja = Integer.parseInt(godinaRodjenja.trim());
-            this.visina = Integer.parseInt(visina.trim());
-            this.tezina = Integer.parseInt(tezina.trim());
-            this.defaultPozicija = Integer.parseInt(pozic.trim());
-        } catch (NumberFormatException nfe) {
-            this.godinaRodjenja = 2000;
-            this.defaultPozicija = 2;
-            this.visina = 180;
-            this.tezina = 80;
-        }
 
         try {
             this.godinaRodjenja = Integer.parseInt(godinaRodjenja.trim());
         } catch (NumberFormatException nfe) {
-            this.godinaRodjenja = 2000;
+            this.godinaRodjenja = 0;
         }
 
         try {
             this.visina = Integer.parseInt(visina.trim());
         } catch (NumberFormatException nfe) {
-            this.visina = 180;
+            this.visina = 0;
         }
 
         try {
             this.tezina = Integer.parseInt(tezina.trim());
         } catch (NumberFormatException nfe) {
-            this.tezina = 80;
+            this.tezina = 0;
         }
 
         try {
@@ -122,6 +113,42 @@ public class Igrac {
 
     public void setNapomena(String napomena) {
         this.napomena = napomena;
+    }
+
+    public void setGodinaRodjenja(int godinaRodjenja) {
+        this.godinaRodjenja = godinaRodjenja;
+    }
+
+    public void setVisina(int visina) {
+        this.visina = visina;
+    }
+
+    public void setTezina(int tezina) {
+        this.tezina = tezina;
+    }
+
+    public void setImageFileName(String imageFileName) {
+        this.imageFileName = imageFileName;
+    }
+
+    public void setDefaultPozicija(int defaultPozicija) {
+        this.defaultPozicija = defaultPozicija;
+    }
+
+    public int getVisina() {
+        return visina;
+    }
+
+    public int getTezina() {
+        return tezina;
+    }
+
+    public Object getImage() {
+        return image;
+    }
+
+    public void setImage(Object image) {
+        this.image = image;
     }
 
     public boolean isNaTerenu() {

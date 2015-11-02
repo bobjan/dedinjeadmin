@@ -2,12 +2,16 @@ package com.logotet.dedinjeadmin.threads;
 
 import com.logotet.dedinjeadmin.xmlparser.*;
 
+import org.xml.sax.SAXException;
+
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+
+import javax.xml.parsers.ParserConfigurationException;
 
 /**
  * Created by boban on 8/28/15.
@@ -37,7 +41,6 @@ public class RequestThread extends Thread {
             url = new URL(serverAddress + requestParams);
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.addRequestProperty("Cache-Control", "no-cache");
-
 
             instream = new BufferedInputStream(urlConnection.getInputStream());
             switch (what) {
@@ -95,6 +98,10 @@ public class RequestThread extends Thread {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
             e.printStackTrace();
         } finally {
             urlConnection.disconnect();

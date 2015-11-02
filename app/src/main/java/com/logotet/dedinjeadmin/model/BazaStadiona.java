@@ -36,7 +36,7 @@ public class BazaStadiona {
 
     public Stadion getStadion(int id) {
         for (int i = 0; i < tereni.size(); i++) {
-            Stadion tmp = tereni.get(id);
+            Stadion tmp = tereni.get(i);
             if (tmp.getId() == id)
                 return tmp;
         }

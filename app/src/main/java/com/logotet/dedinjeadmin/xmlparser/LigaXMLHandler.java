@@ -12,7 +12,6 @@ import java.io.InputStream;
  * Klasa koja parsira config.xml
  */
 public class LigaXMLHandler extends MyXMLHandler {
-
     AppHeaderData headerData;
     BazaTimova bazaTimova;
 
@@ -33,6 +32,7 @@ public class LigaXMLHandler extends MyXMLHandler {
     public void startElement(String namespaceURI, String localName,
                              String rawName, Attributes attr) throws SAXException {
         contents.reset();
+        textBuffer = new StringBuffer("");
 
         if (rawName.equals("liga")) {
             pcData = 0;
@@ -71,15 +71,14 @@ public class LigaXMLHandler extends MyXMLHandler {
             pcData = 1;
         }
         if (rawName.equals("naziv")) {
-            pcData = LIGA + 555;
+            headerData.setNazivLige(textBuffer.toString());
         }
         if (rawName.equals("user")) {
-            pcData = USER + 555;
+            headerData.setUserTeamName(textBuffer.toString());
         }
         if (rawName.equals("password")) {
-            pcData = PASSWORD + 555;
+            headerData.setPassword(textBuffer.toString());
         }
-
     }
 
     /**
@@ -87,20 +86,7 @@ public class LigaXMLHandler extends MyXMLHandler {
      */
     public void characters(char[] ch, int start, int length) throws SAXException {
         contents.write(ch, start, length);//ne znam cemu sluzi ali neka ostane
-        String tekst = new String(ch, start, length);
-        switch (pcData) {
-            case LIGA:
-                headerData.setNazivLige(tekst);
-                break;
-            case USER:
-                headerData.setUserTeamName(tekst);
-                break;
-            case PASSWORD:
-                headerData.setPassword(tekst);
-                break;
-            default:
-                break;
-        }
+        textBuffer.append(new String(ch, start, length));
     }
 
 }

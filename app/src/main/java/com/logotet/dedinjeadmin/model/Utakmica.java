@@ -27,7 +27,7 @@ public class Utakmica {
 
     private boolean userTeamDomacin;
 
-    private boolean fromHttpServer;     // kada je true znaci postoji livematch.xml na serveru
+    private boolean fromHttpServer;     // kada je true znaci postoji livematch.xml na serveru i da su osnovni podaci(bez dogadjaja ucitani)
 
 
     private boolean sortirano;

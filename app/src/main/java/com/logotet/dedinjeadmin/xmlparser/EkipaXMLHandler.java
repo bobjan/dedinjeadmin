@@ -30,7 +30,6 @@ public class EkipaXMLHandler extends MyXMLHandler {
          textBuffer = new StringBuffer("");
         if (rawName.equals("ekipa")) {
             bazaIgraca = BazaIgraca.getInstance();
-            isOk = true;
         }
         if (rawName.equals("player")) {
             pcData = PLAYER;

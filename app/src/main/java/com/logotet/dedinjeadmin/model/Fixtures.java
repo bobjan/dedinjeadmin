@@ -10,7 +10,7 @@ public class Fixtures {
     private static Fixtures fixtures = null;
     private ArrayList<FixturesRow> raspored;
 
-    private boolean loaded;
+    private boolean loaded; // load from fixtures.xml completed
 
     private String sezona;
     public static Fixtures getInstance() {
@@ -45,9 +45,30 @@ public class Fixtures {
     }
 
     public void add(FixturesRow row) {
-        if (!raspored.contains(row))
+        FixturesRow tmp = getKolo(row.getKolo());
+        if(tmp == null)
             raspored.add(row);
+        else{
+            tmp.setDatum(row.getDatum());
+            tmp.setDomacin(row.isDomacin());
+            tmp.setPlayed(row.isPlayed());
+            tmp.setProtivnik(row.getProtivnik());
+            tmp.setTheyscored(row.getTheyscored());
+            tmp.setWescored(row.getWescored());
+        }
+//        if (!raspored.contains(row))
+//            raspored.add(row);
     }
+
+    public FixturesRow getKolo(int kolo){
+        for (int i = 0; i < raspored.size(); i++) {
+            FixturesRow tmp = raspored.get(i);
+            if (tmp.getKolo() == kolo)
+                return tmp;
+        }
+        return null;
+    }
+
 
     public String toString() {
         StringBuffer sb = new StringBuffer();

@@ -56,6 +56,30 @@ public class FixturesRow {
         return kolo;
     }
 
+    public void setDatum(BJDatum datum) {
+        this.datum = datum;
+    }
+
+    public void setProtivnik(String protivnik) {
+        this.protivnik = protivnik;
+    }
+
+    public void setDomacin(boolean domacin) {
+        this.domacin = domacin;
+    }
+
+    public void setPlayed(boolean played) {
+        this.played = played;
+    }
+
+    public void setWescored(int wescored) {
+        this.wescored = wescored;
+    }
+
+    public void setTheyscored(int theyscored) {
+        this.theyscored = theyscored;
+    }
+
     public BJDatum getDatum() {
         return datum;
     }

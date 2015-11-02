@@ -37,11 +37,15 @@ public class BazaPozicija {
 
     public Pozicija getPozicija(int id) {
         for (int i = 0; i < timposition.size(); i++) {
-            Pozicija tmp = timposition.get(id);
+            Pozicija tmp = timposition.get(i);
             if (tmp.getId() == id)
                 return tmp;
         }
         return null;
+    }
+
+    public ArrayList<Pozicija> getTimposition() {
+        return timposition;
     }
 
     public String toString() {

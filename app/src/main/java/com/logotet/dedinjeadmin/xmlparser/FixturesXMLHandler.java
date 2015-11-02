@@ -28,7 +28,6 @@ public class FixturesXMLHandler extends MyXMLHandler {
         contents.reset();
 
         if (rawName.equals("fixtures")) {
-            isOk = true;
             fixtures = Fixtures.getInstance();
             fixtures.setSezona(attr.getValue("sezona"));
         }
@@ -47,6 +46,7 @@ public class FixturesXMLHandler extends MyXMLHandler {
     public void endElement(String namespaceURI, String localName,
                            String rawName) throws SAXException {
         if (rawName.equals("fixtures")) {
+            fixtures.setLoaded(true);
             pcData = 0;
         }
         if (rawName.equals("kolo")) {

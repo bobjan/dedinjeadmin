@@ -13,7 +13,7 @@ public class BazaSaopstenja {
     private static BazaSaopstenja bazaSaopstenja = null;
     private ArrayList<Saopstenje> vesti;
 
-    private boolean loaded;
+    private boolean loaded; // load from saopstenje.xml xompleted
 
     public static BazaSaopstenja getInstance() {
         if (bazaSaopstenja == null)

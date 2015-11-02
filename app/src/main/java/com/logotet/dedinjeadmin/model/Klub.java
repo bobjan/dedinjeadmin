@@ -13,7 +13,7 @@ public class Klub {
     private static Klub klub = null;
     private ArrayList<Osoba> rukovodstvo;
 
-    private boolean loaded;
+    private boolean loaded; // load from rukovodstvo.xml completed!
 
     private BJDatum datumOsnivanja;
     private String adresa;
@@ -141,13 +141,23 @@ public class Klub {
     }
 
     public void add(Osoba osoba) {
-        if (!rukovodstvo.contains(osoba))
+        Osoba tmp = getOsoba(osoba.getId());
+        if(tmp == null)
             rukovodstvo.add(osoba);
+        else{
+            tmp.setNapomena(osoba.getNapomena());
+            tmp.setNaziv(osoba.getNaziv());
+            tmp.setImage(osoba.getImage());
+            tmp.setImageFileName(osoba.getImageFileName());
+            tmp.setImageLoaded(osoba.isImageLoaded());
+        }
+//        if (!rukovodstvo.contains(osoba))
+//            rukovodstvo.add(osoba);
     }
 
     public Osoba getOsoba(int id) {
-        for (int i = 0; i < rukovodstvo.size(); i++) {
-           Osoba tmp = rukovodstvo.get(id);
+        for (int idx = 0; idx < rukovodstvo.size(); idx++) {
+           Osoba tmp = rukovodstvo.get(idx);
             if (tmp.getId() == id)
                 return tmp;
         }
@@ -160,7 +170,6 @@ public class Klub {
         while (iter.hasNext()) {
             sb.append(iter.next().toString());
             sb.append("\n");
-
         }
         return sb.toString();
     }

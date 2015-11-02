@@ -15,6 +15,8 @@ import com.logotet.dedinjeadmin.xmlparser.ServertimeXMLHandler;
 import com.logotet.dedinjeadmin.xmlparser.StadionXMLHandler;
 import com.logotet.dedinjeadmin.xmlparser.TabelaXMLHandler;
 
+import org.xml.sax.SAXException;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -22,14 +24,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
+
+import javax.xml.parsers.ParserConfigurationException;
 
 /**
  * Created by boban on 9/11/15.
  */
 public class HttpCatcher {
-    private static int httpCounter = 0;
     private String urlAdresa;
     private String requestParams;
 
@@ -40,19 +42,16 @@ public class HttpCatcher {
     int what;
 
     public HttpCatcher(int what, String host, Object object) throws IOException {
-        httpCounter++;
         this.urlAdresa = host;
         this.what = what;
         requestParams = RequestPreparator.getRequest(what, object);
         URL url = new URL(urlAdresa + requestParams);
         urlConnection = (HttpURLConnection) url.openConnection();
         urlConnection.addRequestProperty("Cache-Control", "no-cache");
-
     }
 
 
     public HttpCatcher(String host) throws IOException {
-        httpCounter++;
         this.urlAdresa = host;
         URL url = new URL(urlAdresa);
         urlConnection = (HttpURLConnection) url.openConnection();
@@ -72,14 +71,14 @@ public class HttpCatcher {
         urlConnection.disconnect();
     }
 
-    public StringBuffer getResponsePage() {
+    public StringBuffer getResponsePage() throws IOException {
         getInputStream();
         inFile = new BufferedReader(new InputStreamReader(instream));
         StringBuffer sb = readAndParse();
         return sb;
     }
 
-    private StringBuffer readAndParse() {
+    private StringBuffer readAndParse() throws IOException {
         StringBuffer sb = new StringBuffer();
         boolean petlja = true;
         while (petlja) {
@@ -94,20 +93,18 @@ public class HttpCatcher {
                 petlja = false;
             } catch (IOException e) {
                 petlja = false;
+                throw new IOException(e);
             }
         }
         try {
             inFile.close();
         } catch (IOException e) {
+            throw new IOException(e);
         }
         return sb;
     }
 
-    public static int getHttpCounter() {
-        return httpCounter;
-    }
-
-    public void catchData() {
+    public void catchData() throws IOException {
         try {
             instream = new BufferedInputStream(urlConnection.getInputStream());
             myXMLHandler = null;
@@ -163,18 +160,19 @@ public class HttpCatcher {
             }
             if (myXMLHandler != null) {
                 myXMLHandler.doEntireJob();
-                httpCounter--;
+                if(!myXMLHandler.isOk())
+                    throw new IOException("myXMLHandler error");
             }
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (ParserConfigurationException pce) {
+            throw new IOException("XMLParsing error " + pce.getMessage());
+        } catch (SAXException saxe) {
+            throw new IOException("SAX error " + saxe.getMessage());
         } finally {
             urlConnection.disconnect();
         }
     }
 
-    public byte[] catchByteArray() {
+    public byte[] catchByteArray() throws IOException {
         ByteArrayOutputStream outstream = new ByteArrayOutputStream();
         try {
             if (urlConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
@@ -186,13 +184,10 @@ public class HttpCatcher {
                 outstream.flush();
                 outstream.close();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }finally {
+        } finally {
             urlConnection.disconnect();
         }
         return outstream.toByteArray();
     }
-
 }
 

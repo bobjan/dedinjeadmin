@@ -4,7 +4,7 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 
 /**
- * Klasa koja parsira stadion.xml
+ * Klasa koja nema sta da parsira, a
  */
 public class NoResponseHandler extends MyXMLHandler {
 

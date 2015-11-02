@@ -177,9 +177,15 @@ public class Dogadjaj implements TimeComparable {
     public int getPlayerInId() {
         return playerInId;
     }
+    public Igrac getIgracIn() {
+        return BazaIgraca.getInstance().getIgrac(getPlayerInId());
+    }
 
     public int getPlayerOutId() {
         return playerOutId;
+    }
+    public Igrac getIgracOut() {
+        return BazaIgraca.getInstance().getIgrac(getPlayerOutId());
     }
 
 

@@ -7,37 +7,32 @@ package com.logotet.dedinjeadmin.model;
 public class Stadion {
     private int id;
     private String naziv;
-    private String imageFileName;
 
-    private double lattitude;
+    private double latitude;
     private double longitude;
 
     public Stadion(int id, String naziv) {
         this.id = id;
         this.naziv = naziv;
-        this.lattitude = 0.0;
+        this.latitude = 0.0;
         this.longitude = 0.0;
-        imageFileName = "";
     }
 
-
-    public Stadion(int id, String naziv, String imageFileName) {
-        this(id, naziv);
-        this.imageFileName = imageFileName;
-    }
 
     public Stadion(int id, String naziv, double lat, double longit) {
         this(id, naziv);
-        this.lattitude = lat;
+        this.latitude = lat;
         this.longitude = longit;
     }
 
     public Stadion(int id, String naziv, String lat, String longit) {
         this(id, naziv);
         try {
-            this.lattitude = Double.parseDouble(lat.trim());
+            this.latitude = Double.parseDouble(lat.trim());
             this.longitude = Double.parseDouble(longit.trim());
         } catch (NumberFormatException nfe) {
+            this.latitude = 0.0D;
+            this.longitude = 0.0D;
         }
     }
 
@@ -49,8 +44,12 @@ public class Stadion {
         return naziv;
     }
 
-    public String getImageFileName() {
-        return imageFileName;
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
     }
 
     public String toString() {
